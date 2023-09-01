@@ -8,8 +8,8 @@ import Builder from "../Layout/Adminboard/Builder/Builder";
 export default function Routers() {
   return (
     <Routes>
-      <Route path="/" element={<Builder />} />
-      <Route path="/signin" element={<Builder />} />
+      <Route path="/" element={<SignIn />} />
+      <Route path="/signin" element={<SignIn />} />
       <Route path="/dashboard">
         <Route index element={<Dashboard />} />
       </Route>
@@ -20,11 +20,11 @@ export default function Routers() {
           <Route path="edit-package/:packageId" element={<AddPackage />} /> */}
       </Route>
       <Route path="/templates">
-        <Route index element={<Dashboard></Dashboard>} />
+        <Route index element={<Builder />} />
         {/* <Route path="add-truck" element={<AddTruck />} />
           <Route path="edit-truck/:truckId" element={<AddTruck />} /> */}
       </Route>
-      <Route path="/builder" element={<Dashboard></Dashboard>} />
+      <Route path="/builder" element={<Builder />} />
       <Route path="/profile" element={<Profile />} />
       <Route
         path="*"
