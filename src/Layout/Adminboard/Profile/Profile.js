@@ -8,5 +8,5 @@ export const user = {
 };
 
 export default function Profile() {
-  return <h2>Profile</h2>;
+  return <h2>Team</h2>;
 }

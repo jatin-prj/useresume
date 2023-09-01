@@ -19,7 +19,7 @@ export default function Routers() {
         {/* <Route path="add-package" element={<AddPackage />} />
           <Route path="edit-package/:packageId" element={<AddPackage />} /> */}
       </Route>
-      <Route path="/templates">
+      <Route path="/projects">
         <Route index element={<Builder />} />
         {/* <Route path="add-truck" element={<AddTruck />} />
           <Route path="edit-truck/:truckId" element={<AddTruck />} /> */}
