@@ -4,6 +4,8 @@ import Dashboard from "../Layout/Adminboard/Dashboard/Dashboard";
 // import HomePage from "../Layout/Adminboard/LandingPage/landingPage";
 import Profile from "../Layout/Adminboard/Profile/Profile";
 import Builder from "../Layout/Adminboard/Builder/Builder";
+import TwoColumnLayout from "../Components/Template/TemplateLayouts/MultiColumnLayout/TwoColumnLayout";
+import SingleColumnLayout from "../Components/Template/TemplateLayouts/SingleColumnLayout/SingleColumnTemplate";
 
 export default function Routers() {
   return (
@@ -14,18 +16,46 @@ export default function Routers() {
         <Route index element={<Dashboard />} />
       </Route>
       <Route path="/team">
-        <Route index element={<Profile />} />
+        <Route
+          index
+          element={
+            <Dashboard>
+              <Profile />
+            </Dashboard>
+          }
+        />
 
         {/* <Route path="add-package" element={<AddPackage />} />
           <Route path="edit-package/:packageId" element={<AddPackage />} /> */}
       </Route>
       <Route path="/projects">
-        <Route index element={<Builder />} />
-        {/* <Route path="add-truck" element={<AddTruck />} />
-          <Route path="edit-truck/:truckId" element={<AddTruck />} /> */}
+        <Route
+          index
+          element={
+            <Dashboard>
+              <Builder />
+            </Dashboard>
+          }
+        />
+        <Route path="multi-column" element={<TwoColumnLayout />} />
+        <Route path="single-column" element={<SingleColumnLayout />} />
       </Route>
-      <Route path="/builder" element={<Builder />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/builder"
+        element={
+          <Dashboard>
+            <Builder />
+          </Dashboard>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <Dashboard>
+            <Profile />
+          </Dashboard>
+        }
+      />
       <Route
         path="*"
         element={

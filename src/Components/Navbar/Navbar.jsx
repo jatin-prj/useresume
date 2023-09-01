@@ -23,9 +23,9 @@ export default function Navbar() {
                   <div className="flex">
                     <div className="flex">
                       <div className="flex items-center w-14 h-14">
-                        <button className="rounded-md w-full text-white hover:bg-gray-700">
+                        {/* <button className="rounded-md w-full text-white hover:bg-gray-700">
                           {Icons.barIcon}
-                        </button>
+                        </button> */}
                       </div>
                       <div className="flex items-center w-52">
                         <p class="inline-block align-middle text-white text-3xl w-full">

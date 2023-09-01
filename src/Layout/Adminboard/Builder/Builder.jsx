@@ -1,3 +1,21 @@
+import { Link } from "react-router-dom";
+
 export default function Builder() {
-  return <h2>Builder</h2>;
+  return (
+    <div className="text-center">
+      <h2>Choose Templates</h2>
+      <div className="flex justify-center gap-4">
+        <Link to={"/projects/single-column"}>
+          <button className="rounded-full bg-slate-800 text-white p-4">
+            Single Column
+          </button>
+        </Link>
+        <Link to={"/projects/multi-column"}>
+          <button className="rounded-full bg-slate-800 text-white p-4">
+            Multi Column
+          </button>
+        </Link>
+      </div>
+    </div>
+  );
 }
