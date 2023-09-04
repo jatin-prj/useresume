@@ -1,9 +1,25 @@
-export default function Experience() {
+export default function Experience({
+  className,
+  id,
+  draggable,
+  onDragStart,
+  onDragEnd,
+  onDragOver,
+  onDrop,
+}) {
   return (
     <>
-      <div className="py-3 experience">
+      <div
+        // className={`py-3 experience ${className}`}
+        // id={id}
+        // draggable={draggable}
+        // onDragStart={(e) => onDragStart(e)}
+        // onDragEnd={(e) => onDragEnd(e)}
+        // onDragOver={(e) => onDragOver(e)}
+        // onDrop={(e) => onDrop(e)}
+      >
         <h2 className="text-lg font-poppins font-bold text-top-color experience">
-           Experience
+          Experience
         </h2>
         <div className="border-2 w-20 border-gray-300 rounded experience"></div>
 
@@ -29,7 +45,9 @@ export default function Experience() {
             <p className="text-lg font-bold text-gray-700 experience">
               Amazon.com | Lead
             </p>
-            <p className="font-semibold text-sm text-gray-700 experience">2020-2021</p>
+            <p className="font-semibold text-sm text-gray-700 experience">
+              2020-2021
+            </p>
             <p className="font-semibold text-sm text-gray-700 mt-2 mb-1 experience">
               Key Responsibilities
             </p>

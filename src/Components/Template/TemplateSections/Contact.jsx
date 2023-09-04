@@ -1,9 +1,25 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-export default function Contact() {
+export default function Contact({
+  className,
+  id,
+  draggable,
+  onDragStart,
+  onDragEnd,
+  onDragOver,
+  onDrop,
+}) {
   return (
     <>
-      <div className=" w-full contact">
-        <h2 className=" text-lg font-poppins font-bold text-top-color contact" >
+      <div
+      // className={`w-full contact ${className}`}
+      // id={id}
+      // draggable={draggable}
+      // onDragStart={(e) => onDragStart(e)}
+      // onDragEnd={(e) => onDragEnd(e)}
+      // onDragOver={(e) => onDragOver(e)}
+      // onDrop={(e) => onDrop(e)}
+      >
+        <h2 className=" text-lg font-poppins font-bold text-top-color contact">
           My Contact
         </h2>
         <div className=" border-2 w-20 border-gray-300 rounded contact"></div>

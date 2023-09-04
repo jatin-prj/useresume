@@ -1,9 +1,25 @@
 /* eslint-disable jsx-a11y/alt-text */
-export default function Header() {
+export default function Header({
+  className,
+  id,
+  draggable,
+  onDragStart,
+  onDragEnd,
+  onDragOver,
+  onDrop,
+}) {
   return (
     <>
-      <div className="flex rounded-t-lg bg-top-color p-2 border mb-5  bg-blue-500 w-full ">
-        <div className="h-20 w-20 overflow-hidden rounded-full  border ml-5 ">
+      <div
+        className={`flex rounded-t-lg bg-top-color p-2 border bg-blue-500 w-full `}
+        // id={id}
+        // draggable={draggable}
+        // onDragStart={(e) => onDragStart(e)}
+        // onDragEnd={(e) => onDragEnd(e)}
+        // onDragOver={(e) => onDragOver(e)}
+        // onDrop={(e) => onDrop(e)}
+      >
+        <div className="h-20 w-20 rounded-full  border ml-5 ">
           <img src="" />
         </div>
 

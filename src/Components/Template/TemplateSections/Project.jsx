@@ -1,7 +1,23 @@
-export default function Project() {
+export default function Project({
+  className,
+  id,
+  draggable,
+  onDragStart,
+  onDragEnd,
+  onDragOver,
+  onDrop,
+}) {
   return (
     <>
-      <div className="py-3 project">
+      <div
+        // className={`py-3 project ${className}`}
+        // id={id}
+        // draggable={draggable}
+        // onDragStart={(e) => onDragStart(e)}
+        // onDragEnd={(e) => onDragEnd(e)}
+        // onDragOver={(e) => onDragOver(e)}
+        // onDrop={(e) => onDrop(e)}
+      >
         <h2 className="text-lg font-poppins font-bold text-top-color project">
           Projects
         </h2>
@@ -25,7 +41,7 @@ export default function Project() {
             </p>
             <p className="font-normal text-sm text-gray-700 mb-1 pl-2 project">
               it’s a web application which helps you to book your slot for your
-              car just like booking a movie ticket from home. 
+              car just like booking a movie ticket from home.
             </p>
           </div>
         </div>
