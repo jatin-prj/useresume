@@ -1,4 +1,4 @@
-export default function Experience({
+export default function Education({
   className,
   id,
   draggable,
@@ -9,9 +9,9 @@ export default function Experience({
 }) {
   return (
     <>
-      <div className="w-auto h-auto">
+      <div className="w-auto h-auto ">
         <h2 className="text-lg font-poppins font-bold text-top-color ">
-          Experience
+          Education
         </h2>
         <div className="border-2 w-20 border-gray-300 rounded "></div>
 

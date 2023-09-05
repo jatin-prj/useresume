@@ -4,8 +4,10 @@ import Dashboard from "../Layout/Adminboard/Dashboard/Dashboard";
 // import HomePage from "../Layout/Adminboard/LandingPage/landingPage";
 import Profile from "../Layout/Adminboard/Profile/Profile";
 import Builder from "../Layout/Adminboard/Builder/Builder";
-import TwoColumnLayout from "../Components/Template/TemplateLayouts/MultiColumnLayout/TwoColumnLayout";
+// import TwoColumnLayout from "../Components/Template/TemplateLayouts/MultiColumnLayout/TwoColumnLayout";
 import SingleColumnLayout from "../Components/Template/TemplateLayouts/SingleColumnLayout/SingleColumnTemplate";
+import TwoColumnLayout from "../Components/Template/TemplateLayouts/MultiColumnLayout/Demo2";
+// import TwoColumnLayout from "../Components/Template/TemplateLayouts/MultiColumnLayout/Demo";
 
 export default function Routers() {
   return (

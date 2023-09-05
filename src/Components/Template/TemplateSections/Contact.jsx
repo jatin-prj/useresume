@@ -1,36 +1,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-export default function Contact({
-  className,
-  id,
-  draggable,
-  onDragStart,
-  onDragEnd,
-  onDragOver,
-  onDrop,
-}) {
+export default function Contact() {
   return (
     <>
-      <div
-      // className={`w-full contact ${className}`}
-      // id={id}
-      // draggable={draggable}
-      // onDragStart={(e) => onDragStart(e)}
-      // onDragEnd={(e) => onDragEnd(e)}
-      // onDragOver={(e) => onDragOver(e)}
-      // onDrop={(e) => onDrop(e)}
-      >
-        <h2 className=" text-lg font-poppins font-bold text-top-color contact">
+      <div className="w-auto h-auto">
+        <h2 className=" text-lg font-poppins font-bold text-top-color ">
           My Contact
         </h2>
-        <div className=" border-2 w-20 border-gray-300 rounded contact"></div>
+        <div className=" border-2 w-20 border-gray-300 rounded "></div>
 
         <div>
-          <div className=" flex items-center my-1 contact">
-            <a className=" w-6 text-gray-700 hover:text-orange-600 contact">
+          <div className=" flex items-center my-1 ">
+            <a className=" w-6 text-gray-700 hover:text-orange-600 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
-                className=" h-4 contact"
+                className=" h-4 "
               >
                 <path
                   fill="currentColor"
@@ -38,11 +22,11 @@ export default function Contact({
                 ></path>
               </svg>
             </a>
-            <div className=" ml-2  contact">amitpachange@gmail.com</div>
+            <div className=" ml-2  ">amitpachange@gmail.com</div>
           </div>
-          <div className=" flex items-center my-1 contact">
+          <div className=" flex items-center my-1 ">
             <a
-              className=" w-6 text-gray-700 hover:text-orange-600 contact"
+              className=" w-6 text-gray-700 hover:text-orange-600 "
               aria-label="Visit TrendyMinds YouTube"
               href=""
               target="_blank"
@@ -50,7 +34,7 @@ export default function Contact({
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 576 512"
-                className=" h-4 contact"
+                className=" h-4 "
               >
                 <path
                   fill="currentColor"
@@ -58,11 +42,11 @@ export default function Contact({
                 ></path>
               </svg>
             </a>
-            <div className="contact">9145258775</div>
+            <div className="">9145258775</div>
           </div>
-          <div className=" flex items-center my-1 contact">
+          <div className=" flex items-center my-1 ">
             <a
-              className=" w-6 text-gray-700 hover:text-orange-600 contact"
+              className=" w-6 text-gray-700 hover:text-orange-600 "
               aria-label="Visit TrendyMinds Facebook"
               href=""
               target="_blank"
@@ -70,7 +54,7 @@ export default function Contact({
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 320 512"
-                className=" h-4 contact"
+                className=" h-4 "
               >
                 <path
                   fill="currentColor"
@@ -78,11 +62,11 @@ export default function Contact({
                 ></path>
               </svg>
             </a>
-            <div className="contact">sale galli latur</div>
+            <div className="">sale galli latur</div>
           </div>
-          <div className=" flex items-center my-1 contact">
+          <div className=" flex items-center my-1 ">
             <a
-              className=" w-6 text-gray-700 hover:text-orange-600 contact"
+              className=" w-6 text-gray-700 hover:text-orange-600 "
               aria-label="Visit TrendyMinds Twitter"
               href=""
               target="_blank"
@@ -98,7 +82,7 @@ export default function Contact({
                 ></path>
               </svg>
             </a>
-            <div className="contact">amitpachange21</div>
+            <div className="">amitpachange21</div>
           </div>
         </div>
       </div>
