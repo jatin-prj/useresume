@@ -1,278 +1,336 @@
-// /* eslint-disable no-unused-vars */
-// import { useState } from "react";
+// import React, { useState } from "react";
 // import Header from "../../TemplateSections/Header";
-// import Contact from "../../TemplateSections/Contact";
 // import AboutMe from "../../TemplateSections/AboutMe";
+// import Contact from "../../TemplateSections/Contact";
 // import Skills from "../../TemplateSections/Skills";
 // import Experience from "../../TemplateSections/Experience";
 // import Project from "../../TemplateSections/Project";
 
 // export default function TwoColumnLayout() {
+//   const [dragSection, setDragSection] = useState();
+//   const [swapSection, setSwapSection] = useState();
 //   const [isDragStart, setIsDragStart] = useState();
-//   const [dragId, setDragId] = useState();
-//   const [dragOver, setDragOver] = useState();
-//   const [dragOverId, setDragOverId] = useState();
-//   const [boxes, setBoxes] = useState([
-//     {
-//       id: "header",
-//       name: <Header />,
-//       order: 1,
-//     },
-//     {
-//       id: "contact",
-//       name: <Contact />,
-//       order: 2,
-//     },
-//     {
-//       id: "about-me",
-//       name: <AboutMe />,
-//       order: 3,
-//     },
-//     {
-//       id: "skills",
-//       name: <Skills />,
-//       order: 4,
-//     },
-//     {
-//       id: "experience",
-//       name: <Experience />,
-//       order: 5,
-//     },
-//     {
-//       id: "project",
-//       name: <Project />,
-//       order: 6,
-//     },
-//     // {
-//     //   id: "other",
-//     //   name: <div>Other</div>,
-//     //   order: 7,
-//     // },
-//   ]);
-//   // const [boxes, setBoxes] = useState([
-//   //   {
-//   //     id: "Box-1",
-//   //     color: "red",
-//   //     order: 1,
-//   //   },
-//   //   {
-//   //     id: "Box-2",
-//   //     color: "green",
-//   //     order: 2,
-//   //   },
-//   //   {
-//   //     id: "Box-3",
-//   //     color: "blue",
-//   //     order: 3,
-//   //   },
-//   // ]);
-
-//   // const arrayLayout = [
-//   //   { id: "header", className: "w-full mt-1" },
-//   //   { id: "contact", className: "w-[29%] mt-1" },
-//   //   { id: "about-me", className: "w-[69%] mt-1" },
-//   //   { id: "project", className: " w-[69%] mt-1" },
-//   //   { id: "skills", className: "w-[29%] mt-1" },
-//   //   { id: "experience", className: "w-full mt-1" },
-//   //   { id: "other", className: " w-full mt-1" },
-//   // ];
-
-//   const arrayLayout = [
-//     { id: "header", className: "w-full mt-1" },
-//     { id: "contact", className: "w-[29%] mt-1" },
-//     { id: "about-me", className: "w-[69%] mt-1" },
-//     { id: "project", className: " w-[69%] mt-1" },
-//     { id: "skills", className: "w-[29%] mt-1" },
-//     { id: "experience", className: "w-full mt-1" },
-//     { id: "other", className: " w-full mt-1" },
+//   const components = [
+//     { id: "header", name: <Header /> },
+//     { id: "contact", name: <Contact /> },
+//     { id: "about-me", name: <AboutMe /> },
+//     { id: "skills", name: <Skills /> },
+//     { id: "experience", name: <Experience /> },
+//     { id: "project", name: <Project /> },
 //   ];
-//   const handleDrag = (e) => {
-//     setDragId(e.target.id);
+
+//   const dragStart = (e) => {
+//     //dragStart event function to get know drag startex
+//     // e.dataTransfer.setData("draggedPackage", JSON.stringify(packages));
+//     setDragSection(e.target.id);
 //     setIsDragStart(true);
 //   };
-//   const handleDragOver = (e) => {
+
+//   const dragEnd = (e) => {
+//     //dragEnd event function to get know drag ended
 //     e.preventDefault();
-//     setDragOver(true);
-//     setDragOverId(e.target.id);
-//   };
-//   console.log("dragOver", dragOverId);
-
-//   const handleDrop = (e) => {
+//     // setDragSection(e);
 //     setIsDragStart(false);
-//     setDragOver(false);
-//     const dragBox = boxes.find((box) => box.id === dragId);
-//     const dropBox = boxes.find((box) => box.id === e.target.id);
-
-//     const dragBoxOrder = dragBox.order;
-//     const dropBoxOrder = dropBox.order;
-//     console.log("dragBoxOrder", dragBoxOrder);
-//     console.log("dropBoxOrder", dropBoxOrder);
-
-//     const newBoxState = boxes.map((box) => {
-//       if (box.id === dragId) {
-//         box.order = dropBoxOrder;
-//       }
-//       if (box.id === e.target.id) {
-//         box.order = dragBoxOrder;
-//       }
-//       return box;
-//     });
-
-//     // Set a temporary transform property to reset the scale to 1
-//     const resetBoxState = newBoxState.map((box) => {
-//       box.transform = "scale(1)";
-//       return box;
-//     });
-
-//     setBoxes(resetBoxState);
-
-//     // Use a small timeout to apply the new transform property
-//     setTimeout(() => {
-//       setBoxes(newBoxState);
-//     }, 10);
 //   };
-//   console.log("dragId>>>>>", dragId);
 
+//   const dragOver = (e) => {
+//     // DragOver event function to get on which truck package comes
+//     e.preventDefault();
+//     setSwapSection(e.target.id);
+//     console.log("DragOver", e.target);
+//   };
+//   const drop = (e) => {
+//     //Drop event function, for get the dropped package as well as truck in which package dropped
+//   };
+//   console.log("drag>>>>>>..", dragSection);
+//   console.log("swap>>>>>..", swapSection);
+
+//   // swapBoxes = (fromBox, toBox) => {
+//   //   let boxes = this.state.boxes.slice();
+//   //   let fromIndex = -1;
+//   //   let toIndex = -1;
+
+//   //   for (let i = 0; i < boxes.length; i++) {
+//   //     if (boxes[i].id === fromBox.id) {
+//   //       fromIndex = i;
+//   //     }
+//   //     if (boxes[i].id === toBox.id) {
+//   //       toIndex = i;
+//   //     }
+//   //   }
+
+//   //   if (fromIndex != -1 && toIndex != -1) {
+//   //     let { fromId, ...fromRest } = boxes[fromIndex];
+//   //     let { toId, ...toRest } = boxes[toIndex];
+//   //     boxes[fromIndex] = { id: fromBox.id, ...toRest };
+//   //     boxes[toIndex] = { id: toBox.id, ...fromRest };
+
+//   //     this.setState({ boxes: boxes });
+//   //   }
+//   // };
 //   return (
-//     <div className="grid">
-//       <div className="flex justify-center ">
-//         <div className="bg-white shadow-2xl mt-5 w-auto h-auto mb-1 p-1">
-//           <div className="flex flex-wrap p-1">
-//             {boxes
-//               .sort((a, b) => a.order - b.order)
-//               .map((box) => (
-//                 <Box
-//                   key={box.id}
-//                   boxNumber={box.id}
-//                   boxName={box.name}
-//                   draggable={true}
-//                   handleDrag={(e) => handleDrag(e)}
-//                   handleDrop={(e) => handleDrop(e)}
-//                   handleDragOver={(e) => handleDragOver(e)}
-//                   transform={box.transform}
-//                   isDragStart={isDragStart}
-//                   dragOverId={dragOverId}
-//                   dragOver={dragOver}
-//                   dragId={dragId}
-//                 />
-//               ))}
+//     <div className="flex justify-center ">
+//       <div className="bg-white shadow-2xl mt-5 w-[49.6rem] h-auto mb-1 p-1">
+//         <div>
+//           <Header
+//             className={`cursor-grab ${
+//               isDragStart && dragSection === "header" && "opacity-[.01]"
+//             }`}
+//             id="header"
+//             draggable
+//             onDragStart={(e) => dragStart(e)}
+//             onDragEnd={(e) => dragEnd(e)}
+//             onDragOver={(e) => dragOver(e)}
+//             onDrop={(e) => drop(e)}
+//           />
+//         </div>
+
+//         <div className="grid grid-rows-3 grid-flow-col gap-1 ">
+//           {/* ////////////////////////////////////// */}
+//           <div className="row-span-3 bg-slate-500">
+//             <Header
+//               className={`cursor-grab ${
+//                 isDragStart && dragSection === "contact" && "opacity-[.01]"
+//               }`}
+//               id="contact"
+//               draggable
+//               onDragStart={(e) => dragStart(e)}
+//               onDragEnd={(e) => dragEnd(e)}
+//               onDragOver={(e) => dragOver(e)}
+//               onDrop={(e) => drop(e)}
+//             />
+//           </div>
+
+//           <div className="col-span-2 flex flex-wrap bg-slate-500" id="about-me">
+//             <AboutMe
+//               className={`cursor-grab ${
+//                 isDragStart && dragSection === "about-me" && "opacity-[.01]"
+//               }`}
+//               id="about-me"
+//               draggable
+//               onDragStart={(e) => dragStart(e)}
+//               onDragEnd={(e) => dragEnd(e)}
+//               onDragOver={(e) => dragOver(e)}
+//               onDrop={(e) => drop(e)}
+//             />
+//           </div>
+
+//           <div className="row-span-2 col-span-2 bg-slate-500">
+//             <AboutMe
+//               className={`cursor-grab ${
+//                 isDragStart && dragSection === "skills" && "opacity-[.01]"
+//               }`}
+//               id="skills"
+//               draggable
+//               onDragStart={(e) => dragStart(e)}
+//               onDragEnd={(e) => dragEnd(e)}
+//               onDragOver={(e) => dragOver(e)}
+//               onDrop={(e) => drop(e)}
+//             />
+//           </div>
+//           {/* //////////////////////////////////// */}
+//         </div>
+
+//         <div className="grid gap-4 grid-cols-2 grid-flow-row auto-rows-max p-1">
+//           <div className="bg-slate-500 flex flex-wrap">
+//             <Experience
+//               className={`cursor-grab ${
+//                 isDragStart && dragSection === "experience" && "opacity-[.01]"
+//               }`}
+//               id="experience"
+//               draggable
+//               onDragStart={(e) => dragStart(e)}
+//               onDragEnd={(e) => dragEnd(e)}
+//               onDragOver={(e) => dragOver(e)}
+//               onDrop={(e) => drop(e)}
+//             />
+//           </div>
+
+//           <div className="bg-slate-500">
+//             <Project
+//               className={`cursor-grab ${
+//                 isDragStart && dragSection === "project" && "opacity-[.01]"
+//               }`}
+//               id="project"
+//               draggable
+//               onDragStart={(e) => dragStart(e)}
+//               onDragEnd={(e) => dragEnd(e)}
+//               onDragOver={(e) => dragOver(e)}
+//               onDrop={(e) => drop(e)}
+//             />
+//           </div>
+
+//           <div className="bg-slate-500">
+//             <div
+//               className={`cursor-grab ${isDragStart && "opacity-[.01]"}`}
+//               id=""
+//               draggable
+//               onDragStart={(e) => dragStart(e)}
+//               onDragEnd={(e) => dragEnd(e)}
+//               onDragOver={(e) => dragOver(e)}
+//               onDrop={(e) => drop(e)}
+//             >
+//               03
+//             </div>
+//           </div>
+
+//           <div className="bg-slate-500">
+//             <div
+//               className={`cursor-grab ${isDragStart && "opacity-[.01]"}`}
+//               id=""
+//               draggable
+//               onDragStart={(e) => dragStart(e)}
+//               onDragEnd={(e) => dragEnd(e)}
+//               onDragOver={(e) => dragOver(e)}
+//               onDrop={(e) => drop(e)}
+//             >
+//               04
+//             </div>
 //           </div>
 //         </div>
 //       </div>
 //     </div>
 //   );
 // }
-// export function Box({
-//   boxNumber,
-//   boxName,
-//   draggable,
-//   handleDrag,
-//   handleDrop,
-//   handleDragOver,
-//   transform,
-//   isDragStart,
-//   dragOverId,
-//   dragOver,
-//   dragId,
-// }) {
-//   return (
-//     <div
-//       draggable={draggable}
-//       id={boxNumber}
-//       onDragOver={(e) => handleDragOver(e)}
-//       onDragStart={handleDrag}
-//       onDrop={handleDrop}
-//       className={`w-auto h-auto p-5 my-2 mx-2 cursor-grab ${
-//         isDragStart && dragId === boxNumber && "opacity-[.01]"
-//       } ${dragOver && dragOverId === boxNumber && "border-4 border-sky-500"}`}
-//       style={{ transform }} // Apply the transform property
-//     >
-//       {boxName}
-//     </div>
-//   );
-// }
-import React, { useState } from "react";
-import { Rnd } from "react-rnd";
 
-const App = () => {
-  const [isOverlap, setIsOverlap] = useState();
-  const [components, setComponents] = useState([
-    {
-      id: 1,
-      width: 200,
-      height: 200,
-      x: 100,
-      y: 100,
-    },
-    {
-      id: 2,
-      width: 200,
-      height: 200,
-      x: 350,
-      y: 100,
-    },
-  ]);
+{/* <div>
+          <Header
+            className={`cursor-grab ${
+              isDragStart && dragSection === "header" && "opacity-[.01]"
+            }`}
+            id="header"
+            draggable
+            onDragStart={(e) => dragStart(e)}
+            onDragEnd={(e) => dragEnd(e)}
+            onDragOver={(e) => dragOver(e)}
+            onDrop={(e) => drop(e)}
+          />
+        </div>
 
-  const handleDrag = (e, data, id) => {
-    const updatedComponents = components.map((component) =>
-      component.id === id ? { ...component, x: data.x, y: data.y } : component
-    );
+        <div className="flex flex-wrap justify-between p-1">
+        
+          <div className="bg-slate-500 w-[29%]">
+            <Contact
+              className={`cursor-grab ${
+                isDragStart && dragSection === "contact" && "opacity-[.01]"
+              }`}
+              id="contact"
+              draggable
+              onDragStart={(e) => dragStart(e)}
+              onDragEnd={(e) => dragEnd(e)}
+              onDragOver={(e) => dragOver(e)}
+              onDrop={(e) => drop(e)}
+            />
+          </div>
 
-    // Check for collisions and prevent overlap
-    const collidingComponents = findCollidingComponents(updatedComponents);
-    if (collidingComponents.length > 0) {
-      // Handle overlap by adjusting positions or sizes
-      // For example, you can move the colliding component to a new position
-      // or resize it.
-    }
+          <div className=" bg-slate-500 w-[69%]" id="about-me">
+            <AboutMe
+              className={`cursor-grab ${
+                isDragStart && dragSection === "about-me" && "opacity-[.01]"
+              }`}
+              id="about-me"
+              draggable
+              onDragStart={(e) => dragStart(e)}
+              onDragEnd={(e) => dragEnd(e)}
+              onDragOver={(e) => dragOver(e)}
+              onDrop={(e) => drop(e)}
+            />
+          </div>
 
-    setComponents(updatedComponents);
-    console.log("updatedComponents", updatedComponents);
-  };
+          <div className="bg-slate-500 w-[69%] h-72 mt-1">
+            <Project
+              className={`cursor-grab ${
+                isDragStart && dragSection === "project" && "opacity-[.01]"
+              }`}
+              id="project"
+              draggable
+              onDragStart={(e) => dragStart(e)}
+              onDragEnd={(e) => dragEnd(e)}
+              onDragOver={(e) => dragOver(e)}
+              onDrop={(e) => drop(e)}
+            />
+          </div>
+          <div className="bg-slate-500 w-[29%] h-72 mt-1">
+            <Skills
+              className={`cursor-grab ${
+                isDragStart && dragSection === "skills" && "opacity-[.01]"
+              }`}
+              id="skills"
+              draggable
+              onDragStart={(e) => dragStart(e)}
+              onDragEnd={(e) => dragEnd(e)}
+              onDragOver={(e) => dragOver(e)}
+              onDrop={(e) => drop(e)}
+            />
+          </div>
 
-  const findCollidingComponents = (componentList) => {
-    const collidingComponents = [];
-    for (let i = 0; i < componentList.length; i++) {
-      for (let j = i + 1; j < componentList.length; j++) {
-        const componentA = componentList[i];
-        const componentB = componentList[j];
+          <div className="bg-slate-500 w-full mt-1">
+            <Experience
+              className={`cursor-grab ${
+                isDragStart && dragSection === "experience" && "opacity-[.01]"
+              }`}
+              id="experience"
+              draggable
+              onDragStart={(e) => dragStart(e)}
+              onDragEnd={(e) => dragEnd(e)}
+              onDragOver={(e) => dragOver(e)}
+              onDrop={(e) => drop(e)}
+            />
+          </div>
 
-        // Check for collision by comparing positions and dimensions
-        if (
-          componentA.x < componentB.x + componentB.width &&
-          componentA.x + componentA.width > componentB.x &&
-          componentA.y < componentB.y + componentB.height &&
-          componentA.y + componentA.height > componentB.y
-        ) {
-          collidingComponents.push(componentA, componentB);
-        }
-      }
-    }
-    if (collidingComponents.length > 0) {
-      setIsOverlap(true);
-    }
+          <div className="bg-slate-500 w-[49%] mt-1">
+            <div
+              className={`cursor-grab ${isDragStart && "opacity-[.01]"}`}
+              id=""
+              draggable
+              onDragStart={(e) => dragStart(e)}
+              onDragEnd={(e) => dragEnd(e)}
+              onDragOver={(e) => dragOver(e)}
+              onDrop={(e) => drop(e)}
+            >
+              03
+            </div>
+          </div>
 
-    return (
-      console.log("collidingComponents", collidingComponents),
-      collidingComponents
-    );
-  };
+          <div className="bg-slate-500 w-[49%] mt-1">
+            <div
+              className={`cursor-grab ${isDragStart && "opacity-[.01]"}`}
+              id=""
+              draggable
+              onDragStart={(e) => dragStart(e)}
+              onDragEnd={(e) => dragEnd(e)}
+              onDragOver={(e) => dragOver(e)}
+              onDrop={(e) => drop(e)}
+            >
+              04
+            </div>
+          </div>
+         
+        </div> */}
 
-  return (
-    <div>
-      {components.map((component) => (
-        <Rnd
-          className="bg-slate-500 mr-5 mx-2"
-          key={component.id}
-          size={{ width: component.width, height: component.height }}
-          position={{ x: component.x, y: component.y }}
-          onDrag={(e, data) => handleDrag(e, data, component.id)}
-        >
-          Component {component.id}
-        </Rnd>
-      ))}
-    </div>
-  );
-};
 
-export default App;
+        // const handleDragStart = (e, index) => {
+        //     console.log("indexd", index);
+        //     setDragItem(index);
+        //   };
+        
+        //   const handleDragEnter = (e, index) => {
+        //     console.log("Enter index", index);
+        //     setDragOverIndex(index);
+        //   };
+        
+        //   const handleDragLeave = (e) => {
+        //     setDragOverIndex(undefined);
+        //   };
+        //   const swapElements = (arr, index1, index2) => {
+        //     arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+        //     return arr;
+        //   };
+        //   const handleDrop = (e, index) => {
+        //     const newList = [...list];
+        //     setList(swapElements(newList, dragItem, index));
+        //   };
+        //   const handleDragEnd = (e) => {
+        //     setDragItem(undefined);
+        //     setDragOverIndex(undefined);
+        //   };

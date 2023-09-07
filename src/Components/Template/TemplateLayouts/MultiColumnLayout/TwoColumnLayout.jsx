@@ -1,189 +1,73 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Responsive, WidthProvider } from "react-grid-layout";
+import "/node_modules/react-grid-layout/css/styles.css";
+// import "/node_modules/react-resizable/css/styles.css";
 import Header from "../../TemplateSections/Header";
-import AboutMe from "../../TemplateSections/AboutMe";
 import Contact from "../../TemplateSections/Contact";
+import AboutMe from "../../TemplateSections/AboutMe";
 import Skills from "../../TemplateSections/Skills";
 import Experience from "../../TemplateSections/Experience";
 import Project from "../../TemplateSections/Project";
+import Education from "../../TemplateSections/Education";
 
-// const arrayComponent = [
-//   {
-//     id: "header",
-//     name: <Header />,
-//   },
-//   {
-//     id: "contact",
-//     name: <Contact />,
-//   },
-//   {
-//     id: "about-me",
-//     name: <AboutMe />,
-//   },
-//   {
-//     id: "skills",
-//     name: <Skills />,
-//   },
-//   {
-//     id: "experience",
-//     name: <Experience />,
-//   },
-//   {
-//     id: "project",
-//     name: <Project />,
-//   },
-//   {
-//     id: "other",
-//     name: <div>Other</div>,
-//   },
-// ];
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 export default function TwoColumnLayout() {
-  const [dragSection, setDragSection] = useState();
-  const [swapSection, setSwapSection] = useState();
-  const [isDragStart, setIsDragStart] = useState();
-  const [dragItem, setDragItem] = useState();
-  const [dragOverIndex, setDragOverIndex] = useState();
-  const [component, setComponent] = useState([
+  const [compactType, setcompactType] = useState("vertical");
+  const [mounted, setMounted] = useState(false);
+
+  const [layout, setLayout] = useState([
     {
-      id: "header",
+      i: "header",
+      x: 0,
+      y: 0,
+      w: 5,
+      h: 5,
       name: <Header />,
     },
+    { i: "contact", x: 0, y: 1, w: 2, h: 8, name: <Contact /> },
     {
-      id: "contact",
-      name: <Contact />,
-    },
-    {
-      id: "about-me",
+      i: "about-me",
+      x: 2,
+      y: 1,
+      w: 3,
+      h: 8,
       name: <AboutMe />,
     },
-    {
-      id: "skills",
-      name: <Skills />,
-    },
-    {
-      id: "experience",
-      name: <Experience />,
-    },
-    {
-      id: "project",
-      name: <Project />,
-    },
-    {
-      id: "other",
-      name: <div>Other</div>,
-    },
+    { i: "experience", x: 0, y: 2, w: 4, h: 20, name: <Experience /> },
+    { i: "skills", x: 4, y: 2, w: 1, h: 20, name: <Skills /> },
+    { i: "project", x: 0, y: 3, w: 5, h: 9, name: <Project /> },
+    { i: "education", x: 0, y: 4, w: 5, h: 20, name: <Education /> },
   ]);
-  const [dragId, setDragId] = useState();
 
-  const arrayLayout = [
-    { id: "header", className: "w-full mt-1" },
-    { id: "contact", className: "w-[29%] mt-1" },
-    { id: "about-me", className: "w-[69%] mt-1" },
-    { id: "project", className: " w-[69%] mt-1" },
-    { id: "skills", className: "w-[29%] mt-1" },
-    { id: "experience", className: "w-full mt-1" },
-    { id: "other", className: " w-full mt-1" },
-  ];
-
-  // const dragStart = (e, index) => {
-  //   //dragStart event function to get know drag startex
-  //   e.dataTransfer.setData("dragContent", JSON.stringify());
-  //   setDragSection(e.target.id);
-  //   setIsDragStart(true);
-  // };
-  // const dragOver = (e, index) => {
-  //   // DragOver event function to get on which truck package comes
-  //   e.preventDefault();
-  //   setSwapSection(e.target.id);
-  //   // console.log("DragOver", e.target);
-  // };
-  // const swapElements = (arr, index1, index2) => {
-  //   arr[index1] = arr.splice(index2, 1, arr[index1])[0];
-  //   return arr;
-  // };
-
-  // const dragEnd = (e) => {
-  //   //dragEnd event function to get know drag ended
-  //   e.preventDefault();
-  //   setDragSection(e);
-  //   setIsDragStart(false);
-  // };
-
-  const handleDrag = (ev) => {
-    setDragId(ev.currentTarget.id);
-  };
-  const handleDrop = (ev) => {
-    const dragBox = component.find((box) => box.id === dragId);
-    const dropBox = component.find((box) => box.id === ev.currentTarget.id);
-
-    const dragBoxOrder = dragBox.order;
-    const dropBoxOrder = dropBox.order;
-
-    const newBoxState = component.map((box) => {
-      if (box.id === dragId) {
-        box.order = dropBoxOrder;
-      }
-      if (box.id === ev.currentTarget.id) {
-        box.order = dragBoxOrder;
-      }
-      return box;
-    });
-
-    // Set a temporary transform property to reset the scale to 1
-    const resetBoxState = newBoxState.map((box) => {
-      box.transform = "scale(1)";
-      return box;
-    });
-
-    setComponent(resetBoxState);
-
-    // Use a small timeout to apply the new transform property
-    setTimeout(() => {
-      setComponent(newBoxState);
-    }, 10);
-  };
-
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  console.log(layout);
   return (
-    <div className="flex justify-center ">
-      <div className="bg-white shadow-2xl mt-5 w-[49.6rem] h-auto mb-1 p-1">
-        <div className="flex flex-wrap justify-between p-1">
-          {arrayLayout.map((layout, key) => (
-            <div className={`bg-slate-500 ${layout.className}`} key={key}>
-              {component &&
-                component.map((component, key) => {
-                  if (layout.id === component.id) {
-                    return (
-                      <div
-                        key={key}
-                        className={`cursor-grab ${
-                          isDragStart &&
-                          dragSection === component.id &&
-                          "opacity-[.01]"
-                        }`}
-                        id={component.id}
-                        draggable
-                        onDragOver={(e) => e.preventDefault()}
-                        onDragStart={(e) => {
-                          handleDrag(e);
-                        }}
-                        onDrop={(e) => {
-                          handleDrop(e);
-                        }}
-                        // onDragEnd={(e) => dragEnd(e)}
-                        // onDragOver={(e) => dragOver(e, key)}
-                        // onDrop={(e) => drop(e)}
-                      >
-                        {" "}
-                        {component.name}{" "}
-                      </div>
-                    );
-                  } else {
-                    return null;
-                  }
-                })}
-            </div>
-          ))}
+    <div className="grid">
+      <div className="flex justify-center ">
+        <div className="bg-white shadow-2xl mt-5 w-[51.6rem] h-auto mb-1 p-1 ">
+          <div className="flex flex-wrap p-2 relative  cursor-grab">
+            <ResponsiveReactGridLayout
+              rowHeight={10}
+              cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+              layout={layout}
+              compactType={compactType}
+              preventCollision={!compactType}
+              isDroppable={true}
+              // isResizable={false}
+              // isDraggable={false}
+              droppingItem={{ i: "xx", h: 50, w: 250 }}
+            >
+              {layout.map((itm, i) => (
+                <div key={i} data-grid={itm} className="absolute bg-slate-500">
+                  {itm.name}
+                </div>
+              ))}
+            </ResponsiveReactGridLayout>
+          </div>
         </div>
       </div>
     </div>

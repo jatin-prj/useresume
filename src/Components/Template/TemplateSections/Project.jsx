@@ -1,29 +1,38 @@
+import { useSelector } from "react-redux";
+
 export default function Project() {
+  const Project = useSelector((state) => state?.ResumeDetails?.project);
+  console.log("pro", Project);
   return (
     <>
-      <div className="w-full h-full">
-        <h2 className="text-lg font-poppins font-bold text-top-color ">
+      <div
+        // className={`py-3 project ${className}`}
+        // id={id}
+        // draggable={draggable}
+        // onDragStart={(e) => onDragStart(e)}
+        // onDragEnd={(e) => onDragEnd(e)}
+        // onDragOver={(e) => onDragOver(e)}
+        // onDrop={(e) => onDrop(e)}
+      >
+        <h2 className="text-lg font-poppins font-bold text-top-color project">
           Projects
         </h2>
-        <div className="border-2 w-20 border-gray-300 rounded "></div>
+        <div className="border-2 w-20 border-gray-300 rounded project"></div>
 
-        <div className="">
-          <div className="">
-            <p className="text-lg font-semibold text-gray-700 ">
-              Used Books mobile app
+        <div className="project">
+          <div className="project">
+            <p className="text-lg font-semibold text-gray-700 project">
+              {Project?.projectName}
             </p>
-            <p className="font-normal text-sm text-gray-700 mb-1 pl-2 ">
-              A platform to sell as well as to buy used books only for PCCoE
-              College due to this reuse of books will be there beneficial for
-              environment also indirectly helps increase communication between
-              juniors and seniors.
+            <p className="font-normal text-sm text-gray-700 mb-1 pl-2 project">
+              {Project?.projectDetail}
             </p>
           </div>
-          <div className="">
-            <p className="text-lg font-semibold text-gray-700 ">
+          <div className="project">
+            <p className="text-lg font-semibold text-gray-700 project">
               Parking Automation System
             </p>
-            <p className="font-normal text-sm text-gray-700  pl-2 ">
+            <p className="font-normal text-sm text-gray-700 mb-1 pl-2 project">
               it’s a web application which helps you to book your slot for your
               car just like booking a movie ticket from home.
             </p>
