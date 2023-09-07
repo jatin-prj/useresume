@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 export default function InfoSection() {
-  const {page} = useParams()
+  const { page } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [img, setImg] = useState();
@@ -30,7 +30,7 @@ export default function InfoSection() {
       };
       dispatch(PersonalDetails(data)).then((res) => {
         if (res) {
-          navigate(`/templates/${page}/contactform`);
+          navigate(`/templates/contactform`);
         }
       });
       console.log("values", data);

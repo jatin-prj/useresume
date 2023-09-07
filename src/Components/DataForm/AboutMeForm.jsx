@@ -21,7 +21,7 @@ export default function AboutMeForm() {
     onSubmit: (values, { resetForm }) => {
       dispatch(AboutDetails(values)).then((res) => {
         if (res) {
-          navigate(`/templates/${page}/educationform`);
+          navigate(`/templates/educationform`);
         }
       });
       console.log("values", values);

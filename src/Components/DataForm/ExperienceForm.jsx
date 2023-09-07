@@ -32,7 +32,7 @@ export default function ExperienceForm() {
       };
       dispatch(ExperienceDetails(data)).then((res) => {
         if (res) {
-          navigate(`/templates/${page}/projectform`);
+          navigate(`/templates/projectform`);
         }
       });
       console.log("values", values);

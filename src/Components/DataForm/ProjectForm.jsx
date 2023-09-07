@@ -23,7 +23,7 @@ export default function ProjectForm() {
     onSubmit: (values, { resetForm }) => {
       dispatch(ProjectDetails(values)).then((res) => {
         if (res) {
-          navigate(`/templates/${page}/skillform`);
+          navigate(`/templates/skillform`);
         }
       });
       console.log("values", values);

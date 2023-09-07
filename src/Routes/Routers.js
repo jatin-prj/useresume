@@ -50,7 +50,7 @@ export default function Routers() {
             }
           />
           <Route
-            path=":page/info"
+            path="info"
             element={
               <MainSection>
                 <InfoSection />
@@ -58,7 +58,7 @@ export default function Routers() {
             }
           />
           <Route
-            path=":page/contactform"
+            path="contactform"
             element={
               <MainSection>
                 <ContactForm />
@@ -66,7 +66,7 @@ export default function Routers() {
             }
           />
           <Route
-            path=":page/aboutform"
+            path="aboutform"
             element={
               <MainSection>
                 <AboutMeForm />
@@ -74,7 +74,7 @@ export default function Routers() {
             }
           />
           <Route
-            path=":page/educationform"
+            path="educationform"
             element={
               <MainSection>
                 <EducationForm />
@@ -82,7 +82,7 @@ export default function Routers() {
             }
           />
           <Route
-            path=":page/experienceform"
+            path="experienceform"
             element={
               <MainSection>
                 <ExperienceForm />
@@ -90,7 +90,7 @@ export default function Routers() {
             }
           />
           <Route
-            path=":page/projectform"
+            path="projectform"
             element={
               <MainSection>
                 <ProjectForm />
@@ -98,7 +98,7 @@ export default function Routers() {
             }
           />
           <Route
-            path=":page/skillform"
+            path="skillform"
             element={
               <MainSection>
                 <SkillsForm />

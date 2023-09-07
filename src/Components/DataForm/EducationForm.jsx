@@ -30,7 +30,7 @@ export default function EducationForm() {
     onSubmit: (values, { resetForm }) => {
       dispatch(EducationDetails(values)).then((res) => {
         if (res) {
-          navigate(`/templates/${page}/experienceform`);
+          navigate(`/templates/experienceform`);
         }
       });
       console.log("values", values);

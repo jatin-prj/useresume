@@ -25,7 +25,7 @@ export default function ContactForm() {
     onSubmit: (values, { resetForm }) => {
       dispatch(ContactDetails(values)).then((res) => {
         if (res) {
-          navigate(`/templates/${page}/aboutform`);
+          navigate(`/templates/aboutform`);
         }
       });
       console.log("values", values);
@@ -99,7 +99,7 @@ export default function ContactForm() {
                 placeholder="Your message..."
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-              ></textarea>
+              ></textarea> 
 
               {formik.touched.address && formik.errors.address && (
                 <div className="text-red-400">{formik.errors.address}</div>
@@ -107,14 +107,12 @@ export default function ContactForm() {
             </div>
           </div>
           <div className="">
-            <Link to="/projectform">
-              <button className="bg-blue-700 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                Back
-              </button>
-            </Link>
+            <button className="bg-blue-700 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              <Link to="/templates/projectform">Back</Link>
+            </button>
             <button
+              className="bg-slate-50 border  hover:bg-blue-800 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
               type="submit"
-              className="bg-blue-700 border  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
             >
               Next
             </button>
