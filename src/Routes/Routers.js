@@ -12,7 +12,14 @@ import TwoColumnLayout from "../Components/Template/TemplateLayouts/MultiColumnL
 export default function Routers() {
   return (
     <Routes>
-      <Route path="/" element={<SignIn />} />
+      <Route
+        path="/"
+        element={
+          <Dashboard>
+            <Builder />
+          </Dashboard>
+        }
+      />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/dashboard">
         <Route index element={<Dashboard />} />
@@ -30,7 +37,7 @@ export default function Routers() {
         {/* <Route path="add-package" element={<AddPackage />} />
           <Route path="edit-package/:packageId" element={<AddPackage />} /> */}
       </Route>
-      <Route path="/projects">
+      <Route path="/templates">
         <Route
           index
           element={
@@ -39,6 +46,13 @@ export default function Routers() {
             </Dashboard>
           }
         />
+        <Route path="info" element={<TwoColumnLayout />} />
+        <Route path="contactform" element={<TwoColumnLayout />} />
+        <Route path="aboutform" element={<TwoColumnLayout />} />
+        <Route path="educationform" element={<TwoColumnLayout />} />
+        <Route path="experienceform" element={<TwoColumnLayout />} />
+        <Route path="projectform" element={<TwoColumnLayout />} />
+        <Route path="skillform" element={<TwoColumnLayout />} />
         <Route path="multi-column" element={<TwoColumnLayout />} />
         <Route path="single-column" element={<SingleColumnLayout />} />
       </Route>

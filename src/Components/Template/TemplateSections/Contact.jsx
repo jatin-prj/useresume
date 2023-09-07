@@ -2,7 +2,7 @@
 export default function Contact() {
   return (
     <>
-      <div className="w-auto h-auto">
+      <div className="w-full h-full">
         <h2 className=" text-lg font-poppins font-bold text-top-color ">
           My Contact
         </h2>
@@ -22,7 +22,7 @@ export default function Contact() {
                 ></path>
               </svg>
             </a>
-            <div className=" ml-2  ">amitpachange@gmail.com</div>
+            <div className=" ml-2  ">krunal.webcodegenie@gmail.com</div>
           </div>
           <div className=" flex items-center my-1 ">
             <a
@@ -62,7 +62,7 @@ export default function Contact() {
                 ></path>
               </svg>
             </a>
-            <div className="">sale galli latur</div>
+            <div className="">krunalfb.com</div>
           </div>
           <div className=" flex items-center my-1 ">
             <a
@@ -82,7 +82,7 @@ export default function Contact() {
                 ></path>
               </svg>
             </a>
-            <div className="">amitpachange21</div>
+            <div className="">krunalbhuvad</div>
           </div>
         </div>
       </div>

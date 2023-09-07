@@ -1,15 +1,7 @@
-export default function Education({
-  className,
-  id,
-  draggable,
-  onDragStart,
-  onDragEnd,
-  onDragOver,
-  onDrop,
-}) {
+export default function Education() {
   return (
     <>
-      <div className="w-auto h-auto ">
+      <div className="w-full h-full">
         <h2 className="text-lg font-poppins font-bold text-top-color ">
           Education
         </h2>

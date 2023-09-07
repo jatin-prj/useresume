@@ -5,12 +5,12 @@ export default function Builder() {
     <div className="text-center">
       <h2>Choose Templates</h2>
       <div className="flex justify-center gap-4">
-        <Link to={"/projects/single-column"}>
+        <Link to={"/templates/single-column"}>
           <button className="rounded-full bg-slate-800 text-white p-4">
             Single Column
           </button>
         </Link>
-        <Link to={"/projects/multi-column"}>
+        <Link to={"/templates/multi-column"}>
           <button className="rounded-full bg-slate-800 text-white p-4">
             Multi Column
           </button>

@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
-import "./styles.css";
 import "/node_modules/react-grid-layout/css/styles.css";
-import "/node_modules/react-resizable/css/styles.css";
+// import "/node_modules/react-resizable/css/styles.css";
 import Header from "../../TemplateSections/Header";
 import Contact from "../../TemplateSections/Contact";
 import AboutMe from "../../TemplateSections/AboutMe";
@@ -19,9 +18,23 @@ export default function TwoColumnLayout() {
   const [mounted, setmounted] = useState(false);
 
   const [layout, setlayout] = useState([
-    { i: "header", x: 0, y: 0, w: 5, h: 5, name: <Header /> },
+    {
+      i: "header",
+      x: 0,
+      y: 0,
+      w: 5,
+      h: 5,
+      name: <Header />,
+    },
     { i: "contact", x: 0, y: 1, w: 2, h: 8, name: <Contact /> },
-    { i: "about-me", x: 2, y: 1, w: 3, h: 8, name: <AboutMe /> },
+    {
+      i: "about-me",
+      x: 2,
+      y: 1,
+      w: 3,
+      h: 8,
+      name: <AboutMe />,
+    },
     { i: "experience", x: 0, y: 2, w: 4, h: 20, name: <Experience /> },
     { i: "skills", x: 4, y: 2, w: 1, h: 20, name: <Skills /> },
     { i: "project", x: 0, y: 3, w: 5, h: 9, name: <Project /> },
@@ -36,22 +49,16 @@ export default function TwoColumnLayout() {
     <div className="grid">
       <div className="flex justify-center ">
         <div className="bg-white shadow-2xl mt-5 w-[51.6rem] h-auto mb-1 p-1 ">
-          <div className="flex flex-wrap p-2 relative w-full ">
+          <div className="flex flex-wrap p-2 relative w-full cursor-grab">
             <ResponsiveReactGridLayout
               rowHeight={10}
               cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
               layout={layout}
-              // onLayoutChange={this.onLayoutChange}
-
-              // WidthProvider option
-              measureBeforeMount={true}
-              // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
-              // and set `measureBeforeMount={true}`.
-              // useCSSTransforms={mounted}
               compactType={compactType}
               preventCollision={!compactType}
               isDroppable={true}
-              // isResizable={false}
+              isResizable={false}
+              // isDraggable={false}
               droppingItem={{ i: "xx", h: 50, w: 250 }}
             >
               {layout.map((itm, i) => (

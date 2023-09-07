@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import Header from "../../TemplateSections/Header";
 import AboutMe from "../../TemplateSections/AboutMe";

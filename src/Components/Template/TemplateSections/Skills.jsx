@@ -1,15 +1,7 @@
-export default function Skills({
-  className,
-  id,
-  draggable,
-  onDragStart,
-  onDragEnd,
-  onDragOver,
-  onDrop,
-}) {
+export default function Skills() {
   return (
     <>
-      <div>
+      <div className="w-full h-full">
         <h2 className="text-lg font-poppins font-bold text-top-color ">
           Skills
         </h2>
