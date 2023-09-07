@@ -1,4 +1,8 @@
+import { useSelector } from "react-redux";
+
 export default function Project() {
+  const Project = useSelector((state) => state?.ResumeDetails?.project);
+  console.log("pro", Project);
   return (
     <>
       <div className="py-3 project">
@@ -10,13 +14,10 @@ export default function Project() {
         <div className="project">
           <div className="project">
             <p className="text-lg font-semibold text-gray-700 project">
-              Used Books mobile app
+              {Project?.projectName}
             </p>
             <p className="font-normal text-sm text-gray-700 mb-1 pl-2 project">
-              A platform to sell as well as to buy used books only for PCCoE
-              College due to this reuse of books will be there beneficial for
-              environment also indirectly helps increase communication between
-              juniors and seniors.
+              {Project?.projectDetail}
             </p>
           </div>
           <div className="project">
@@ -25,7 +26,7 @@ export default function Project() {
             </p>
             <p className="font-normal text-sm text-gray-700 mb-1 pl-2 project">
               it’s a web application which helps you to book your slot for your
-              car just like booking a movie ticket from home. 
+              car just like booking a movie ticket from home.
             </p>
           </div>
         </div>

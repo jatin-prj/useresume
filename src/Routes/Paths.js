@@ -1,7 +1,7 @@
 export const navigation = [
   { name: "Dashboard", path: "/dashboard" },
   { name: "Team", path: "/team" },
-  { name: "Projects", path: "/projects" },
+  { name: "Templates", path: "/templates" },
 ];
 
 export const userNavigation = [
