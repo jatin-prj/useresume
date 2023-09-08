@@ -1,7 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { Route, Routes } from "react-router-dom";
 import SignIn from "../Layout/Authboard/SignIn";
 import Dashboard from "../Layout/Adminboard/Dashboard/Dashboard";
 import { Suspense, lazy } from "react";
+import HomePage from "../Layout/Adminboard/LandingPage/HomePage";
+import Template3 from "../Components/Template/TemplateLayouts/Template3";
+import Template2 from "../Components/Template/TemplateLayouts/Template2";
 // import HomePage from "../Layout/Adminboard/LandingPage/landingPage";
 const Profile = lazy(() => import("../Layout/Adminboard/Profile/Profile"));
 const InfoSection = lazy(() => import("../Components/DataForm/InfoSection"));
@@ -17,6 +21,9 @@ const ProjectForm = lazy(() => import("../Components/DataForm/ProjectForm"));
 const AboutMeForm = lazy(() => import("../Components/DataForm/AboutMeForm"));
 const ContactForm = lazy(() => import("../Components/DataForm/ContactForm"));
 const Builder = lazy(() => import("../Layout/Adminboard/Builder/Builder"));
+const TemplatePreview = lazy(() =>
+  import("../Components/Template/TemplatePreview/TemplatePreview")
+);
 const SingleColumnTemplate = lazy(() =>
   import(
     "../Components/Template/TemplateLayouts/SingleColumnLayout/SingleColumnTemplate"
@@ -29,16 +36,39 @@ const TwoColumnLayout = lazy(() =>
 );
 
 export default function Routers() {
+  const templateId = localStorage.getItem("template-id");
   return (
     <Suspense fallback={"Loading......"}>
       <Routes>
-        <Route exact path="/" element={<SignIn />} />
+        <Route
+          exact
+          path="/"
+          element={
+            <Dashboard>
+              <HomePage />
+            </Dashboard>
+          }
+        />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/dashboard">
-          <Route index element={<Dashboard />} />
+          <Route
+            index
+            element={
+              <Dashboard>
+                <HomePage />
+              </Dashboard>
+            }
+          />
         </Route>
         <Route path="/team">
-          <Route index element={<Profile />} />
+          <Route
+            index
+            element={
+              <Dashboard>
+                <Template2 />
+              </Dashboard>
+            }
+          />
         </Route>
         <Route path="/templates">
           <Route
@@ -105,7 +135,11 @@ export default function Routers() {
               </MainSection>
             }
           />
-          <Route path="multi-column" element={<TwoColumnLayout />} />
+          <Route
+            path={`:id/preview`}
+            element={<TemplatePreview />}
+            // element={<Template1 />}
+          />
           <Route path="single-column" element={<SingleColumnTemplate />} />
         </Route>
 

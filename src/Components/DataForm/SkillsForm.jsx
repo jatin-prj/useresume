@@ -26,7 +26,8 @@ export default function SkillsForm() {
       };
       dispatch(SkillDetails(data)).then((res) => {
         if (res) {
-          navigate(`/templates`);
+          navigate(`/templates/template-${localStorage.getItem("template-id")}/preview`);
+          // console.log("templateId and rsponse", templateId, res);
         }
       });
       console.log("values", data);

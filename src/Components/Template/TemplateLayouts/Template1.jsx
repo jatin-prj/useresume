@@ -1,13 +1,13 @@
-import Contact from "../../TemplateSections/Contact";
-import Skills from "../../TemplateSections/Skills";
-import Education from "../../TemplateSections/Education";
-import AboutMe from "../../TemplateSections/AboutMe";
-import Header from "../../TemplateSections/Header";
-import Project from "../../TemplateSections/Project";
-import Experience from "../../TemplateSections/Experience";
 import { useState } from "react";
+import Header from "../TemplateSections/Header";
+import AboutMe from "../TemplateSections/AboutMe";
+import Contact from "../TemplateSections/Contact";
+import Skills from "../TemplateSections/Skills";
+import Education from "../TemplateSections/Education";
+import Experience from "../TemplateSections/Experience";
+import Project from "../TemplateSections/Project";
 
-export default function SingleColumnTemplate() {
+export default function Template1() {
   const [dragItem, setDragItem] = useState();
   const [dragOverIndex, setDragOverIndex] = useState();
 

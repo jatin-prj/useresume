@@ -1,15 +1,22 @@
-import { Fragment, useRef, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { Fragment, useRef } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
+// import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-export default function Example({open,setOpen}) {
-//   const [open, setOpen] = useState(true)
+export default function TemplateModal({ open, setOpen, template }) {
+  //   const [open, setOpen] = useState(true)
+  const navigate = useNavigate();
 
-  const cancelButtonRef = useRef(null)
+  const cancelButtonRef = useRef(null);
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="relative z-10 transition ease-in-out delay-150"
+        initialFocus={cancelButtonRef}
+        onClose={setOpen}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -19,7 +26,11 @@ export default function Example({open,setOpen}) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div
+            className={`fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity ${
+              open && "transition ease-in-out delay-150"
+            }`}
+          />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -33,26 +44,69 @@ export default function Example({open,setOpen}) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <Dialog.Panel
+                className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full"
+                style={{ width: "85.5rem", height: "50rem" }}
+              >
+                {/* sm:max-w-lg */}
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <ExclamationTriangleIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
-                    </div>
-                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                        Deactivate account
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All of your data will be permanently
-                          removed. This action cannot be undone.
-                        </p>
+                    {/* <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                      <ExclamationTriangleIcon
+                        className="h-6 w-6 text-red-600"
+                        aria-hidden="true"
+                      />
+                    </div> */}
+                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                      <div className="flex justify-between mt-2">
+                        <div className="w-[63%] h-[35rem] bg-slate-50 flex items-center justify-center">
+                          <div className="w-[20rem]">
+                            <div>{template.template}</div>
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap w-[34%]">
+                          <div className="w-full">
+                            <Dialog.Title
+                              as="h3"
+                              className="text-base font-semibold leading-6 text-gray-900"
+                            >
+                              {`Template ${template.id}`}
+                            </Dialog.Title>
+                            <div className="mt-2">
+                              <p className="text-sm text-gray-600 font-bold">
+                                One of the Best Templates for your Resume.
+                              </p>
+                              <p className="mt-3">
+                                Lorem ipsum dolor, sit amet consectetur
+                                adipisicing elit. Aliquid illo voluptatibus
+                                minima voluptate alias totam deserunt, adipisci
+                                in animi quae vel vitae nostrum, amet veritatis
+                                aspernatur deleniti quos mollitia doloribus!
+                                Omnis, libero? Rem, earum facilis officia
+                                ratione recusandae impedit suscipit deserunt?
+                                Dolorum, molestiae placeat optio cupiditate quod
+                                soluta facere doloremque culpa ad dolorem, sunt
+                                totam repudiandae praesentium, amet assumenda
+                                quia.
+                              </p>
+                            </div>
+                            <div className="relative top-[12rem] text-center">
+                              <button
+                                class="rounded bg-cyan-500 text-white p-3 hover:bg-cyan-700"
+                                onClick={() => {
+                                  navigate("/templates/info");
+                                }}
+                              >
+                                Customize this template
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 relative top-[36rem]">
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
@@ -75,5 +129,5 @@ export default function Example({open,setOpen}) {
         </div>
       </Dialog>
     </Transition.Root>
-  )
+  );
 }
