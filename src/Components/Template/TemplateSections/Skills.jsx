@@ -11,18 +11,18 @@ export default function Skills() {
         <div className="border-2 w-20 border-gray-300 rounded skills"></div>
 
         <div className="flex justify-between w-full flex-wrap">
-          {Skill?.skill.map((skillEle) => (
+          {Skill?.skillData.map((skillEle, index) => (
             <>
-              <div className="w-2/5 mx-5">
+              <div key={index} className="w-2/5 mx-5">
                 <div className="mb-1 text-base font-medium skills">
-                  {skillEle}
+                  {skillEle?.skill}
                 </div>
                 <div className="w-full  rounded-full h-2.5 mb-4 bg-gray-700 skills">
                   <div
                     className=" bg-blue-500 p-0.3 text-center  h-2.5  rounded-full text-xs  leading-none skills"
-                    style={{ width: "45%" }}
+                    style={{ width: `${parseInt(skillEle?.rating)}%` }}
                   >
-                    45%
+                    {skillEle?.rating}
                   </div>
                 </div>
               </div>
