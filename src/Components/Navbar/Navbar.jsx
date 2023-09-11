@@ -30,11 +30,13 @@ export default function Navbar() {
                           {Icons.barIcon}
                         </button>
                       </div> */}
-                      <div className="flex items-center w-52">
-                        <p class="inline-block align-middle text-white text-3xl w-full">
-                          useResume
-                        </p>
-                      </div>
+                      <Link to={"/"}>
+                        <div className="flex items-center w-52">
+                          <p class="inline-block align-middle text-white text-3xl w-full">
+                            useResume
+                          </p>
+                        </div>
+                      </Link>
                     </div>
                     <div className="2xl:flex xl:flex lg:flex items-center md:block hidden">
                       <div className=" flex items-baseline space-x-4">

@@ -12,7 +12,7 @@ import Education from "../TemplateSections/Education";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-export default function Template2() {
+export default function Template4() {
   const [compactType, setcompactType] = useState("vertical");
   const [mounted, setMounted] = useState(false);
   const [isDraggable, setIsDraggable] = useState();
@@ -26,20 +26,19 @@ export default function Template2() {
       h: 5,
       name: <Header />,
     },
-    { i: "contact", x: 0, y: 1, w: 5, h: 7, name: <Contact /> },
+    { i: "contact", x: 0, y: 1, w: 2, h: 8, name: <Contact /> },
     {
       i: "about-me",
-      x: 0,
-      y: 2,
-      w: 5,
-      h: 6,
-
+      x: 2,
+      y: 1,
+      w: 3,
+      h: 8,
       name: <AboutMe />,
     },
-    { i: "experience", x: 0, y: 3, w: 5, h: 10, name: <Experience /> },
-    { i: "skills", x: 0, y: 4, w: 5, h: 6, name: <Skills /> },
-    { i: "project", x: 0, y: 5, w: 5, h: 10, name: <Project /> },
-    { i: "education", x: 0, y: 6, w: 5, h: 10, name: <Education /> },
+    { i: "experience", x: 0, y: 2, w: 2, h: 30, name: <Experience /> },
+    { i: "project", x: 2, y: 2, w: 3, h: 20, name: <Project /> },
+    { i: "skills", x: 2, y: 3, w: 3, h: 10, name: <Skills /> },
+    { i: "education", x: 0, y: 4, w: 5, h: 20, name: <Education /> },
   ]);
 
   useEffect(() => {

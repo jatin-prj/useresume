@@ -1,15 +1,15 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link, json, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PersonalDetails } from "../../Redux/Action/Information";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 export default function InfoSection() {
-  const { page } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [img, setImg] = useState();
+
   const formik = useFormik({
     initialValues: {
       ImgUrl: "",
@@ -17,10 +17,8 @@ export default function InfoSection() {
       subtitle: "",
     },
     validationSchema: Yup.object({
-      //   ImgUrl: Yup.string().required("* Please Enter Your ImgUrl"),
-      username: Yup.string()
-        .required("* Please Enter Your Password")
-        .min(4, "To Short"),
+      username: Yup.string().required("* Please Enter Your Password"),
+      subtitle: Yup.string().required("* Please Enter Your Designation"),
     }),
     onSubmit: (values, { resetForm }) => {
       let data = {
@@ -33,19 +31,19 @@ export default function InfoSection() {
           navigate(`/templates/contactform`);
         }
       });
-      console.log("values", data);
-
+      console.log("values", values);
       resetForm({ values: "", data: "" });
     },
   });
+
   return (
     <>
       <div className="mx-5 ">
+        <h3 className="mb-4 text-lg font-medium leading-none text-gray-900">
+          Header Details
+        </h3>
         <form onSubmit={formik.handleSubmit}>
-          <h3 className="mb-4 text-lg font-medium leading-none text-gray-900">
-            Header Details
-          </h3>
-          <div className="grid gap-4 mb-4 sm:grid-cols-2">
+          <div className="grid gap-4 mb-4 sm:grid-cols-2 ">
             <div>
               <label
                 htmlFor="username"
@@ -88,7 +86,6 @@ export default function InfoSection() {
                 <div className="text-red-400">{formik.errors.ImgUrl}</div>
               )}
             </div>
-
             <div>
               <label
                 htmlFor="subtitle"
@@ -111,12 +108,14 @@ export default function InfoSection() {
               )}
             </div>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-700 border hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            Next
-          </button>
+          <div className="">
+            <button
+              type="submit"
+              className="bg-blue-700 border hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            >
+              Next
+            </button>
+          </div>
         </form>
       </div>
     </>

@@ -1,16 +1,12 @@
 import { useFormik } from "formik";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
+import { Link, useNavigate,  } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { ContactDetails } from "../../Redux/Action/Contact";
 
 export default function ContactForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { page } = useParams();
-  const [selected, setSelected] = useState(["papaya"]);
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -29,7 +25,6 @@ export default function ContactForm() {
         }
       });
       console.log("values", values);
-
       resetForm({ values: "" });
     },
   });
@@ -99,7 +94,7 @@ export default function ContactForm() {
                 placeholder="Your message..."
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-              ></textarea> 
+              ></textarea>
 
               {formik.touched.address && formik.errors.address && (
                 <div className="text-red-400">{formik.errors.address}</div>
@@ -107,13 +102,12 @@ export default function ContactForm() {
             </div>
           </div>
           <div className="">
-            <button className="bg-blue-700 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-              <Link to="/templates/projectform">Back</Link>
-            </button>
-            <button
-              className="bg-slate-50 border  hover:bg-blue-800 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
-              type="submit"
-            >
+            <Link to={`/templates/info`}>
+              <button className="bg-blue-700 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                Back
+              </button>
+            </Link>
+            <button className="bg-blue-700 border text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ">
               Next
             </button>
           </div>

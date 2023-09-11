@@ -1,16 +1,12 @@
 import { useFormik } from "formik";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { AboutDetails } from "../../Redux/Action/About";
 
 export default function AboutMeForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { page } = useParams();
-  const [selected, setSelected] = useState(["papaya"]);
-
   const formik = useFormik({
     initialValues: {
       about: "",
@@ -26,7 +22,7 @@ export default function AboutMeForm() {
       });
       console.log("values", values);
 
-      // resetForm({ values: "" });
+      resetForm({ values: "" });
     },
   });
 
@@ -60,15 +56,12 @@ export default function AboutMeForm() {
             </div>
           </div>
           <div className="">
-            <Link to="/projectform">
+            <Link to={`/templates/contactform`}>
               <button className="bg-blue-700 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Back
               </button>
             </Link>
-            <button
-              type="submit"
-              className="bg-blue-700 border  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
-            >
+            <button className="bg-blue-700 border text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ">
               Next
             </button>
           </div>

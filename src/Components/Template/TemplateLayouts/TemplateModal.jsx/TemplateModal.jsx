@@ -1,8 +1,7 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
-// import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-
+import { RxCross2 } from "react-icons/rx";
 export default function TemplateModal({ open, setOpen, template }) {
   //   const [open, setOpen] = useState(true)
   const navigate = useNavigate();
@@ -50,13 +49,13 @@ export default function TemplateModal({ open, setOpen, template }) {
               >
                 {/* sm:max-w-lg */}
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <div className="relative flex items-center justify-end bottom-[1.4rem] left-[1rem] sm:mx-0 sm:h-10">
+                    <button onClick={() => setOpen(false)}>
+                      <RxCross2 className="text-[2rem]" />
+                    </button>
+                  </div>
+
                   <div className="sm:flex sm:items-start">
-                    {/* <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <ExclamationTriangleIcon
-                        className="h-6 w-6 text-red-600"
-                        aria-hidden="true"
-                      />
-                    </div> */}
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
                       <div className="flex justify-between mt-2">
                         <div className="w-[63%] h-[35rem] bg-slate-50 flex items-center justify-center">
