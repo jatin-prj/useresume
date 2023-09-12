@@ -6,6 +6,7 @@ import { Suspense, lazy } from "react";
 import HomePage from "../Layout/Adminboard/LandingPage/HomePage";
 import Template3 from "../Components/Template/TemplateLayouts/Template3";
 import Template2 from "../Components/Template/TemplateLayouts/Template2";
+import Team from "../Layout/Adminboard/Team/Team";
 // import HomePage from "../Layout/Adminboard/LandingPage/landingPage";
 const Profile = lazy(() => import("../Layout/Adminboard/Profile/Profile"));
 const InfoSection = lazy(() => import("../Components/DataForm/InfoSection"));
@@ -65,7 +66,7 @@ export default function Routers() {
             index
             element={
               <Dashboard>
-                <Template2 />
+                <Team />
               </Dashboard>
             }
           />
@@ -137,7 +138,11 @@ export default function Routers() {
           />
           <Route
             path={`:id/preview`}
-            element={<TemplatePreview />}
+            element={
+              <Dashboard>
+                <TemplatePreview />
+              </Dashboard>
+            }
             // element={<Template1 />}
           />
           <Route path="single-column" element={<SingleColumnTemplate />} />

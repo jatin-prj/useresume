@@ -91,7 +91,7 @@ export default function TemplateModal({ open, setOpen, template }) {
                             </div>
                             <div className="relative top-[12rem] text-center">
                               <button
-                                class="rounded bg-cyan-500 text-white p-3 hover:bg-cyan-700"
+                                className="rounded bg-cyan-500 text-white p-3 hover:bg-cyan-700"
                                 onClick={() => {
                                   navigate("/templates/info");
                                 }}

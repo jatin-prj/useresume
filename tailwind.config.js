@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
+// module.exports = {
+//   content: [],
+//   theme: {
+//     extend: {},
+//   },
+//   plugins: [],
+// };
 module.exports = {
   theme: {
     extend: {
@@ -18,7 +18,7 @@ module.exports = {
       },
       width: {
         793.7: "49.6rem",
-        825.6:"51.6rem" 
+        825.6: "51.6rem",
       },
       gridColumn: {
         "span-2.5": "span 2.5 / span 2.5",

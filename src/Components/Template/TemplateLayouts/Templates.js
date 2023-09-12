@@ -1,28 +1,234 @@
-/* eslint-disable no-unused-vars */
-import t1 from "../../../Assests/Img/t1.png";
-import t2 from "../../../Assests/Img/t2.png";
+import AboutMe from "../TemplateSections/AboutMe";
+import Contact from "../TemplateSections/Contact";
+import Education from "../TemplateSections/Education";
+import Experience from "../TemplateSections/Experience";
+import Header from "../TemplateSections/Header";
+import Project from "../TemplateSections/Project";
+import Skills from "../TemplateSections/Skills";
 
-import t3 from "../../../Assests/Img/t3.png";
-
-import t4 from "../../../Assests/Img/t4.png";
-
-export const Templates = [
+export const Template1 = [
   {
-    id: 1,
-    template: <img src={t1} alt="template1" className="w-fit h-fit" />,
+    id: "header",
+    x: 0,
+    y: 0,
+    w: 6,
+    h: 6,
+    static: true,
+  },
+  {
+    id: "contact",
+    x: 0,
+    y: 1,
+    w: 6,
+    h: 7,
+  },
+  {
+    id: "about-me",
+    x: 0,
+    y: 2,
+    w: 6,
+    h: 6,
+  },
+  {
+    id: "experience",
+    x: 0,
+    y: 3,
+    w: 6,
+    h: 10,
+  },
+  {
+    id: "skills",
+    x: 0,
+    y: 4,
+    w: 6,
+    h: 6,
+  },
+  {
+    id: "project",
+    x: 0,
+    y: 6,
+    w: 6,
+    h: 10,
+  },
+  {
+    id: "education",
+    x: 0,
+    y: 6,
+    w: 6,
+    h: 10,
+  },
+];
+export const Template2 = [
+  {
+    id: "header",
+    x: 0,
+    y: 0,
+    w: 6,
+    h: 6,
+    static: true,
+  },
+  {
+    id: "about-me",
+    x: 0,
+    y: 1,
+    w: 4,
+    h: 8,
+  },
+  {
+    id: "contact",
+    x: 4,
+    y: 1,
+    w: 2,
+    h: 8,
   },
 
   {
-    id: 2,
-    template: <img src={t2} alt="template2" className="w-fit h-fit" />,
+    id: "experience",
+    x: 1,
+    y: 2,
+    w: 5,
+    h: 20,
   },
+  {
+    id: "skills",
+    x: 0,
+    y: 2,
+    w: 1,
+    h: 20,
+  },
+  {
+    id: "project",
+    x: 0,
+    y: 3,
+    w: 6,
+    h: 9,
+  },
+  {
+    id: "education",
+    x: 0,
+    y: 4,
+    w: 6,
+    h: 20,
+  },
+];
+export const Template3 = [
+  {
+    id: "header",
+    x: 0,
+    y: 0,
+    w: 6,
+    h: 6,
+    static: true,
+  },
+  {
+    id: "about-me",
+    x: 2,
+    y: 1,
+    w: 4,
+    h: 8,
+  },
+  {
+    id: "contact",
+    x: 0,
+    y: 1,
+    w: 2,
+    h: 8,
+  },
+  {
+    id: "experience",
+    x: 0,
+    y: 2,
+    w: 4,
+    h: 20,
+  },
+  {
+    id: "skills",
+    x: 4,
+    y: 2,
+    w: 2,
+    h: 20,
+  },
+  {
+    id: "project",
+    x: 0,
+    y: 3,
+    w: 6,
+    h: 9,
+  },
+  {
+    id: "education",
+    x: 0,
+    y: 4,
+    w: 6,
+    h: 20,
+  },
+];
+export const Template4 = [
+  {
+    id: "header",
+    x: 0,
+    y: 0,
+    w: 6,
+    h: 6,
+    static: true,
+  },
+  {
+    id: "about-me",
+    x: 3,
+    y: 1,
+    w: 3,
+    h: 8,
+  },
+  {
+    id: "contact",
+    x: 0,
+    y: 1,
+    w: 3,
+    h: 8,
+  },
+  {
+    id: "experience",
+    x: 0,
+    y: 2,
+    w: 3,
+    h: 30,
+  },
+  {
+    id: "skills",
+    x: 3,
+    y: 3,
+    w: 3,
+    h: 10,
+  },
+  {
+    id: "project",
+    x: 3,
+    y: 2,
+    w: 3,
+    h: 20,
+  },
+  {
+    id: "education",
+    x: 0,
+    y: 4,
+    w: 6,
+    h: 20,
+  },
+];
 
+export const Sections = [
   {
-    id: 3,
-    template: <img src={t3} alt="template3" className="w-fit h-fit" />,
+    id: "header",
+    name: <Header />,
   },
+  { id: "contact", x: 0, y: 1, w: 5, h: 7, name: <Contact /> },
   {
-    id: 4,
-    template: <img src={t4} alt="template4" className="w-fit h-fit" />,
+    id: "about-me",
+
+    name: <AboutMe />,
   },
+  { id: "experience", name: <Experience /> },
+  { id: "skills", name: <Skills /> },
+  { id: "project", name: <Project /> },
+  { id: "education", name: <Education /> },
 ];

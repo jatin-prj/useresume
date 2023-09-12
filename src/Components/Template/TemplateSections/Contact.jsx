@@ -27,7 +27,7 @@ export default function Contact() {
               href=""
               target="_blank"
             >
-              <FaPhoneVolume beat />
+              <FaPhoneVolume />
             </a>
             <div className="">{Contact?.contact}</div>
           </div>

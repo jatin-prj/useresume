@@ -1,24 +1,150 @@
-import { useLocation } from "react-router-dom";
-import Template1 from "../TemplateLayouts/Template1";
-import Template2 from "../TemplateLayouts/Template2";
-import Template3 from "../TemplateLayouts/Template3";
-import Template4 from "../TemplateLayouts/Template4";
+/* eslint-disable array-callback-return */
+/* eslint-disable no-unused-vars */
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {useState } from "react";
+import { Responsive, WidthProvider } from "react-grid-layout";
+import {
+  Sections,
+  Template1,
+  Template2,
+  Template3,
+  Template4,
+} from "../TemplateLayouts/Templates";
+import { Templates } from "../TemplateLayouts/TemplateOptions";
+import Loader from "../../Loader/Loader";
 
-export default function TemplatePreview({ templateId }) {
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
+export default function TemplatePreview() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState();
+  const [templateId, setTemplateId] = useState(
+    localStorage.getItem("template-id")
+  );
+  const handleSelectTemplate = (id) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, "300");
+    localStorage.setItem("template-id", id);
+    setTemplateId(localStorage.setItem("template-id", id));
+    navigate(
+      `/templates/template-${localStorage.getItem("template-id")}/preview`
+    );
+  };
+
+  const Layout = location.pathname.includes("template-1")
+    ? Template1
+    : location.pathname.includes("template-2")
+    ? Template2
+    : location.pathname.includes("template-3")
+    ? Template3
+    : location.pathname.includes("template-4")
+    ? Template4
+    : Template1;
   return (
     <>
-      {location.pathname.includes("template-1") ? (
-        <Template1 />
-      ) : location.pathname.includes("template-2") ? (
-        <Template2 />
-      ) : location.pathname.includes("template-3") ? (
-        <Template3 />
-      ) : location.pathname.includes("template-4") ? (
-        <Template4 />
-      ) : (
-        ""
-      )}
+      <div className="mx-auto pt-4">
+        <div className="flex gap-4 w-full">
+          <div className="w-[69%]">
+            <div className="bg-slate-100  w-[52rem] flex justify-center items-center">
+              {isLoading ? (
+                <div className="h-[51rem] flex justify-center items-center">
+                  <Loader />
+                </div>
+              ) : (
+                <div className="flex relative w-full">
+                  <ResponsiveReactGridLayout
+                    className={"layout "}
+                    style={{ width: "50rem", marginLeft: "1rem" }}
+                    rowHeight={15}
+                    cols={{ lg: 6, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                    layout={Layout}
+                    autoSize={true}
+                    // breakpoints={{ lg: 100 }}
+                    compactType={"vertical"}
+                    isDroppable={true}
+                    isResizable={false}
+                    isBounded={true}
+                    droppingItem={{ i: "xx", h: 50, w: 250 }}
+                  >
+                    {Layout.map((layout, index) => (
+                      <div
+                        key={index}
+                        data-grid={layout}
+                        className="bg-slate-500 w-full cursor-grab"
+                      >
+                        {Sections.map((section, index) => {
+                          if (layout.id === section.id) {
+                            return <div key={index}>{section.name}</div>;
+                          }
+                        })}
+                      </div>
+                    ))}
+                  </ResponsiveReactGridLayout>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="h-[55rem] bg-slate-50">
+            <div className="">
+              <div className="border flex justify-center">
+                <div className="flex flex-wrap justify-center gap-4 mt-5">
+                  {Templates.map((template, index) => (
+                    <div
+                      key={index}
+                      className="cursor-pointer w-40"
+                      onClick={() => {
+                        handleSelectTemplate(template.id);
+                      }}
+                    >
+                      {template.template}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="mx-auto pt-4">
+        <div className="flex gap-4 w-full">
+          <div className="w-[69%]">
+            {templateId === "1" ? (
+              <Template1 />
+            ) : templateId === "2" ? (
+              <Template2 />
+            ) : templateId === "3" ? (
+              <Template3 />
+            ) : templateId === "4" ? (
+              <Template4 />
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="h-[55rem] bg-slate-50">
+            <div className="">
+              <div className="border flex justify-center">
+                <div className="flex flex-wrap justify-center gap-4 mt-5">
+                  {Templates.map((template, index) => (
+                    <div key={index} className="w-40">
+                      <button
+                        onClick={() => {
+                          // handleSelect(template);
+                          localStorage.setItem("template-id", template.id);
+                          setTemplateId(localStorage.getItem("template-id"));
+                        }}
+                      >
+                        {template.template}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}
     </>
   );
 }

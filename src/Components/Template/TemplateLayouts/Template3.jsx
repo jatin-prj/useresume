@@ -25,6 +25,7 @@ export default function Template3() {
       w: 5,
       h: 5,
       name: <Header />,
+      static: true,
     },
     { i: "contact", x: 0, y: 1, w: 2, h: 8, name: <Contact /> },
     {
@@ -46,29 +47,27 @@ export default function Template3() {
   }, []);
   console.log(layout);
   return (
-    <div className="grid">
-      <div className="flex justify-center ">
-        <div className="bg-white shadow-2xl mt-5 w-[51.6rem] h-auto mb-1 p-1 ">
-          <div className="flex flex-wrap p-2 relative  cursor-grab">
-            <ResponsiveReactGridLayout
-              rowHeight={10}
-              cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-              layout={layout}
-              compactType={compactType}
-              preventCollision={!compactType}
-              isDroppable={true}
-              isResizable={false}
-              // isDraggable={false}
-              droppingItem={{ i: "xx", h: 50, w: 250 }}
-            >
-              {layout.map((itm, i) => (
-                <div key={i} data-grid={itm} className="absolute bg-slate-500">
-                  {itm.name}
-                </div>
-              ))}
-            </ResponsiveReactGridLayout>
-          </div>
-        </div>
+    <div className="bg-slate-100 h-auto w-[52rem]">
+      <div className="flex relative w-full">
+        <ResponsiveReactGridLayout
+          className={"layout "}
+          style={{ width: "50rem", marginLeft: "1rem" }}
+          rowHeight={15}
+          cols={{ lg: 14, md: 10, sm: 6, xs: 4, xxs: 2 }}
+          layout={layout}
+          compactType={compactType}
+          preventCollision={!compactType}
+          isDroppable={true}
+          isResizable={false}
+          // isDraggable={false}
+          droppingItem={{ i: "xx", h: 50, w: 250 }}
+        >
+          {layout.map((itm, i) => (
+            <div key={i} data-grid={itm} className="absolute bg-slate-500">
+              {itm.name}
+            </div>
+          ))}
+        </ResponsiveReactGridLayout>
       </div>
     </div>
   );

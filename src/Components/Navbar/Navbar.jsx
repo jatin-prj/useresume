@@ -32,7 +32,7 @@ export default function Navbar() {
                       </div> */}
                       <Link to={"/"}>
                         <div className="flex items-center w-52">
-                          <p class="inline-block align-middle text-white text-3xl w-full">
+                          <p className="inline-block align-middle text-white text-3xl w-full">
                             useResume
                           </p>
                         </div>

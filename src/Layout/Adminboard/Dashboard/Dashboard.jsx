@@ -7,7 +7,9 @@ export default function Dashboard({ children }) {
     <>
       <Navbar />
       {/* <Sidebar /> */}
-      <ContentBody> {children}</ContentBody>
+      <div className="container mx-auto">
+        <ContentBody> {children}</ContentBody>
+      </div>
     </>
   );
 }

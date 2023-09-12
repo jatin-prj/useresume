@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+// /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
@@ -12,10 +13,9 @@ import Education from "../TemplateSections/Education";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-export default function Template2() {
-  const [compactType, setcompactType] = useState("vertical");
-  const [mounted, setMounted] = useState(false);
-  const [isDraggable, setIsDraggable] = useState();
+export default function Template1() {
+  // const [mounted, setMounted] = useState(false);
+  // const [isDraggable, setIsDraggable] = useState();
 
   const [layout, setLayout] = useState([
     {
@@ -25,6 +25,7 @@ export default function Template2() {
       w: 5,
       h: 5,
       name: <Header />,
+      static: true,
     },
     { i: "contact", x: 0, y: 1, w: 5, h: 7, name: <Contact /> },
     {
@@ -42,34 +43,37 @@ export default function Template2() {
     { i: "education", x: 0, y: 6, w: 5, h: 10, name: <Education /> },
   ]);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  console.log(layout);
+  // useEffect(() => {
+  //   setMounted(true);
+  // }, []);
+
   return (
-    <div className="grid">
-      <div className="flex justify-center ">
-        <div className="bg-white shadow-2xl mt-5 w-[51.6rem] h-auto mb-1 p-1 ">
-          <div className="flex flex-wrap p-2 relative  cursor-grab">
-            <ResponsiveReactGridLayout
-              rowHeight={10}
-              cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-              layout={layout}
-              compactType={compactType}
-              preventCollision={!compactType}
-              isDroppable={true}
-              isResizable={false}
-              // isDraggable={false}
-              droppingItem={{ i: "xx", h: 50, w: 250 }}
+    <div className="bg-slate-100 h-auto w-[52rem]">
+      <div className="flex relative w-full">
+        <ResponsiveReactGridLayout
+          className={"layout "}
+          style={{ width: "50rem", marginLeft: "1rem" }}
+          rowHeight={15}
+          cols={{ lg: 6, md: 10, sm: 6, xs: 4, xxs: 2 }}
+          layout={layout}
+          autoSize={true}
+          // breakpoints={{ lg: 100 }}
+          compactType={"vertical"}
+          isDroppable={true}
+          isResizable={false}
+          isBounded={true}
+          droppingItem={{ i: "xx", h: 50, w: 250 }}
+        >
+          {layout.map((itm, i) => (
+            <div
+              key={i}
+              data-grid={itm}
+              className="absolute bg-slate-500 w-full cursor-grab"
             >
-              {layout.map((itm, i) => (
-                <div key={i} data-grid={itm} className="absolute bg-slate-500">
-                  {itm.name}
-                </div>
-              ))}
-            </ResponsiveReactGridLayout>
-          </div>
-        </div>
+              {itm.name}
+            </div>
+          ))}
+        </ResponsiveReactGridLayout>
       </div>
     </div>
   );
