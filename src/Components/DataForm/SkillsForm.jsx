@@ -53,7 +53,7 @@ export default function SkillsForm() {
       };
       dispatch(SkillDetails(data)).then((res) => {
         if (res) {
-          navigate(`/templates/template-${templateId}/preview`);
+          navigate(`/templates/preview/template-${templateId}`);
         }
       });
       console.log("values", data);

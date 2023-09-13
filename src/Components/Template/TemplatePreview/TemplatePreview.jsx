@@ -1,8 +1,9 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import {useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import React, { lazy, useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
+import "/node_modules/react-grid-layout/css/styles.css";
 import {
   Sections,
   Template1,
@@ -11,26 +12,22 @@ import {
   Template4,
 } from "../TemplateLayouts/Templates";
 import { Templates } from "../TemplateLayouts/TemplateOptions";
-import Loader from "../../Loader/Loader";
+const Loader = lazy(() => import("../../Loader/Loader"));
+// import Loader from "../../Loader/Loader";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 export default function TemplatePreview() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState();
-  const [templateId, setTemplateId] = useState(
-    localStorage.getItem("template-id")
-  );
+
   const handleSelectTemplate = (id) => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
     }, "300");
     localStorage.setItem("template-id", id);
-    setTemplateId(localStorage.setItem("template-id", id));
-    navigate(
-      `/templates/template-${localStorage.getItem("template-id")}/preview`
-    );
+    navigate(`/templates/preview/template-${id}`);
   };
 
   const Layout = location.pathname.includes("template-1")
@@ -55,18 +52,13 @@ export default function TemplatePreview() {
               ) : (
                 <div className="flex relative w-full">
                   <ResponsiveReactGridLayout
-                    className={"layout "}
+                    className={"layout"}
                     style={{ width: "50rem", marginLeft: "1rem" }}
                     rowHeight={15}
                     cols={{ lg: 6, md: 10, sm: 6, xs: 4, xxs: 2 }}
                     layout={Layout}
-                    autoSize={true}
-                    // breakpoints={{ lg: 100 }}
                     compactType={"vertical"}
-                    isDroppable={true}
-                    isResizable={false}
                     isBounded={true}
-                    droppingItem={{ i: "xx", h: 50, w: 250 }}
                   >
                     {Layout.map((layout, index) => (
                       <div

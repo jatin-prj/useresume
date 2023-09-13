@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { Templates } from "../../../Components/Template/TemplateLayouts/TemplateOptions";
-import TemplateModal from "../../../Components/Template/TemplateLayouts/TemplateModal.jsx/TemplateModal";
+import TemplateModal from "../../../Components/Template/TemplateModal/TemplateModal";
 import { useState } from "react";
 export default function Builder() {
   const [open, setOpen] = useState(false);

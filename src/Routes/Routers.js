@@ -4,10 +4,8 @@ import SignIn from "../Layout/Authboard/SignIn";
 import Dashboard from "../Layout/Adminboard/Dashboard/Dashboard";
 import { Suspense, lazy } from "react";
 import HomePage from "../Layout/Adminboard/LandingPage/HomePage";
-import Template3 from "../Components/Template/TemplateLayouts/Template3";
-import Template2 from "../Components/Template/TemplateLayouts/Template2";
 import Team from "../Layout/Adminboard/Team/Team";
-// import HomePage from "../Layout/Adminboard/LandingPage/landingPage";
+const LostPage = lazy(() => import("../Components/Error/LostServer"));
 const Profile = lazy(() => import("../Layout/Adminboard/Profile/Profile"));
 const InfoSection = lazy(() => import("../Components/DataForm/InfoSection"));
 const MainSection = lazy(() => import("../Components/DataForm/MainSection"));
@@ -24,16 +22,6 @@ const ContactForm = lazy(() => import("../Components/DataForm/ContactForm"));
 const Builder = lazy(() => import("../Layout/Adminboard/Builder/Builder"));
 const TemplatePreview = lazy(() =>
   import("../Components/Template/TemplatePreview/TemplatePreview")
-);
-const SingleColumnTemplate = lazy(() =>
-  import(
-    "../Components/Template/TemplateLayouts/SingleColumnLayout/SingleColumnTemplate"
-  )
-);
-const TwoColumnLayout = lazy(() =>
-  import(
-    "../Components/Template/TemplateLayouts/MultiColumnLayout/TwoColumnLayout"
-  )
 );
 
 export default function Routers() {
@@ -137,7 +125,7 @@ export default function Routers() {
             }
           />
           <Route
-            path={`:id/preview`}
+            path={`preview/:id`}
             element={
               <Dashboard>
                 <TemplatePreview />
@@ -145,20 +133,13 @@ export default function Routers() {
             }
             // element={<Template1 />}
           />
-          <Route path="single-column" element={<SingleColumnTemplate />} />
+          {/* <Route path="single-column" element={<SingleColumnTemplate />} /> */}
         </Route>
 
         <Route path="/builder" element={<Builder />} />
         <Route path="/profile" element={<Profile />} />
 
-        <Route
-          path="*"
-          element={
-            <>
-              <h2>You Are Lost</h2>
-            </>
-          }
-        />
+        <Route path="*" element={<LostPage />} />
       </Routes>
     </Suspense>
   );

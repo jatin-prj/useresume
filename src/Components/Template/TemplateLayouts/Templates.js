@@ -84,16 +84,16 @@ export const Template2 = [
 
   {
     id: "experience",
-    x: 1,
+    x: 2,
     y: 2,
-    w: 5,
+    w: 4,
     h: 20,
   },
   {
     id: "skills",
     x: 0,
     y: 2,
-    w: 1,
+    w: 2,
     h: 20,
   },
   {
