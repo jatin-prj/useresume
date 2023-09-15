@@ -7,8 +7,8 @@ export default function Dashboard({ children }) {
     <>
       <Navbar />
       {/* <Sidebar /> */}
-      <div className="container mx-auto">
-        <ContentBody> {children}</ContentBody>
+      <div className="relative top-[3rem] h-auto">
+        <ContentBody>{children}</ContentBody>
       </div>
     </>
   );

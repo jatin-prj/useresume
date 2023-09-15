@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 import { useLocation, useNavigate } from "react-router-dom";
@@ -41,9 +42,115 @@ export default function TemplatePreview() {
     : Template1;
   return (
     <>
-      <div className="mx-auto pt-4">
+      <div className="sm:w-full ">
+        <div className="sm:w-full h-full">
+          <div className="flex h-screen sm:w-full sm:h-full ">
+            <div className="flex sm:w-full sm:h-full">
+              <div className="relative md:w-[82%] flex sm:p-1 ">
+                <div className="shadow p-2 flex gap-2 justify-between md:w-full">
+                  <div className="flex justify-between gap-2 md:w-full">
+                    <div className="md:w-[75%]">
+                      <div className="bg-slate-200 h-full flex justify-center items-center md:p-1">
+                        <div className="">
+                          {isLoading ? (
+                            <div className="h-[51rem] flex justify-center items-center">
+                              <Loader />
+                            </div>
+                          ) : (
+                            <div className="flex justify-center w-full p-4">
+                              <ResponsiveReactGridLayout
+                                className={"layout bg-white"}
+                                style={{ width: "50rem" }}
+                                rowHeight={15}
+                                // cols={{ lg: 6, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                                layout={Layout}
+                                compactType={"vertical"}
+                                isBounded={true}
+                              >
+                                {Layout.map((layout, index) => (
+                                  <div
+                                    key={index}
+                                    data-grid={layout}
+                                    className="bg-slate-500 w-full cursor-grab"
+                                  >
+                                    {Sections.map((section, index) => {
+                                      if (layout.id === section.id) {
+                                        return (
+                                          <div key={index}>{section.name}</div>
+                                        );
+                                      }
+                                    })}
+                                  </div>
+                                ))}
+                              </ResponsiveReactGridLayout>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      className=" md:w-[25%] md:p-2 sm:text-2xl 
+                    "
+                    >
+                      <div className="flex justify-center">Sections</div>
+                      <div className="sm:p-5">
+                        <ul class="sm:text-base list-disc">
+                          {Sections.map((section, index) => (
+                            <li>{section.id}</li>
+                          ))}
+                          {/* <li>
+                            At least 10 characters (and up to 100 characters)
+                          </li>
+                          <li>At least one lowercase character</li>
+                          <li>
+                            Inclusion of at least one special character, e.g., !
+                            @ # ?
+                          </li> */}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className="p-2 bg-[#066970] md:w-[18%] flex flex-col md:flex hidden md:fixed right-0"
+                id="sideNav"
+              >
+                <div className="bg-white h-[45rem]">
+                  <div className="flex flex-wrap justify-center items-center gap-2 h-full overflow-y-auto">
+                    {Templates.map((template, index) => (
+                      <div
+                        key={index}
+                        className="cursor-pointer w-32 h-max"
+                        onClick={() => {
+                          handleSelectTemplate(template.id);
+                        }}
+                      >
+                        {template.template}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <a
+                  className="block text-slate-800 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white mt-auto"
+                  href="#"
+                >
+                  Kuldip Chatrala
+                </a>
+                <div className="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mt-2"></div>
+                <p className="mb-1 px-5 py-3 text-left text-xs text-cyan-500">
+                  Copyright WCG@2023
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* <div className="mx-auto pt-4">
         <div className="flex gap-4 w-full">
-          <div className="w-[69%]">
+          <div className="w-[69%] flex justify-center">
             <div className="bg-slate-100  w-[52rem] flex justify-center items-center">
               {isLoading ? (
                 <div className="h-[51rem] flex justify-center items-center">
@@ -79,9 +186,9 @@ export default function TemplatePreview() {
             </div>
           </div>
           <div className="h-[55rem] bg-slate-50">
-            <div className="">
+            <div className="w-[33rem]">
               <div className="border flex justify-center">
-                <div className="flex flex-wrap justify-center gap-4 mt-5">
+                <div className="flex flex-wrap justify-center gap-4 p-2">
                   {Templates.map((template, index) => (
                     <div
                       key={index}
@@ -98,45 +205,8 @@ export default function TemplatePreview() {
             </div>
           </div>
         </div>
-      </div>
-      {/* <div className="mx-auto pt-4">
-        <div className="flex gap-4 w-full">
-          <div className="w-[69%]">
-            {templateId === "1" ? (
-              <Template1 />
-            ) : templateId === "2" ? (
-              <Template2 />
-            ) : templateId === "3" ? (
-              <Template3 />
-            ) : templateId === "4" ? (
-              <Template4 />
-            ) : (
-              ""
-            )}
-          </div>
-          <div className="h-[55rem] bg-slate-50">
-            <div className="">
-              <div className="border flex justify-center">
-                <div className="flex flex-wrap justify-center gap-4 mt-5">
-                  {Templates.map((template, index) => (
-                    <div key={index} className="w-40">
-                      <button
-                        onClick={() => {
-                          // handleSelect(template);
-                          localStorage.setItem("template-id", template.id);
-                          setTemplateId(localStorage.getItem("template-id"));
-                        }}
-                      >
-                        {template.template}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div> */}
+      </div>
     </>
   );
 }

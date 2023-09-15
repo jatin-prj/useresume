@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
+import { Link } from "react-router-dom";
 import { Templates } from "../../../Components/Template/TemplateLayouts/TemplateOptions";
 import TemplateModal from "../../../Components/Template/TemplateModal/TemplateModal";
 import { useState } from "react";
+import { LuArrowUpRightFromCircle } from "react-icons/lu";
 export default function Builder() {
   const [open, setOpen] = useState(false);
   const [template, setTemplate] = useState();
@@ -9,33 +11,47 @@ export default function Builder() {
     setOpen(true);
     setTemplate(template);
   };
-  console.log(">>>>>>>>>>>>>...", template);
 
   return (
     <>
-      <div className="container text-center pt-3">
-        <h2>Choose Templates</h2>
-        <div className="flex w- justify-center gap-4 mt-5">
-          {Templates.map((template, index) => (
-            <div
-              key={index}
-              className="w-40 transition duration-250 hover:scale-125 "
-            >
-              <button
-                onClick={() => {
-                  handleSelect(template);
-                  localStorage.setItem("template-id", template.id);
-                }}
+      <div className="relative top-4">
+        <div className="text-center">
+          <div className="flex">
+            <p className="text-2xl font-bold w-[86%]">Choose Templates</p>
+            <div>
+              <Link
+                to={`/templates/preview/${localStorage.getItem("template-id")}`}
               >
-                {template.template}
-              </button>
+                <button className="rounded-full bg-slate-100 p-1 w-32">
+                  Preview
+                </button>
+                <LuArrowUpRightFromCircle className="text-lg relative bottom-[25px] left-[112px]" />
+              </Link>
             </div>
-          ))}
+          </div>
+          <div className="flex w- justify-center gap-4 mt-5">
+            {Templates.map((template, index) => (
+              <div
+                key={index}
+                className="w-40 transition duration-250 hover:scale-125 "
+              >
+                <button
+                  onClick={() => {
+                    handleSelect(template);
+                    localStorage.setItem("template-id", template.id);
+                  }}
+                >
+                  {template.template}
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {open && (
+          <TemplateModal open={open} setOpen={setOpen} template={template} />
+        )}
       </div>
-      {open && (
-        <TemplateModal open={open} setOpen={setOpen} template={template} />
-      )}
     </>
   );
 }

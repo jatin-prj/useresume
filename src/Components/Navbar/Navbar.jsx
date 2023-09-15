@@ -1,23 +1,24 @@
 /* eslint-disable no-unused-vars */
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { BellIcon } from "@heroicons/react/24/outline";
 import { navigation, userNavigation } from "../../Routes/Paths";
 import { user } from "../../Layout/Adminboard/Profile/Profile";
-import { Link } from "react-router-dom";
-import { Icons } from "../../Assests/Icon/Icons";
+import { Link, useLocation } from "react-router-dom";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 export default function Navbar() {
+  const location = useLocation();
   return (
     <>
-      <div className="min-h-full">
+      <div className={`min-h-full`}>
         <Disclosure
           as="nav"
-          className="fixed bg-gray-800 w-full h-[4.5rem] border-b-2 border-slate-600 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] z-10"
+          // shadow-[0px_1px_10px_#999]
+          className="fixed bg-white w-full h-[4rem] border-b-2 border-slate-50 shadow   z-10"
         >
           {({ open }) => (
             <>
@@ -32,7 +33,7 @@ export default function Navbar() {
                       </div> */}
                       <Link to={"/"}>
                         <div className="flex items-center w-52">
-                          <p className="inline-block align-middle text-white text-3xl w-full">
+                          <p className="inline-block align-middle text-[#07919e] text-3xl w-full">
                             useResume
                           </p>
                         </div>
@@ -44,15 +45,17 @@ export default function Navbar() {
                           <Link
                             key={item.name}
                             to={item.path}
-                            className={classNames(
-                              item.current
-                                ? "bg-gray-900 text-white"
-                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                              "rounded-md px-3 py-2 text-sm font-medium"
-                            )}
+                            className={`
+                              ${
+                                location.pathname.includes(item.path)
+                                  ? "text-[#066970] px-3 py-2 text-sm font-medium"
+                                  : "text-[#07919e] group relative inline-block overflow-hidden px-3 py-2 text-sm font-normal"
+                              }
+                            `}
                             aria-current={item.current ? "page" : undefined}
                           >
                             {item.name}
+                            <span class="ease absolute bottom-0 left-0 h-0 w-0 border-b-2 border-[#07919e] transition-all duration-200 group-hover:w-full"></span>
                           </Link>
                         ))}
                       </div>
@@ -89,10 +92,12 @@ export default function Navbar() {
                                 {({ active }) => (
                                   <a
                                     href={item.href}
-                                    className={classNames(
-                                      active ? "bg-gray-100" : "",
-                                      "block px-4 py-2 text-sm text-gray-700"
-                                    )}
+                                    className={`
+                                      ${
+                                        (active ? "bg-gray-100" : "",
+                                        "block px-4 py-2 text-sm text-gray-700")
+                                      }
+                                    `}
                                   >
                                     {item.name}
                                   </a>
@@ -117,12 +122,14 @@ export default function Navbar() {
                       key={item.name}
                       as="a"
                       href={item.href}
-                      className={classNames(
-                        item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "block rounded-md px-3 py-2 text-base font-medium"
-                      )}
+                      className={`
+                        ${
+                          (item.current
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "block rounded-md px-3 py-2 text-base font-medium")
+                        }
+                      `}
                       aria-current={item.current ? "page" : undefined}
                     >
                       {item.name}

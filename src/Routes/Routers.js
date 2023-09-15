@@ -5,6 +5,8 @@ import Dashboard from "../Layout/Adminboard/Dashboard/Dashboard";
 import { Suspense, lazy } from "react";
 import HomePage from "../Layout/Adminboard/LandingPage/HomePage";
 import Team from "../Layout/Adminboard/Team/Team";
+import Loader from "../Components/Loader/Loader";
+import Navbar from "../Components/Navbar/Navbar";
 const LostPage = lazy(() => import("../Components/Error/LostServer"));
 const Profile = lazy(() => import("../Layout/Adminboard/Profile/Profile"));
 const InfoSection = lazy(() => import("../Components/DataForm/InfoSection"));
@@ -27,7 +29,7 @@ const TemplatePreview = lazy(() =>
 export default function Routers() {
   const templateId = localStorage.getItem("template-id");
   return (
-    <Suspense fallback={"Loading......"}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route
           exact
@@ -71,57 +73,71 @@ export default function Routers() {
           <Route
             path="info"
             element={
-              <MainSection>
-                <InfoSection />
-              </MainSection>
+              <Dashboard>
+                <MainSection>
+                  <InfoSection />
+                </MainSection>
+              </Dashboard>
             }
           />
           <Route
             path="contactform"
             element={
-              <MainSection>
-                <ContactForm />
-              </MainSection>
+              <Dashboard>
+                <MainSection>
+                  <ContactForm />
+                </MainSection>
+              </Dashboard>
             }
           />
           <Route
             path="aboutform"
             element={
-              <MainSection>
-                <AboutMeForm />
-              </MainSection>
+              <Dashboard>
+                <MainSection>
+                  <AboutMeForm />
+                </MainSection>
+              </Dashboard>
             }
           />
           <Route
             path="educationform"
             element={
-              <MainSection>
-                <EducationForm />
-              </MainSection>
+              <Dashboard>
+                <MainSection>
+                  <EducationForm />
+                </MainSection>
+              </Dashboard>
             }
           />
           <Route
             path="experienceform"
             element={
-              <MainSection>
-                <ExperienceForm />
-              </MainSection>
+              <Dashboard>
+                <MainSection>
+                  <ExperienceForm />
+                </MainSection>
+              </Dashboard>
             }
           />
           <Route
             path="projectform"
             element={
-              <MainSection>
-                <ProjectForm />
-              </MainSection>
+              <Dashboard>
+                <MainSection>
+                  <ProjectForm />
+                </MainSection>
+              </Dashboard>
             }
           />
           <Route
             path="skillform"
             element={
-              <MainSection>
-                <SkillsForm />
-              </MainSection>
+              <Dashboard>
+                <MainSection>
+                  <SkillsForm />
+                </MainSection>
+              </Dashboard>
             }
           />
           <Route

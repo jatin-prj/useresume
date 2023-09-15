@@ -1,12 +1,12 @@
 import { useLocation } from "react-router-dom";
-
 export default function MainSection({ children }) {
   const location = useLocation();
   console.log("location", location.pathname);
   return (
     <>
-      <div className="sm:p-20 p-14 md:p-0">
-        <div className="w-full md:w-1/2 md:mx-auto border md:mt-40 p-5  shadow-lg rounded-lg">
+      {" "}
+      <div className="container w-full md:pt-3">
+        <div className="w-full mx-auto border shadow-lg rounded-lg md:pt-5">
           <ol className="flex items-center w-full mb-4 sm:mb-5 ml-5">
             <li className="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
               <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0">
