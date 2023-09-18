@@ -29,7 +29,16 @@ const TemplatePreview = lazy(() =>
 export default function Routers() {
   const templateId = localStorage.getItem("template-id");
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense
+      fallback={
+        <div
+          className="relative h-screen flex justify-center items-center
+        "
+        >
+          <Loader />
+        </div>
+      }
+    >
       <Routes>
         <Route
           exact

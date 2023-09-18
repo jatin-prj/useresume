@@ -12,7 +12,7 @@ export const Template1 = [
     x: 0,
     y: 0,
     w: 6,
-    h: 6,
+    h: 5,
     static: true,
   },
   {
@@ -20,14 +20,14 @@ export const Template1 = [
     x: 0,
     y: 1,
     w: 6,
-    h: 7,
+    h: 5,
   },
   {
     id: "about-me",
     x: 0,
     y: 2,
     w: 6,
-    h: 6,
+    h: 3,
   },
   {
     id: "experience",
@@ -41,12 +41,12 @@ export const Template1 = [
     x: 0,
     y: 4,
     w: 6,
-    h: 6,
+    h: 5,
   },
   {
     id: "project",
     x: 0,
-    y: 6,
+    y: 5,
     w: 6,
     h: 10,
   },
@@ -64,51 +64,44 @@ export const Template2 = [
     x: 0,
     y: 0,
     w: 6,
-    h: 6,
+    h: 5,
     static: true,
-  },
-  {
+  }, {
     id: "about-me",
     x: 0,
     y: 1,
     w: 4,
-    h: 8,
-  },
-  {
+    h: 5,
+  },{
     id: "contact",
     x: 4,
     y: 1,
     w: 2,
-    h: 8,
-  },
-
-  {
+    h: 5,
+  },{
     id: "experience",
-    x: 2,
+    x: 0,
     y: 2,
     w: 4,
-    h: 20,
-  },
-  {
+    h: 15,
+  },{
     id: "skills",
-    x: 0,
+    x: 4,
     y: 2,
     w: 2,
-    h: 20,
-  },
-  {
+    h: 15,
+  }, {
     id: "project",
-    x: 0,
+    x: 4,
     y: 3,
-    w: 6,
-    h: 9,
-  },
-  {
+    w: 2,
+    h: 15,
+  },{
     id: "education",
     x: 0,
-    y: 4,
-    w: 6,
-    h: 20,
+    y: 3,
+    w: 4,
+    h: 15,
   },
 ];
 export const Template3 = [

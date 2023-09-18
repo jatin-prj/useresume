@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AboutDetails } from "../../Redux/Action/About";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 export default function AboutMeForm() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function AboutMeForm() {
       about: "",
     },
     validationSchema: Yup.object({
-      about: Yup.string().required("* Please Enter Some details on work"),
+      about: Yup.string().required("* Please Enter Some word about you").min(50),
     }),
     onSubmit: (values, { resetForm }) => {
       dispatch(AboutDetails(values)).then((res) => {
@@ -44,9 +45,9 @@ export default function AboutMeForm() {
               <textarea
                 id="about"
                 name="about"
-                rows="1"
+                rows="2"
                 className="bg-gray-50 border resize-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="Your message..."
+                placeholder="Enter About You..."
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               ></textarea>
@@ -55,14 +56,18 @@ export default function AboutMeForm() {
               )}
             </div>
           </div>
-          <div className="">
+          <div className="flex justify-between">
             <Link to={`/templates/contactform`}>
-              <button className="bg-blue-700 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                Back
+              <button className="bg-blue-300 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                <FaArrowLeft className="text-white" />
               </button>
             </Link>
-            <button className="bg-blue-700 border text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ">
-              Next
+            <button
+              type="submit"
+              style={{ backgroundColor: "rgb(29 78 216)" }}
+              className=" border text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
+            >
+              <FaArrowRight className="text-white" />
             </button>
           </div>
         </form>

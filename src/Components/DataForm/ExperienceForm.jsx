@@ -3,6 +3,8 @@ import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
+import { designationData } from "../../Redux/Action/Data";
 import { ExperienceDetails } from "../../Redux/Action/Experience";
 
 export default function ExperienceForm() {
@@ -11,8 +13,11 @@ export default function ExperienceForm() {
   const [inputFields, setInputFields] = useState([
     {
       companyName: "",
-      workYear: "",
+      startYear: "",
+      endYear: "",
+      presentcheck: false,
       workOn: "",
+      Designation: "",
     },
   ]);
 
@@ -21,35 +26,59 @@ export default function ExperienceForm() {
       ...inputFields,
       {
         companyName: "",
-        workYear: "",
+        startYear: "",
+        endYear: "",
+        presentcheck: false,
         workOn: "",
+        Designation: "",
       },
     ]);
   };
   const removeInputFields = (index) => {
     let items = inputFields.filter((_, indexOf) => indexOf !== index);
-    console.log("items", items);
-
     setInputFields(items);
+  };
+  const checktick = (e, ind) => {
+    if (e.presentcheck === true) {
+      return ind + 1;
+    }
   };
   const handleChange = (index, event) => {
     console.log("event", event?.target?.name);
     const list = [...inputFields];
-    list[index][event?.target?.name] = event?.target?.value;
+    let ind = list?.map((e, index) => {
+      return checktick(e, index);
+    });
+    if (event?.target?.name === "presentcheck") {
+      if (ind?.filter((e) => e)?.length) {
+        list[ind?.filter((e) => e) - 1][event?.target?.name] = false;
+      }
+      list[index][event?.target?.name] = event?.target?.checked;
+    } else {
+      return (list[index][event?.target?.name] = event?.target?.value);
+    }
     setInputFields(list);
-    return (list[index][event?.target?.name] = event?.target?.value);
   };
 
   const formik = useFormik({
     initialValues: {
       companyName: "",
-      workYear: "",
+      startYear: "",
+      endYear: "",
+      presentcheck: false,
       workOn: "",
+      Designation: "",
     },
     validationSchema: Yup.object({
       companyName: Yup.string().required("* Please Enter Company Name"),
-      workYear: Yup.string().required("* Please Enter WorkYear"),
+      startYear: Yup.string().required("* Enter Start Date"),
+      presentcheck: Yup.boolean(),
+      endYear: Yup.string().when("presentcheck", {
+        is: false,
+        then: () => Yup.string().required("Must enter End Date"),
+      }),
       workOn: Yup.string().required("* Please Enter Some details on work"),
+      Designation: Yup.string().required("* Please Enter Position"),
     }),
     onSubmit: (values, { resetForm }) => {
       let data = {
@@ -68,15 +97,47 @@ export default function ExperienceForm() {
     <>
       <div className="mx-5 p-5">
         <form onSubmit={formik.handleSubmit}>
-          <h3 className="mb-4 text-lg font-medium leading-none text-gray-900">
-            Experience Details
-          </h3>
+          <div className="flex justify-between">
+            <h3 className="mb-4 text-lg font-medium leading-none text-gray-900">
+              Experience Details
+            </h3>
+            <button
+              type="button"
+              style={{ backgroundColor: "rgb(29 78 216)" }}
+              className=" mr-1 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              onClick={() => addInputField()}
+            >
+              <FaPlus className="text-white" />
+            </button>
+          </div>
           {inputFields.map((data, index) => {
-            const { companyName, workYear, workOn } = data;
+            const {
+              companyName,
+              startYear,
+              endYear,
+              presentcheck,
+              workOn,
+              Designation,
+            } = data;
             return (
               <>
-                <div className="grid gap-4 mb-4 grid-cols md:grid-cols-2">
-                  <div>
+                <div className="flex justify-between">
+                  <h3 className="mb-4 text-lg  font-medium leading-none text-gray-900">
+                    {index > 0 && "New Details"}
+                  </h3>
+                  <div className=" flex items-end cursor-pointer ">
+                    {index > 0 && (
+                      <div
+                        className={`p-1 text-white flex justify-center items-center  bg-red-400 text-center px-5 py-2.5 rounded-lg`}
+                        onClick={() => removeInputFields(index)}
+                      >
+                        <FaTrash className="" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="flex w-full  flex-wrap gap-4 mb-2 ">
+                  <div className="w-2/5">
                     <label
                       htmlFor="username"
                       className="block mb-2 text-sm font-medium text-gray-900"
@@ -88,7 +149,7 @@ export default function ExperienceForm() {
                       name="companyName"
                       id="companyName"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                      placeholder="companyName.example"
+                      placeholder="Enter Company Name"
                       onChange={(e) =>
                         formik.setFieldValue(
                           "companyName",
@@ -105,33 +166,131 @@ export default function ExperienceForm() {
                         </div>
                       )}
                   </div>
-                  <div>
+                  <div className="w-2/5">
                     <label
-                      htmlFor="workYear"
+                      htmlFor="Designation"
                       className="block mb-2 text-sm font-medium text-gray-900"
                     >
-                      workYear
+                      Position
+                    </label>
+                    <input
+                      type="text"
+                      name="Designation"
+                      list="Designation"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                      placeholder="Enter Designation"
+                      onChange={(e) =>
+                        formik.setFieldValue(
+                          "Designation",
+                          handleChange(index, e)
+                        )
+                      }
+                      value={Designation}
+                      onBlur={formik.handleBlur}
+                    />
+                    <datalist id="Designation">
+                      {designationData?.map((d) => (
+                        <option key={d.value} value={d.label} className="" />
+                      ))}
+                    </datalist>
+
+                    {formik.touched.Designation &&
+                      formik.errors.Designation && (
+                        <div className="text-red-400">
+                          {formik.errors.Designation}
+                        </div>
+                      )}
+                  </div>
+
+                  <div className="w-2/5 ">
+                    <label
+                      htmlFor="startYear"
+                      className="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                      Starting Year Date
                     </label>
                     <input
                       type="date"
-                      name="workYear"
-                      id="workYear"
+                      min="1949-01-01"
+                      max={new Date().toISOString().split("T")[0]}
+                      name="startYear"
+                      id="startYear"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                      placeholder="name@company.com"
+                      placeholder="Enter Passing Year"
                       onChange={(e) =>
-                        formik.setFieldValue("workYear", handleChange(index, e))
+                        formik.setFieldValue(
+                          "startYear",
+                          handleChange(index, e)
+                        )
                       }
-                      value={workYear}
                       onBlur={formik.handleBlur}
+                      value={startYear}
                     />
-                    {formik.touched.workYear && formik.errors.workYear && (
+                    {formik.touched.startYear && formik.errors.startYear && (
                       <div className="text-red-400">
-                        {formik.errors.workYear}
+                        {formik.errors.startYear}
                       </div>
                     )}
                   </div>
 
-                  <div>
+                  <div className="w-2/5 mt-8">
+                    <div className=" mr-4">
+                      <input
+                        id="presentcheck"
+                        type="checkbox"
+                        name="presentcheck"
+                        onChange={(e) =>
+                          formik.setFieldValue(
+                            "presentcheck",
+                            handleChange(index, e)
+                          )
+                        }
+                        checked={presentcheck}
+                        className="w-4 h-4 text-blue-600 bg-blue-100 border-blue-300 rounded focus:ring-blue-500 focus:ring-2"
+                      />
+                      <label
+                        htmlFor="presentcheck"
+                        className="ml-2 text-sm font-medium text-gray-900 "
+                      >
+                        Currently Work
+                      </label>
+                    </div>
+                  </div>
+
+                  {!presentcheck && (
+                    <div className="w-2/5 ">
+                      <label
+                        htmlFor="endYear"
+                        className="block mb-2 text-sm font-medium text-gray-900"
+                      >
+                        Ending Year Date
+                      </label>
+                      <input
+                        type="date"
+                        max={new Date().toISOString().split("T")[0]}
+                        min={formik.values.startYear}
+                        name="endYear"
+                        id="endYear"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                        placeholder="Enter Passing Year"
+                        onChange={(e) =>
+                          formik.setFieldValue(
+                            "endYear",
+                            handleChange(index, e)
+                          )
+                        }
+                        onBlur={formik.handleBlur}
+                        value={endYear}
+                      />
+                      {formik.touched.endYear && formik.errors.endYear && (
+                        <div className="text-red-400">
+                          {formik.errors.endYear}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <div className={`${presentcheck && "w-full"} w-2/5`}>
                     <label
                       htmlFor="workOn"
                       className="block mb-2 text-sm font-medium text-gray-900 w-full"
@@ -143,7 +302,7 @@ export default function ExperienceForm() {
                       name="workOn"
                       rows="2"
                       className="bg-gray-50 border resize-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                      placeholder="Your message..."
+                      placeholder="Enter Work Description..."
                       onChange={(e) =>
                         formik.setFieldValue("workOn", handleChange(index, e))
                       }
@@ -154,41 +313,23 @@ export default function ExperienceForm() {
                       <div className="text-red-400">{formik.errors.workOn}</div>
                     )}
                   </div>
-
-                  <div className="mt-8">
-                    {index > 0 ? (
-                      <button
-                        className=" p-1 text-white  bg-red-400 w-8 h-8 rounded-full text-center"
-                        onClick={() => removeInputFields(index)}
-                      >
-                        x
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div>
                 </div>
               </>
             );
           })}
-          <div className="">
+          <div className="flex justify-between mt-2">
             <Link to={`/templates/educationform`}>
-              <button className="bg-blue-700 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                Back
+              <button className="bg-blue-300 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                <FaArrowLeft className="text-white" />
               </button>
             </Link>
-            <button
-              type="button"
-              className="bg-blue-700 mr-5 hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-              onClick={() => addInputField()}
-            >
-              Add New
-            </button>
+
             <button
               type="submit"
-              className="bg-blue-700 border hover:text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
+              style={{ backgroundColor: "rgb(29 78 216)" }}
+              className="border text-white   hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
             >
-              Next
+              <FaArrowRight className="text-white" />
             </button>
           </div>
         </form>

@@ -20,7 +20,7 @@ export default function Builder() {
             <p className="text-2xl font-bold w-[86%]">Choose Templates</p>
             <div>
               <Link
-                to={`/templates/preview/${localStorage.getItem("template-id")}`}
+                to={`/templates/preview/template-${localStorage.getItem("template-id")}`}
               >
                 <button className="rounded-full bg-slate-100 p-1 w-32">
                   Preview

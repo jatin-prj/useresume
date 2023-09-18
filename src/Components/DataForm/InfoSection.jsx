@@ -4,35 +4,37 @@ import { useNavigate } from "react-router-dom";
 import { PersonalDetails } from "../../Redux/Action/Information";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-
+import { FaArrowRight, FaCloudUploadAlt } from "react-icons/fa";
+import { designationData } from "../../Redux/Action/Data";
+import profile from "../../Assests/Img/profile.avif";
 export default function InfoSection() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [img, setImg] = useState();
+  const [img, setImg] = useState(profile);
 
   const formik = useFormik({
     initialValues: {
-      ImgUrl: "",
-      username: "",
-      subtitle: "",
+      Profile: "",
+      FullName: "",
+      Designation: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("* Please Enter Your Password"),
-      subtitle: Yup.string().required("* Please Enter Your Designation"),
+      FullName: Yup.string().required("* Please Enter Your Full Name"),
+      Designation: Yup.string().required("* Please Enter Your Designation"),
     }),
     onSubmit: (values, { resetForm }) => {
-      let data = {
-        ImgUrl: img,
-        username: values?.username,
-        subtitle: values?.subtitle,
+      let FieldData = {
+        Profile: img,
+        FullName: values?.FullName,
+        Designation: values?.Designation,
       };
-      dispatch(PersonalDetails(data)).then((res) => {
+      dispatch(PersonalDetails(FieldData)).then((res) => {
         if (res) {
           navigate(`/templates/contactform`);
         }
       });
       console.log("values", values);
-      resetForm({ values: "", data: "" });
+      resetForm({ values: "", FieldData: "" });
     },
   });
 
@@ -40,80 +42,103 @@ export default function InfoSection() {
     <>
       <div className="mx-5 ">
         <h3 className="mb-4 text-lg font-medium leading-none text-gray-900">
-          Header Details
+          Personal Information
         </h3>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid gap-4 mb-4 sm:grid-cols-2 ">
-            <div>
+            <div className="pb-0">
               <label
-                htmlFor="username"
+                htmlFor="FullName"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
-                Username
+                Full Name
               </label>
               <input
                 type="text"
-                name="username"
-                id="username"
+                name="FullName"
+                id="FullName"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="username.example"
+                placeholder="Enter full Name"
                 onChange={formik.handleChange}
-                value={formik.values.username}
+                value={formik.values.FullName}
                 onBlur={formik.handleBlur}
               />
-              {formik.touched.username && formik.errors.username && (
-                <div className="text-red-400">{formik.errors.username}</div>
+              {formik.touched.FullName && formik.errors.FullName && (
+                <div className="text-red-400">{formik.errors.FullName}</div>
               )}
             </div>
-            <div>
+            <div className="">
               <label
                 htmlFor="ImgUrl"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block mb-2 text-sm font-medium text-gray-900 text-center"
               >
-                ImgUrl
+                Profile Picture
               </label>
-              <input
-                accept="image/*"
-                type="file"
-                name="ImgUrl"
-                id="ImgUrl"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="name@company.com"
-                onChange={(e) => setImg(URL.createObjectURL(e.target.files[0]))}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.ImgUrl && formik.errors.ImgUrl && (
-                <div className="text-red-400">{formik.errors.ImgUrl}</div>
+
+              <div className=" mx-auto rounded-full border border-blue-300  w-20 h-20 ">
+                <img
+                  className=" w-full object-cover w-full h-full rounded-full"
+                  src={img}
+                  alt="Profile"
+                />
+                <label
+                  htmlFor="dropzone-file"
+                  className="relative left-12 -top-7 flex flex-col w-8 h-8 items-center justify-center border-2 border-blue-300    rounded-full cursor-pointer bg-blue-500 hover:bg-blue-300 "
+                >
+                  <FaCloudUploadAlt size={18} className="text-white" />
+
+                  <input
+                    id="dropzone-file"
+                    accept="image/*"
+                    type="file"
+                    name="Profile"
+                    className="hidden"
+                    onChange={(e) =>
+                      setImg(URL.createObjectURL(e.target.files[0]))
+                    }
+                    onBlur={formik.handleBlur}
+                  />
+                </label>
+              </div>
+              {formik.touched.Profile && formik.errors.Profile && (
+                <div className="text-red-400">{formik.errors.Profile}</div>
               )}
             </div>
-            <div>
+            <div className="">
               <label
-                htmlFor="subtitle"
+                htmlFor="Designation"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
-                SubTitle
+                Designation
               </label>
               <input
-                type="subtitle"
-                name="subtitle"
-                id="subtitle"
+                type="text"
+                name="Designation"
+                list="Designation"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="name@company.com"
+                placeholder="Enter Designation"
                 onChange={formik.handleChange}
-                value={formik.values.subtitle}
+                value={formik.values.Designation}
                 onBlur={formik.handleBlur}
               />
-              {formik.touched.subtitle && formik.errors.subtitle && (
-                <div className="text-red-400">{formik.errors.subtitle}</div>
+              <datalist id="Designation">
+                {designationData.map((d) => (
+                  <option key={d.value} value={d.label} className="" />
+                ))}
+              </datalist>
+
+              {formik.touched.Designation && formik.errors.Designation && (
+                <div className="text-red-400">{formik.errors.Designation}</div>
               )}
             </div>
           </div>
           <div className="">
             <button
               type="submit"
-              className="bg-blue-700 border hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              style={{ backgroundColor: "rgb(29 78 216)" }}
+              className="bg-blue-700 border text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
-              Next
+              <FaArrowRight className="text-white" />
             </button>
           </div>
         </form>

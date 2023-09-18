@@ -1,9 +1,10 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link, useNavigate, } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { ProjectDetails } from "../../Redux/Action/Project";
+import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 
 export default function ProjectForm() {
   const navigate = useNavigate();
@@ -26,13 +27,12 @@ export default function ProjectForm() {
   };
   const removeInputFields = (index) => {
     let items = inputFields.filter((_, indexOf) => indexOf !== index);
-   
+
     setInputFields(items);
   };
   const handleChange = (index, event) => {
     console.log("event", event?.target?.name);
     const list = [...inputFields];
-    list[index][event?.target?.name] = event?.target?.value;
     setInputFields(list);
     return (list[index][event?.target?.name] = event?.target?.value);
   };
@@ -64,27 +64,53 @@ export default function ProjectForm() {
     <>
       <div className="mx-5">
         <form onSubmit={formik.handleSubmit}>
-          <h3 className="mb-4 text-lg font-medium leading-none text-gray-900">
-            Project Details
-          </h3>
+          <div className="flex justify-between">
+            <h3 className="mb-4  text-lg font-medium leading-none text-gray-900">
+              Other Details
+            </h3>
+            <div
+              type="button"
+              style={{ backgroundColor: "rgb(29 78 216)" }}
+              className="mr-1 text-white border hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer"
+              onClick={() => addInputField()}
+            >
+              <FaPlus className="text-white" />
+            </div>
+          </div>
           {inputFields?.map((data, index) => {
             const { projectName, projectDetail } = data;
             return (
               <>
-                <div className="grid gap-4 mb-4 sm:grid-cols-2">
-                  <div>
+                <div className="flex justify-between">
+                  <h3 className="mb-4 text-lg  font-medium leading-none text-gray-900">
+                    {index > 0 && "New Details"}
+                  </h3>
+                  <div className=" flex items-end cursor-pointer ">
+                    {index > 0 && (
+                      <div
+                        className={`p-1 text-white flex justify-center items-center  bg-red-400 text-center px-5 py-2.5 rounded-lg`}
+                        onClick={() => removeInputFields(index)}
+                      >
+                        <FaTrash className="" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="flex w-full  flex-wrap gap-4 mb-2 ">
+                  <div className="w-2/5">
                     <label
                       htmlFor="ProjectName"
                       className="block mb-2 text-sm font-medium text-gray-900"
                     >
-                      Project Name
+                      Title
                     </label>
                     <input
                       type="text"
                       name="projectName"
                       id="projectName"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                      placeholder="projectName.example"
+                      className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                      placeholder="
+                      Enter Title"
                       onChange={(e) =>
                         formik.setFieldValue(
                           "projectName",
@@ -101,19 +127,19 @@ export default function ProjectForm() {
                         </div>
                       )}
                   </div>
-                  <div>
+                  <div className="w-2/5">
                     <label
                       htmlFor="projectDetail"
                       className="block mb-2 text-sm font-medium text-gray-900"
                     >
-                      projectDetail
+                      Description
                     </label>
                     <textarea
                       id="projectDetail"
                       name="projectDetail"
-                      rows="1"
+                      rows="3"
                       className="bg-gray-50 border resize-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                      placeholder="Your message..."
+                      placeholder="Enter  Description..."
                       onChange={(e) =>
                         formik.setFieldValue(
                           "projectDetail",
@@ -131,41 +157,24 @@ export default function ProjectForm() {
                         </div>
                       )}
                   </div>
-                  <div className="mt-8">
-                    {index > 0 ? (
-                      <button
-                        className=" p-1 text-white  bg-red-400 w-8 h-8 rounded-full text-center"
-                        onClick={() => removeInputFields(index)}
-                      >
-                        x
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div>
                 </div>
               </>
             );
           })}
 
-          <div className="">
+          <div className="flex justify-between mt-2">
             <Link to={`/templates/experienceform`}>
-              <button className="bg-blue-700 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                Back
+              <button className="bg-blue-300 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                <FaArrowLeft className="text-white" />
               </button>
             </Link>
-            <button
-              type="button"
-              className="bg-blue-700 mr-5 hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-              onClick={() => addInputField()}
-            >
-              Add New
-            </button>
+
             <button
               type="submit"
-              className="bg-blue-700 border hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
+              style={{ backgroundColor: "rgb(29 78 216)" }}
+              className=" border text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
             >
-              Next
+              <FaArrowRight className="text-white" />
             </button>
           </div>
         </form>

@@ -2,7 +2,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 import { useLocation, useNavigate } from "react-router-dom";
-import React, { lazy, useState } from "react";
+import React, { lazy, useRef, useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
 import {
@@ -47,8 +47,8 @@ export default function TemplatePreview() {
           <div className="flex h-screen sm:w-full sm:h-full ">
             <div className="flex sm:w-full sm:h-full">
               <div className="relative md:w-[82%] flex sm:p-1 ">
-                <div className="shadow p-2 flex gap-2 justify-between md:w-full">
-                  <div className="flex justify-between gap-2 md:w-full">
+                <div className="shadow p-2 flex  justify-between md:w-full">
+                  <div className="flex justify-between  md:w-full">
                     <div className="md:w-[75%]">
                       <div className="bg-slate-200 h-full flex justify-center items-center md:p-1">
                         <div className="">
@@ -57,26 +57,37 @@ export default function TemplatePreview() {
                               <Loader />
                             </div>
                           ) : (
-                            <div className="flex justify-center w-full p-4">
+                            <div className="flex justify-center w-full ">
                               <ResponsiveReactGridLayout
                                 className={"layout bg-white"}
-                                style={{ width: "50rem" }}
-                                rowHeight={15}
-                                // cols={{ lg: 6, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                                style={{ width: "800px" }}
+                                rowHeight={20}
+                                // cols={{ lg: 1, md: 10, sm: 6, xs: 4, xxs: 2 }}
                                 layout={Layout}
                                 compactType={"vertical"}
                                 isBounded={true}
+                                // isResizable={false}
                               >
                                 {Layout.map((layout, index) => (
                                   <div
+                                    // id={`${layout.id}`}
                                     key={index}
                                     data-grid={layout}
-                                    className="bg-slate-500 w-full cursor-grab"
+                                    className="cursor-grab w-full h-full p-2 border-b-2 bg-slate-500"
+                                    // onClick={() => {
+                                    //   layout.static
+                                    // }}
                                   >
                                     {Sections.map((section, index) => {
                                       if (layout.id === section.id) {
                                         return (
-                                          <div key={index}>{section.name}</div>
+                                          <div
+                                            key={index}
+                                            id={`${section.id}`}
+                                            className="w-full h-full"
+                                          >
+                                            {section.name}
+                                          </div>
                                         );
                                       }
                                     })}
@@ -95,9 +106,9 @@ export default function TemplatePreview() {
                     >
                       <div className="flex justify-center">Sections</div>
                       <div className="sm:p-5">
-                        <ul class="sm:text-base list-disc">
+                        <ul className="sm:text-base list-disc">
                           {Sections.map((section, index) => (
-                            <li>{section.id}</li>
+                            <li key={index}>{section.id}</li>
                           ))}
                           {/* <li>
                             At least 10 characters (and up to 100 characters)
@@ -115,7 +126,7 @@ export default function TemplatePreview() {
               </div>
 
               <div
-                className="p-2 bg-[#066970] md:w-[18%] flex flex-col md:flex hidden md:fixed right-0"
+                className="p-2 bg-[#0a7c87] md:w-[18%] flex flex-col md:flex hidden md:fixed right-0"
                 id="sideNav"
               >
                 <div className="bg-white h-[45rem]">
@@ -140,7 +151,7 @@ export default function TemplatePreview() {
                   Kuldip Chatrala
                 </a>
                 <div className="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mt-2"></div>
-                <p className="mb-1 px-5 py-3 text-left text-xs text-cyan-500">
+                <p className="mb-1 px-5 py-3 text-left text-xs text-cyan-100">
                   Copyright WCG@2023
                 </p>
               </div>

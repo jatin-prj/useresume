@@ -18,19 +18,21 @@ export default function Navbar() {
         <Disclosure
           as="nav"
           // shadow-[0px_1px_10px_#999]
-          className="fixed bg-white w-full h-[4rem] border-b-2 border-slate-50 shadow   z-10"
+          className="fixed bg-white w-full h-[4rem] border-b-2 border-slate-50 shadow  z-10  "
         >
           {({ open }) => (
             <>
-              <div className="mx-auto max-w-screen-2xl px-4 sm:px-6  w-full">
-                <div className="flex h-[4.5rem] items-center justify-between">
-                  <div className="flex">
+              {/* <span className="ease absolute bottom-0 left-0 h-0 w-0 border-b-2 border-[#07919e] transition-all duration-200 group-hover:w-full"></span> */}
+              <div className="mx-auto max-w-screen-2xl px-4 sm:px-6  w-full ">
+                <div className="flex h-[4.5rem] items-center justify-between ">
+                  <div className="flex ">
                     <div className="flex">
                       {/* <div className="flex items-center w-14 h-14">
                         <button className="rounded-md w-full text-white hover:bg-gray-700">
                           {Icons.barIcon}
                         </button>
                       </div> */}
+
                       <Link to={"/"}>
                         <div className="flex items-center w-52">
                           <p className="inline-block align-middle text-[#07919e] text-3xl w-full">
@@ -55,7 +57,7 @@ export default function Navbar() {
                             aria-current={item.current ? "page" : undefined}
                           >
                             {item.name}
-                            <span class="ease absolute bottom-0 left-0 h-0 w-0 border-b-2 border-[#07919e] transition-all duration-200 group-hover:w-full"></span>
+                            <span className="ease absolute bottom-0 left-0 h-0 w-0 border-b-2 border-[#07919e] transition-all duration-200 group-hover:w-full"></span>
                           </Link>
                         ))}
                       </div>
