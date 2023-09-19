@@ -9,6 +9,7 @@ import Skills from "../TemplateSections/Skills";
 export const Template1 = [
   {
     id: "header",
+    i: "header",
     x: 0,
     y: 0,
     w: 6,
@@ -17,6 +18,7 @@ export const Template1 = [
   },
   {
     id: "contact",
+    i: "contact",
     x: 0,
     y: 1,
     w: 6,
@@ -24,6 +26,7 @@ export const Template1 = [
   },
   {
     id: "about-me",
+    i: "about-me",
     x: 0,
     y: 2,
     w: 6,
@@ -31,6 +34,7 @@ export const Template1 = [
   },
   {
     id: "experience",
+    i: "experience",
     x: 0,
     y: 3,
     w: 6,
@@ -38,6 +42,7 @@ export const Template1 = [
   },
   {
     id: "skills",
+    i: "skills",
     x: 0,
     y: 4,
     w: 6,
@@ -45,6 +50,7 @@ export const Template1 = [
   },
   {
     id: "project",
+    i: "project",
     x: 0,
     y: 5,
     w: 6,
@@ -52,6 +58,7 @@ export const Template1 = [
   },
   {
     id: "education",
+    i: "education",
     x: 0,
     y: 6,
     w: 6,
@@ -61,43 +68,56 @@ export const Template1 = [
 export const Template2 = [
   {
     id: "header",
+    i: "header",
     x: 0,
     y: 0,
     w: 6,
     h: 5,
     static: true,
-  }, {
+  },
+  {
     id: "about-me",
+    i: "about-me",
     x: 0,
     y: 1,
     w: 4,
     h: 5,
-  },{
+  },
+  {
     id: "contact",
+    i: "contact",
     x: 4,
     y: 1,
     w: 2,
     h: 5,
-  },{
+  },
+  {
     id: "experience",
+    i: "experience",
     x: 0,
     y: 2,
     w: 4,
     h: 15,
-  },{
+  },
+  {
     id: "skills",
+    i: "skills",
     x: 4,
     y: 2,
     w: 2,
     h: 15,
-  }, {
+  },
+  {
     id: "project",
+    i: "project",
     x: 4,
     y: 3,
     w: 2,
     h: 15,
-  },{
+  },
+  {
     id: "education",
+    i: "education",
     x: 0,
     y: 3,
     w: 4,
@@ -107,6 +127,7 @@ export const Template2 = [
 export const Template3 = [
   {
     id: "header",
+    i: "header",
     x: 0,
     y: 0,
     w: 6,
@@ -115,6 +136,7 @@ export const Template3 = [
   },
   {
     id: "about-me",
+    i: "about-me",
     x: 2,
     y: 1,
     w: 4,
@@ -122,6 +144,7 @@ export const Template3 = [
   },
   {
     id: "contact",
+    i: "contact",
     x: 0,
     y: 1,
     w: 2,
@@ -129,6 +152,7 @@ export const Template3 = [
   },
   {
     id: "experience",
+    i: "experience",
     x: 0,
     y: 2,
     w: 4,
@@ -136,6 +160,7 @@ export const Template3 = [
   },
   {
     id: "skills",
+    i: "skills",
     x: 4,
     y: 2,
     w: 2,
@@ -143,6 +168,7 @@ export const Template3 = [
   },
   {
     id: "project",
+    i: "project",
     x: 0,
     y: 3,
     w: 6,
@@ -150,6 +176,7 @@ export const Template3 = [
   },
   {
     id: "education",
+    i: "education",
     x: 0,
     y: 4,
     w: 6,
@@ -159,6 +186,7 @@ export const Template3 = [
 export const Template4 = [
   {
     id: "header",
+    i: "header",
     x: 0,
     y: 0,
     w: 6,
@@ -167,6 +195,7 @@ export const Template4 = [
   },
   {
     id: "about-me",
+    i: "about-me",
     x: 3,
     y: 1,
     w: 3,
@@ -174,6 +203,7 @@ export const Template4 = [
   },
   {
     id: "contact",
+    i: "contact",
     x: 0,
     y: 1,
     w: 3,
@@ -181,6 +211,7 @@ export const Template4 = [
   },
   {
     id: "experience",
+    i: "experience",
     x: 0,
     y: 2,
     w: 3,
@@ -188,6 +219,7 @@ export const Template4 = [
   },
   {
     id: "skills",
+    i: "skills",
     x: 3,
     y: 3,
     w: 3,
@@ -195,6 +227,7 @@ export const Template4 = [
   },
   {
     id: "project",
+    i: "project",
     x: 3,
     y: 2,
     w: 3,
@@ -202,6 +235,7 @@ export const Template4 = [
   },
   {
     id: "education",
+    i: "education",
     x: 0,
     y: 4,
     w: 6,

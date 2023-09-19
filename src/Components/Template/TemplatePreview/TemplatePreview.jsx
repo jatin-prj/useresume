@@ -1,8 +1,9 @@
+/* eslint-disable no-eval */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 import { useLocation, useNavigate } from "react-router-dom";
-import React, { lazy, useRef, useState } from "react";
+import { lazy, useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
 import {
@@ -40,6 +41,20 @@ export default function TemplatePreview() {
     : location.pathname.includes("template-4")
     ? Template4
     : Template1;
+
+  const getLayouts = () => {
+    const savedLayout = localStorage.getItem("grid-layout");
+    const layout = JSON.parse(savedLayout);
+    const layoutArray = eval(layout);
+    // console.log("??????????????", typeof eval(savedLayout), eval(savedLayout));
+    // return savedLayout ? console.log("true") : console.log("false");
+    return savedLayout ? layoutArray : Layout;
+  };
+
+  const handleLayoutChange = (layout, layouts) => {
+    localStorage.setItem("grid-layout", JSON.stringify(layout));
+    // console.log("layout", localStorage.getItem("grid-layout"));
+  };
   return (
     <>
       <div className="sm:w-full ">
@@ -61,12 +76,20 @@ export default function TemplatePreview() {
                               <ResponsiveReactGridLayout
                                 className={"layout bg-white"}
                                 style={{ width: "800px" }}
+                                layout={getLayouts()}
+                                breakpoints={{
+                                  lg: 1200,
+                                  md: 996,
+                                  sm: 768,
+                                  xs: 480,
+                                  xxs: 0,
+                                }}
                                 rowHeight={20}
-                                // cols={{ lg: 1, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                                layout={Layout}
+                                cols={{ lg: 6, md: 5, sm: 3, xs: 2, xxs: 1 }}
                                 compactType={"vertical"}
                                 isBounded={true}
                                 // isResizable={false}
+                                onLayoutChange={handleLayoutChange}
                               >
                                 {Layout.map((layout, index) => (
                                   <div

@@ -6,7 +6,7 @@ export default function Skills() {
   //   "Skills",
   //   a?.map((e) => e)
   // );
-  console.log("skill", skill);
+  // console.log("skill", skill);
   return (
     <div className="w-full skills" id="skills">
       <h2 className="text-lg font-poppins font-bold text-top-color skills">

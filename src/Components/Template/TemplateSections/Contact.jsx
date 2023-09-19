@@ -4,7 +4,7 @@ import { FaEnvelope, FaPhoneVolume, FaLocationArrow } from "react-icons/fa";
 /* eslint-disable jsx-a11y/anchor-is-valid */
 export default function Contact() {
   const Contact = useSelector((state) => state?.ResumeDetails?.contact);
-  console.log("Conatct", Contact);
+  // console.log("Contact", Contact);
   return (
     <div className=" w-full " id="contact">
       <h2 className=" text-lg font-poppins font-bold text-top-color ">
@@ -26,7 +26,7 @@ export default function Contact() {
             href=""
             target="_blank"
           >
-            <FaPhoneVolume beat />
+            <FaPhoneVolume/>
           </a>
           <div className="">
             {/* {Contact?.countryFlag} -  */}

@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 export default function Header() {
   const info = useSelector((state) => state?.ResumeDetails?.infoSection);
-  console.log("info", info);
+  // console.log("info", info);
   return (
     <div
       className="flex items-center rounded-t-lg border  bg-blue-500 w-full h-full"

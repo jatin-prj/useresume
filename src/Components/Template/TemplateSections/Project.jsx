@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 export default function Project() {
   const Project = useSelector((state) => state?.ResumeDetails?.project);
-  console.log("pro", Project);
+  // console.log("pro", Project);
   return (
     <div className="py-3 project" id="project">
       <h2 className="text-lg font-poppins font-bold text-top-color project">

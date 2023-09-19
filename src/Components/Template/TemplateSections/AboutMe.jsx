@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 export default function AboutMe() {
   const About = useSelector((state) => state?.ResumeDetails?.about);
-  console.log("about", About);
+  // console.log("about", About);
   // const handleClick = (e) => {
   //   const bound = e.target.id;
   //   console.log(">>>>>..", e.target);

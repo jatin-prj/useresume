@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 export default function Experience() {
   const Experience = useSelector((state) => state?.ResumeDetails?.experience);
-  console.log("Exe", Experience);
+  // console.log("Exe", Experience);
   return (
     <div className="py-3" id="experience">
       <h2 className="text-lg font-poppins font-bold text-top-color ">
