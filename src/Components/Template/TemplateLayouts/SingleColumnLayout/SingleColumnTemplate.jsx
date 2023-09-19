@@ -5,7 +5,7 @@ import AboutMe from "../../TemplateSections/AboutMe";
 import Header from "../../TemplateSections/Header";
 import Project from "../../TemplateSections/Project";
 import Experience from "../../TemplateSections/Experience";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export default function SingleColumnTemplate() {
   const [dragItem, setDragItem] = useState();

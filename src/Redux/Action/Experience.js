@@ -1,12 +1,8 @@
 import { EXPERIENCE } from "../Type";
 
 export const ExperienceDetails = (values) => async (dispatch) => {
-  console.log("values",values);
   try {
-    console.log(
-      values,
-      "valuesvaluesvaluesvaluesvaluesvaluesvaluesvaluesvaluesvalues"
-    );
+    console.log(values ,"valuesvaluesvaluesvaluesvaluesvaluesvaluesvaluesvaluesvalues");
     localStorage.setItem("Experience-info", JSON.stringify(values));
     await dispatch({ type: EXPERIENCE, payload: values });
     return Promise.resolve(values);

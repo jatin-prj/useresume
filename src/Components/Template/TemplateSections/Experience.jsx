@@ -13,12 +13,12 @@ export default function Experience() {
 
         <div className="flex justify-between w-full flex-wrap  ">
           {Experience?.experienceData?.map((ele, index) => (
-            <div className="flex flex-col w-1/2 ">
+            <div className="flex flex-col w-1/2 " key={index}>
               <p className="text-lg font-bold text-gray-700 ">
                 {ele?.companyName}
               </p>
               <p className="font-semibold text-sm text-gray-700 ">
-                {ele?.workYear} - Present
+                {ele?.startYear} - {ele?.endYear ? ele?.endYear : "Present"}
               </p>
               <p className="font-semibold text-sm text-gray-700 mt-2 mb-1 ">
                 Key Responsibilities

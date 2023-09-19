@@ -1,7 +1,10 @@
-export default function ContentBody({children}) {
+export default function ContentBody({ children }) {
   return (
-    <div className="p-7 sm:ml-64">
-      {children}
-    </div>
+    <main className="relative top-[4.5rem]">
+      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 ">
+        {/* Your content */}
+        {children}
+      </div>
+    </main>
   );
 }

@@ -5,8 +5,13 @@ export default function AboutMe() {
   console.log("about", About);
   return (
     <div>
-      <h2 className="text-3xl font-bold">About Me</h2>
-      {About?.about}
+      {About?.length > 0 && (
+        <div>
+          <h2 className="text-xl font-bold">About Me</h2>
+          <p> {About?.about}</p>
+        </div>
+      )}
+      
     </div>
   );
 }

@@ -15,23 +15,28 @@ export default function Navbar() {
   return (
     <>
       <div className="min-h-full">
-        <Disclosure as="nav" className="fixed bg-gray-800 w-full h-[4.5rem]">
+        <Disclosure
+          as="nav"
+          className="fixed bg-gray-800 w-full h-[4.5rem] border-b-2 border-slate-600 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] z-10"
+        >
           {({ open }) => (
             <>
-              <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 w-full">
+              <div className="mx-auto max-w-screen-2xl px-4 sm:px-6  w-full">
                 <div className="flex h-[4.5rem] items-center justify-between">
                   <div className="flex">
                     <div className="flex">
-                      <div className="flex items-center w-14 h-14">
+                      {/* <div className="flex items-center w-14 h-14">
                         <button className="rounded-md w-full text-white hover:bg-gray-700">
                           {Icons.barIcon}
                         </button>
-                      </div>
-                      <div className="flex items-center w-52">
-                        <p class="inline-block align-middle text-white text-3xl w-full">
-                          useResume
-                        </p>
-                      </div>
+                      </div> */}
+                      <Link to={"/"}>
+                        <div className="flex items-center w-52">
+                          <p class="inline-block align-middle text-white text-3xl w-full">
+                            useResume
+                          </p>
+                        </div>
+                      </Link>
                     </div>
                     <div className="2xl:flex xl:flex lg:flex items-center md:block hidden">
                       <div className=" flex items-baseline space-x-4">
@@ -167,19 +172,6 @@ export default function Navbar() {
             </>
           )}
         </Disclosure>
-
-        {/* <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              Dashboard
-            </h1>
-          </div>
-        </header> */}
-        <main>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            {/* Your content */}
-          </div>
-        </main>
       </div>
     </>
   );

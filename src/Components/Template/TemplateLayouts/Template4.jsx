@@ -2,18 +2,17 @@
 import React, { useState, useEffect } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
-// import "/node_modules/react-resizable/css/styles.css";
-import Header from "../../TemplateSections/Header";
-import Contact from "../../TemplateSections/Contact";
-import AboutMe from "../../TemplateSections/AboutMe";
-import Skills from "../../TemplateSections/Skills";
-import Experience from "../../TemplateSections/Experience";
-import Project from "../../TemplateSections/Project";
-import Education from "../../TemplateSections/Education";
+import Header from "../TemplateSections/Header";
+import AboutMe from "../TemplateSections/AboutMe";
+import Contact from "../TemplateSections/Contact";
+import Experience from "../TemplateSections/Experience";
+import Skills from "../TemplateSections/Skills";
+import Project from "../TemplateSections/Project";
+import Education from "../TemplateSections/Education";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-export default function TwoColumnLayout() {
+export default function Template4() {
   const [compactType, setcompactType] = useState("vertical");
   const [mounted, setMounted] = useState(false);
   const [isDraggable, setIsDraggable] = useState();
@@ -36,9 +35,9 @@ export default function TwoColumnLayout() {
       h: 8,
       name: <AboutMe />,
     },
-    { i: "experience", x: 0, y: 2, w: 4, h: 20, name: <Experience /> },
-    { i: "skills", x: 4, y: 2, w: 1, h: 20, name: <Skills /> },
-    { i: "project", x: 0, y: 3, w: 5, h: 9, name: <Project /> },
+    { i: "experience", x: 0, y: 2, w: 2, h: 30, name: <Experience /> },
+    { i: "project", x: 2, y: 2, w: 3, h: 20, name: <Project /> },
+    { i: "skills", x: 2, y: 3, w: 3, h: 10, name: <Skills /> },
     { i: "education", x: 0, y: 4, w: 5, h: 20, name: <Education /> },
   ]);
 

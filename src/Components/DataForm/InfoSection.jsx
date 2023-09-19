@@ -1,39 +1,43 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link, json, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PersonalDetails } from "../../Redux/Action/Information";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-
+import { FaArrowRight, FaCloudUploadAlt } from "react-icons/fa";
+import { designationData } from "../../Redux/Action/Data";
+import profile from "../../Assests/Img/profile.avif";
+import { inputCss, labelCss } from "../TailwindCss/tailwindCss";
 export default function InfoSection() {
-  const { page } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [img, setImg] = useState();
+  // state for set user profile image
+  const [img, setImg] = useState(profile);
 
   const formik = useFormik({
     initialValues: {
-      ImgUrl: "",
-      username: "",
-      subtitle: "",
+      Profile: "",
+      FullName: "",
+      Designation: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("* Please Enter Your Password"),
-      subtitle: Yup.string().required("* Please Enter Your Designation"),
+      FullName: Yup.string().required("*  Enter Your Full Name"),
+      Designation: Yup.string().required("*  Enter Your Designation"),
     }),
     onSubmit: (values, { resetForm }) => {
-      let data = {
-        ImgUrl: img,
-        username: values?.username,
-        subtitle: values?.subtitle,
+      let FieldData = {
+        Profile: img,
+        FullName: values?.FullName,
+        Designation: values?.Designation,
       };
-      dispatch(PersonalDetails(data)).then((res) => {
+      // dispatch for PersonalDetails
+      dispatch(PersonalDetails(FieldData)).then((res) => {
         if (res) {
-          navigate(`/templates/${page}/contactform`);
+          navigate(`/templates/contactform`);
         }
       });
       console.log("values", values);
-      resetForm({ values: "", data: "" });
+      resetForm({ values: "", FieldData: "" });
     },
   });
 
@@ -41,80 +45,102 @@ export default function InfoSection() {
     <>
       <div className="mx-5 ">
         <h3 className="mb-4 text-lg font-medium leading-none text-gray-900">
-          Header Details
+          Personal Information
         </h3>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid gap-4 mb-4 sm:grid-cols-2 ">
-            <div>
-              <label
-                htmlFor="username"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Username
-              </label>
+            {/* full Name  */}
+            <div className="pb-0 relative mb-0">
               <input
                 type="text"
-                name="username"
-                id="username"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="username.example"
+                name="FullName"
+                id="FullName"
+                className={`${inputCss}`}
+                placeholder="  "
                 onChange={formik.handleChange}
-                value={formik.values.username}
+                value={formik.values.FullName}
                 onBlur={formik.handleBlur}
               />
-              {formik.touched.username && formik.errors.username && (
-                <div className="text-red-400">{formik.errors.username}</div>
+              <label htmlFor="FullName" className={`${labelCss}`}>
+                Full Name
+              </label>
+              {formik.touched.FullName && formik.errors.FullName && (
+                <div className="text-red-400">{formik.errors.FullName}</div>
               )}
             </div>
-            <div>
+            {/* profile picture  */}
+            <div className="mt-2 sm:-mt-10">
               <label
                 htmlFor="ImgUrl"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block mr-[75%] sm:mr-0 mb-2 text-sm font-medium text-gray-900 text-center"
               >
-                ImgUrl
+                Profile Picture
               </label>
-              <input
-                accept="image/*"
-                type="file"
-                name="ImgUrl"
-                id="ImgUrl"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="name@company.com"
-                onChange={(e) => setImg(URL.createObjectURL(e.target.files[0]))}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.ImgUrl && formik.errors.ImgUrl && (
-                <div className="text-red-400">{formik.errors.ImgUrl}</div>
+
+              <div className=" sm:mx-auto   rounded-full border border-blue-300  w-20 h-20 ">
+                <img
+                  className="  w-full object-cover w-full h-full rounded-full"
+                  src={img}
+                />
+                <label
+                  htmlFor="dropzone-file"
+                  className="relative left-12 -top-7 flex flex-col w-8 h-8 items-center justify-center border-2 border-blue-300    rounded-full cursor-pointer bg-blue-500 hover:bg-blue-300 "
+                >
+                  <FaCloudUploadAlt size={18} className="text-white" />
+
+                  <input
+                    id="dropzone-file"
+                    accept="image/*"
+                    type="file"
+                    name="Profile"
+                    className="hidden"
+                    onChange={(e) =>
+                      setImg(URL.createObjectURL(e.target.files[0]))
+                    }
+                    onBlur={formik.handleBlur}
+                  />
+                </label>
+              </div>
+              {formik.touched.Profile && formik.errors.Profile && (
+                <div className="text-red-400">{formik.errors.Profile}</div>
               )}
             </div>
-            <div>
-              <label
-                htmlFor="subtitle"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                SubTitle
-              </label>
+            {/* Designation(profession) */}
+            <div className="relative">
               <input
-                type="subtitle"
-                name="subtitle"
-                id="subtitle"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="name@company.com"
+                type="text"
+                name="Designation"
+                list="Designation"
+                id="designation"
+                className={`${inputCss}`}
+                placeholder=" "
                 onChange={formik.handleChange}
-                value={formik.values.subtitle}
+                value={formik.values.Designation}
                 onBlur={formik.handleBlur}
               />
-              {formik.touched.subtitle && formik.errors.subtitle && (
-                <div className="text-red-400">{formik.errors.subtitle}</div>
+              <label htmlFor="designation" className={`${labelCss}`}>
+                Profession
+              </label>
+
+              <datalist id="Designation">
+                {designationData.map((d) => (
+                  <option key={d.value} value={d.label} className="" />
+                ))}
+              </datalist>
+
+              {formik.touched.Designation && formik.errors.Designation && (
+                <div className="text-red-400">{formik.errors.Designation}</div>
               )}
             </div>
           </div>
-          <div className="">
+          <div>
+            {/* next button  */}
             <button
               type="submit"
-              className="bg-blue-700 border hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              style={{ backgroundColor: "rgb(29 78 216)" }}
+              className="transform transition duration-500 hover:scale-110  border text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
-              Next
+              <FaArrowRight className="text-white" />
             </button>
           </div>
         </form>

@@ -2,18 +2,17 @@
 import React, { useState, useEffect } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
-// import "/node_modules/react-resizable/css/styles.css";
-import Header from "../../TemplateSections/Header";
-import Contact from "../../TemplateSections/Contact";
-import AboutMe from "../../TemplateSections/AboutMe";
-import Skills from "../../TemplateSections/Skills";
-import Experience from "../../TemplateSections/Experience";
-import Project from "../../TemplateSections/Project";
-import Education from "../../TemplateSections/Education";
+import Header from "../TemplateSections/Header";
+import AboutMe from "../TemplateSections/AboutMe";
+import Contact from "../TemplateSections/Contact";
+import Experience from "../TemplateSections/Experience";
+import Skills from "../TemplateSections/Skills";
+import Project from "../TemplateSections/Project";
+import Education from "../TemplateSections/Education";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-export default function TwoColumnLayout() {
+export default function Template3() {
   const [compactType, setcompactType] = useState("vertical");
   const [mounted, setMounted] = useState(false);
   const [isDraggable, setIsDraggable] = useState();
