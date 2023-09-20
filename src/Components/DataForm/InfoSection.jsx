@@ -5,9 +5,14 @@ import { PersonalDetails } from "../../Redux/Action/Information";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { FaArrowRight, FaCloudUploadAlt } from "react-icons/fa";
-import { designationData } from "../../Redux/Action/Data";
 import profile from "../../Assests/Img/profile.avif";
-import { inputCss, labelCss } from "../TailwindCss/tailwindCss";
+import {
+  formButtonCss,
+  formHeadingCss,
+  inputCss,
+  labelCss,
+} from "../TailwindCss/tailwindCss";
+import { designationData } from "../../Redux/Action/Data";
 export default function InfoSection() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -44,9 +49,7 @@ export default function InfoSection() {
   return (
     <>
       <div className="mx-5 ">
-        <h3 className="mb-4 text-lg font-medium leading-none text-gray-900">
-          Personal Information
-        </h3>
+        <h3 className={`${formHeadingCss}`}>Personal Information</h3>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid gap-4 mb-4 sm:grid-cols-2 ">
             {/* full Name  */}
@@ -60,6 +63,7 @@ export default function InfoSection() {
                 onChange={formik.handleChange}
                 value={formik.values.FullName}
                 onBlur={formik.handleBlur}
+                autoComplete="off"
               />
               <label htmlFor="FullName" className={`${labelCss}`}>
                 Full Name
@@ -72,7 +76,7 @@ export default function InfoSection() {
             <div className="mt-2 sm:-mt-10">
               <label
                 htmlFor="ImgUrl"
-                className="block mr-[75%] sm:mr-0 mb-2 text-sm font-medium text-gray-900 text-center"
+                className={`block mr-[70%] sm:mr-0 mb-2 text-center ${formHeadingCss}`}
               >
                 Profile Picture
               </label>
@@ -85,7 +89,7 @@ export default function InfoSection() {
                 />
                 <label
                   htmlFor="dropzone-file"
-                  className="relative left-12 -top-7 flex flex-col w-8 h-8 items-center justify-center border-2 border-blue-300    rounded-full cursor-pointer bg-blue-500 hover:bg-blue-300 "
+                  className="relative left-12 -top-7 flex flex-col w-8 h-8 items-center justify-center border-2 border-cyan-500  rounded-full cursor-pointer bg-cyan-700 hover:bg-cyan-500 "
                 >
                   <FaCloudUploadAlt size={18} className="text-white" />
 
@@ -134,13 +138,9 @@ export default function InfoSection() {
               )}
             </div>
           </div>
-          <div>
+          <div className="flex justify-end">
             {/* next button  */}
-            <button
-              type="submit"
-              style={{ backgroundColor: "rgb(29 78 216)" }}
-              className="transform transition duration-500 hover:scale-110  border text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
+            <button type="submit" className={`${formButtonCss}`}>
               <FaArrowRight className="text-white" />
             </button>
           </div>

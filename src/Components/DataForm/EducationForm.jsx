@@ -5,7 +5,12 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { EducationDetails } from "../../Redux/Action/Education";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
-import { inputCss, labelCss } from "../TailwindCss/tailwindCss";
+import {
+  formButtonCss,
+  formHeadingCss,
+  inputCss,
+  labelCss,
+} from "../TailwindCss/tailwindCss";
 
 export default function EducationForm() {
   const navigate = useNavigate();
@@ -108,13 +113,10 @@ export default function EducationForm() {
         <form onSubmit={formik.handleSubmit}>
           {/* Add button and heading of form  */}
           <div className="flex justify-between">
-            <h3 className="mb-4 text-lg  font-medium leading-none text-gray-900">
-              Education Details
-            </h3>
+            <h3 className={`${formHeadingCss}`}>Education Details</h3>
             <button
               type="button"
-              style={{ backgroundColor: "rgb(29 78 216)" }}
-              className="transform transition duration-500 hover:scale-110 mr-1 border text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
+              className={`${formButtonCss}`}
               onClick={() => addInputField()}
             >
               <FaPlus className="text-white " />
@@ -133,13 +135,13 @@ export default function EducationForm() {
               <div key={index}>
                 {/* Remove button  */}
                 <div className="flex justify-between">
-                  <h3 className="mb-4 text-lg  font-medium leading-none text-gray-900">
+                  <h3 className={`${formHeadingCss}`}>
                     {index > 0 && "New Details"}
                   </h3>
                   <div className=" flex items-end cursor-pointer ">
                     {index > 0 && (
                       <div
-                        className={`transform transition duration-500 hover:scale-110 p-1 text-white flex justify-center items-center  bg-red-400 text-center px-5 py-2.5 rounded-lg`}
+                        className={`${formButtonCss}`}
                         onClick={() => removeInputFields(index)}
                       >
                         <FaTrash className="" />
@@ -164,6 +166,7 @@ export default function EducationForm() {
                       }
                       value={instituteName}
                       onBlur={formik.handleBlur}
+                      autoComplete="off"
                     />
                     <label htmlFor="instituteName" className={`${labelCss}`}>
                       School or College Name
@@ -188,6 +191,7 @@ export default function EducationForm() {
                       }
                       value={course}
                       onBlur={formik.handleBlur}
+                      autoComplete="off"
                     />
                     <label htmlFor="cource" className={`${labelCss}`}>
                       Course Name
@@ -245,7 +249,8 @@ export default function EducationForm() {
                       />
                       <label
                         htmlFor={`presentcheck${index}`}
-                        className="ml-2 text-sm font-medium text-gray-900 "
+                        // className="ml-2 text-sm font-medium text-gray-900 "
+                        className={`ml-2 text-sm ${formHeadingCss}`}
                       >
                         Pursuing
                       </label>
@@ -301,6 +306,7 @@ export default function EducationForm() {
                         }
                         value={percentage}
                         onBlur={formik.handleBlur}
+                        autoComplete="off"
                       />
                       <label htmlFor="percentage" className={`${labelCss}`}>
                         Enter Percentage
@@ -323,17 +329,13 @@ export default function EducationForm() {
             <Link to={`/templates/aboutform`}>
               <button
                 type="button "
-                className=" bg-blue-300 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                className={`bg-[#309ba0] ${formButtonCss.split("form-button")}`}
               >
                 <FaArrowLeft className="text-white " />
               </button>
             </Link>
 
-            <button
-              type="submit"
-              style={{ backgroundColor: "rgb(29 78 216)" }}
-              className="transform transition duration-500 hover:scale-110 border text-white   focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
-            >
+            <button type="submit" className={`${formButtonCss}`}>
               <FaArrowRight className="text-white " />
             </button>
           </div>

@@ -35,7 +35,7 @@ export default function Navbar() {
 
                       <Link to={"/"}>
                         <div className="flex items-center w-52">
-                          <p className="inline-block align-middle text-[#07919e] text-3xl w-full">
+                          <p className="inline-block align-middle text-[#0e7490] text-3xl w-full">
                             useResume
                           </p>
                         </div>
@@ -50,8 +50,8 @@ export default function Navbar() {
                             className={`
                               ${
                                 location.pathname.includes(item.path)
-                                  ? "text-[#066970] px-3 py-2 text-sm font-medium"
-                                  : "text-[#07919e] group relative inline-block overflow-hidden px-3 py-2 text-sm font-normal"
+                                  ? "text-cyan-700 px-3 py-2 text-sm font-medium"
+                                  : "text-cyan-500 group relative inline-block overflow-hidden px-3 py-2 text-sm font-normal"
                               }
                             `}
                             aria-current={item.current ? "page" : undefined}

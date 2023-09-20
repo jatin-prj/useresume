@@ -13,13 +13,12 @@ export default function AboutMe() {
   // }, []);
   return (
     <div>
-      {About?.length > 0 && (
+      {About?.about && (
         <div>
           <h2 className="text-xl font-bold">About Me</h2>
           <p> {About?.about}</p>
         </div>
       )}
-      
     </div>
   );
 }

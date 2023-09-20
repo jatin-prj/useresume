@@ -4,6 +4,7 @@ import { Templates } from "../../../Components/Template/TemplateLayouts/Template
 import TemplateModal from "../../../Components/Template/TemplateModal/TemplateModal";
 import { useState } from "react";
 import { LuArrowUpRightFromCircle } from "react-icons/lu";
+import { mainHeadingCss } from "../../../Components/TailwindCss/tailwindCss";
 export default function Builder() {
   const [open, setOpen] = useState(false);
   const [template, setTemplate] = useState();
@@ -16,11 +17,13 @@ export default function Builder() {
     <>
       <div className="relative top-4">
         <div className="text-center">
-          <div className="flex">
-            <p className="text-2xl font-bold w-[86%]">Choose Templates</p>
+          <div className="flex justify-around">
+            <h3 className={`w-[60%] ${mainHeadingCss}`}>Choose Templates</h3>
             <div>
               <Link
-                to={`/templates/preview/template-${localStorage.getItem("template-id")}`}
+                to={`/templates/preview/template-${localStorage.getItem(
+                  "template-id"
+                )}`}
               >
                 <button className="rounded-full bg-slate-100 p-1 w-32">
                   Preview

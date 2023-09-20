@@ -30,8 +30,8 @@ export default function MainSection({ children }) {
                         stepperArray?.findIndex(
                           (e) => e.url === location.pathname
                         )
-                          ? "bg-blue-800"
-                          : "bg-blue-400"
+                          ? "bg-cyan-700"
+                          : "bg-cyan-500"
                       }   `}
                     >
                       <div className="relative">
@@ -55,7 +55,14 @@ export default function MainSection({ children }) {
                       </div>
                     </div>
                     <div
-                      className={`absolute top-12  text-black mt-2 pb-0 mb-3`}
+                      className={`absolute top-12  mt-2 pb-0 mb-3 ${
+                        index <
+                        stepperArray?.findIndex(
+                          (e) => e.url === location.pathname
+                        )
+                          ? "text-cyan-700"
+                          : "text-cyan-500"
+                      }`}
                     >
                       {stepperData?.name}
                     </div>
@@ -68,8 +75,8 @@ export default function MainSection({ children }) {
                       stepperArray?.findIndex(
                         (e) => e.url === location.pathname
                       )
-                        ? "border-blue-800"
-                        : "border-blue-400"
+                        ? "border-cyan-700"
+                        : "border-cyan-500"
                     } ${
                       index < stepperArray?.length - 1 ? "w-[13rem]" : "w-1"
                     } `}

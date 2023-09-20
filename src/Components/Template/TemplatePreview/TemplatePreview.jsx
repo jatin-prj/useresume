@@ -149,7 +149,7 @@ export default function TemplatePreview() {
               </div>
 
               <div
-                className="p-2 bg-[#0a7c87] md:w-[18%] flex flex-col md:flex hidden md:fixed right-0"
+                className="p-2 bg-cyan-700 md:w-[18%] flex flex-col md:flex hidden md:fixed right-0"
                 id="sideNav"
               >
                 <div className="bg-white h-[45rem]">
@@ -168,8 +168,8 @@ export default function TemplatePreview() {
                   </div>
                 </div>
                 <a
-                  className="block text-slate-800 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white mt-auto"
-                  href="#"
+                  className="block mt-3 text-base text-slate-900 py-2.5 px-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white mt-auto"
+                  // href="#"
                 >
                   Kuldip Chatrala
                 </a>
