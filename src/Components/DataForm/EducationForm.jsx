@@ -5,10 +5,12 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { EducationDetails } from "../../Redux/Action/Education";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
+import { inputCss, labelCss } from "../TailwindCss/tailwindCss";
 
 export default function EducationForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // state for all input fields
   const [inputFields, setInputFields] = useState([
     {
       startYear: "",
@@ -19,7 +21,7 @@ export default function EducationForm() {
       presentcheck: false,
     },
   ]);
-
+  // Add field function
   const addInputField = () => {
     setInputFields([
       ...inputFields,
@@ -33,15 +35,19 @@ export default function EducationForm() {
       },
     ]);
   };
+  // remove field function
   const removeInputFields = (index) => {
     let items = inputFields.filter((_, indexOf) => indexOf !== index);
     setInputFields(items);
   };
+  // checktick funtion for checking true and false for present or not
   const checktick = (e, ind) => {
     if (e.presentcheck === true) {
       return ind + 1;
     }
   };
+
+  // handleChange function used when user change the data in particular field
   const handleChange = (index, event) => {
     const list = [...inputFields];
     let ind = list?.map((e, index) => {
@@ -74,7 +80,7 @@ export default function EducationForm() {
         is: false,
         then: () => Yup.string().required("* Enter End Date"),
       }),
-      course: Yup.string().required("* Please Enter Cource"),
+      course: Yup.string().required("*  Enter Cource"),
       instituteName: Yup.string().required("* Enter School or College Name"),
       percentage: Yup.string().when("presentcheck", {
         is: false,
@@ -85,6 +91,7 @@ export default function EducationForm() {
       let data = {
         educationData: inputFields,
       };
+      // dispatch for education
       dispatch(EducationDetails(data)).then((res) => {
         if (res) {
           navigate(`/templates/experienceform`);
@@ -99,18 +106,19 @@ export default function EducationForm() {
     <>
       <div className="mx-5">
         <form onSubmit={formik.handleSubmit}>
+          {/* Add button and heading of form  */}
           <div className="flex justify-between">
             <h3 className="mb-4 text-lg  font-medium leading-none text-gray-900">
               Education Details
             </h3>
-            <div
+            <button
               type="button"
               style={{ backgroundColor: "rgb(29 78 216)" }}
-              className="mr-1 border text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
+              className="transform transition duration-500 hover:scale-110 mr-1 border text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
               onClick={() => addInputField()}
             >
               <FaPlus className="text-white " />
-            </div>
+            </button>
           </div>
           {inputFields.map((data, index) => {
             const {
@@ -122,7 +130,8 @@ export default function EducationForm() {
               presentcheck,
             } = data;
             return (
-              <>
+              <div key={index}>
+                {/* Remove button  */}
                 <div className="flex justify-between">
                   <h3 className="mb-4 text-lg  font-medium leading-none text-gray-900">
                     {index > 0 && "New Details"}
@@ -130,7 +139,7 @@ export default function EducationForm() {
                   <div className=" flex items-end cursor-pointer ">
                     {index > 0 && (
                       <div
-                        className={`p-1 text-white flex justify-center items-center  bg-red-400 text-center px-5 py-2.5 rounded-lg`}
+                        className={`transform transition duration-500 hover:scale-110 p-1 text-white flex justify-center items-center  bg-red-400 text-center px-5 py-2.5 rounded-lg`}
                         onClick={() => removeInputFields(index)}
                       >
                         <FaTrash className="" />
@@ -139,19 +148,14 @@ export default function EducationForm() {
                   </div>
                 </div>
                 <div className="flex w-full  flex-wrap gap-4 mb-10 ">
-                  <div className="w-full md:w-2/5  ">
-                    <label
-                      htmlFor="instituteName"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      School or College Name
-                    </label>
+                  {/* Institute Name (school or college ) */}
+                  <div className="w-full md:w-2/5 relative">
                     <input
                       type="text"
                       name="instituteName"
                       id="instituteName"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                      placeholder="Enter School or College Name"
+                      className={`${inputCss} mb-3`}
+                      placeholder=" "
                       onChange={(e) =>
                         formik.setFieldValue(
                           "instituteName",
@@ -161,6 +165,9 @@ export default function EducationForm() {
                       value={instituteName}
                       onBlur={formik.handleBlur}
                     />
+                    <label htmlFor="instituteName" className={`${labelCss}`}>
+                      School or College Name
+                    </label>
                     {formik.touched.instituteName &&
                       formik.errors.instituteName && (
                         <div className="text-red-400">
@@ -168,44 +175,36 @@ export default function EducationForm() {
                         </div>
                       )}
                   </div>
-                  <div className="w-full md:w-2/5">
-                    <label
-                      htmlFor="cource"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Course Name
-                    </label>
+                  {/* course  */}
+                  <div className="w-full md:w-2/5 relative">
                     <input
                       type="text"
                       name="course"
                       id="course"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                      placeholder="Enter course Name"
+                      className={`${inputCss} mb-3`}
+                      placeholder=" "
                       onChange={(e) =>
                         formik.setFieldValue("course", handleChange(index, e))
                       }
                       value={course}
                       onBlur={formik.handleBlur}
                     />
+                    <label htmlFor="cource" className={`${labelCss}`}>
+                      Course Name
+                    </label>
                     {formik.touched.course && formik.errors.course && (
                       <div className="text-red-400">{formik.errors.course}</div>
                     )}
                   </div>
-
-                  <div className="w-full md:w-2/5  ">
-                    <label
-                      htmlFor="startYear"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Starting Year Date
-                    </label>
+                  {/* start Year date  */}
+                  <div className="w-full md:w-2/5 relative ">
                     <input
                       type="date"
                       min="1949-01-01"
                       max={new Date().toISOString().split("T")[0]}
                       name="startYear"
                       id="startYear"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                      className={`${inputCss} mb-3`}
                       placeholder="Enter Passing Year"
                       onChange={(e) =>
                         formik.setFieldValue(
@@ -216,15 +215,21 @@ export default function EducationForm() {
                       onBlur={formik.handleBlur}
                       value={startYear}
                     />
+                    <label
+                      htmlFor="startYear"
+                      className={`${labelCss} text-xl`}
+                    >
+                      Starting Year Date
+                    </label>
                     {formik.touched.startYear && formik.errors.startYear && (
                       <div className="text-red-400">
                         {formik.errors.startYear}
                       </div>
                     )}
                   </div>
-
-                  <div className="w-full md:w-2/5  mt-8">
-                    <div className=" mr-4">
+                  {/* present checkbox  */}
+                  <div className="w-full md:w-2/5 mt-3">
+                    <div className=" mr-4 mb-3">
                       <input
                         id={`presentcheck${index}`}
                         type="checkbox"
@@ -236,7 +241,7 @@ export default function EducationForm() {
                           )
                         }
                         checked={presentcheck}
-                        className="w-4 h-4 text-blue-600 bg-blue-100 border-blue-300 rounded focus:ring-blue-500 focus:ring-2"
+                        className="w-4 h-4 text-blue-600 bg-blue-100 rounded  "
                       />
                       <label
                         htmlFor={`presentcheck${index}`}
@@ -246,23 +251,16 @@ export default function EducationForm() {
                       </label>
                     </div>
                   </div>
-
+                  {/* End Year Date  */}
                   {!presentcheck && (
-                    <div className="w-full md:w-2/5  ">
-                      <label
-                        htmlFor="endYear"
-                        className="block mb-2 text-sm font-medium text-gray-900"
-                      >
-                        Ending Year Date
-                      </label>
+                    <div className="w-full md:w-2/5 relative  ">
                       <input
                         type="date"
                         max={new Date().toISOString().split("T")[0]}
-                        min={formik.values.startYear}
-
+                        min={startYear}
                         name="endYear"
                         id="endYear"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                        className={`${inputCss} mb-3`}
                         placeholder="Enter Passing Year"
                         onChange={(e) =>
                           formik.setFieldValue(
@@ -273,6 +271,12 @@ export default function EducationForm() {
                         onBlur={formik.handleBlur}
                         value={!presentcheck && endYear}
                       />
+                      <label
+                        htmlFor="endYear"
+                        className={`${labelCss} text-xl`}
+                      >
+                        Ending Year Date
+                      </label>
                       {formik.touched.endYear && formik.errors.endYear && (
                         <div className="text-red-400">
                           {formik.errors.endYear}
@@ -280,21 +284,15 @@ export default function EducationForm() {
                       )}
                     </div>
                   )}
-
+                  {/* percentage  */}
                   {!presentcheck && (
-                    <div className="w-full md:w-2/5 ">
-                      <label
-                        htmlFor="percentage"
-                        className="block mb-2 text-sm font-medium text-gray-900"
-                      >
-                        Enter Percentage
-                      </label>
+                    <div className="w-full md:w-2/5 relative ">
                       <input
                         type="text"
                         name="percentage"
                         id="percentage"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                        placeholder="Enter Percentage"
+                        className={`${inputCss} mb-3`}
+                        placeholder=" "
                         onChange={(e) =>
                           formik.setFieldValue(
                             "percentage",
@@ -304,6 +302,9 @@ export default function EducationForm() {
                         value={percentage}
                         onBlur={formik.handleBlur}
                       />
+                      <label htmlFor="percentage" className={`${labelCss}`}>
+                        Enter Percentage
+                      </label>
 
                       {formik.touched.percentage &&
                         formik.errors.percentage && (
@@ -314,10 +315,10 @@ export default function EducationForm() {
                     </div>
                   )}
                 </div>
-              </>
+              </div>
             );
           })}
-
+          {/* Button group  */}
           <div className="flex justify-between mt-2">
             <Link to={`/templates/aboutform`}>
               <button
@@ -331,7 +332,7 @@ export default function EducationForm() {
             <button
               type="submit"
               style={{ backgroundColor: "rgb(29 78 216)" }}
-              className="border text-white   focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
+              className="transform transition duration-500 hover:scale-110 border text-white   focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
             >
               <FaArrowRight className="text-white " />
             </button>

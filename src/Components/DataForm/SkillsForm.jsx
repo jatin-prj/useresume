@@ -2,38 +2,41 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { SkillDetails } from "../../Redux/Action/skill";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 import { TagsInput } from "react-tag-input-component";
+import "../../App.css";
+import { inputCss, labelCss } from "../TailwindCss/tailwindCss";
 
 export default function SkillsForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const templateId = localStorage.getItem("template-id");
   const expertise = ["Expert", "Intermediate", "Beginner"];
+  // state for input fields
   const [inputFields, setInputFields] = useState([
     {
       skill: ["C"],
       rating: "Expert",
     },
   ]);
-
+  // Add field function
   const addInputField = () => {
     setInputFields([
       ...inputFields,
       {
         skill: [],
-        rating: "Expert",
+        rating: "",
       },
     ]);
   };
-
+  // remove field function
   const removeInputFields = (index) => {
     let items = inputFields.filter((_, indexOf) => indexOf !== index);
     setInputFields(items);
   };
-
+  // handleChange funtion is used when user change on particular field
   const handleChange = (index, event) => {
     let list = [...inputFields];
     setInputFields(list);
@@ -43,21 +46,22 @@ export default function SkillsForm() {
 
   const formik = useFormik({
     initialValues: {
-      skill: [],
+      skill: ["C"],
       rating: "Expert",
     },
     validationSchema: Yup.object({
-      skill: Yup.array().required("* Please Enter Skill"),
-      rating: Yup.string().required("* Please Select Level "),
+      skill: Yup.array().required("*  Enter Skill").min(1),
+      rating: Yup.string().required("*  Select Level "),
     }),
     onSubmit: (values, { resetForm }) => {
       let data = inputFields;
+      // dispatch for skill detail
       dispatch(SkillDetails(data)).then((res) => {
         if (res) {
-          navigate(`/templates/preview/template-${templateId}`);
+          navigate(`/templates/template-${templateId}/preview`);
         }
       });
-      console.log("values", data);
+      console.log("values", data, values);
       resetForm({ values: "" });
     },
   });
@@ -66,6 +70,7 @@ export default function SkillsForm() {
     <>
       <div className="mx-5">
         <form onSubmit={formik.handleSubmit}>
+          {/* Add button and heading of form  */}
           <div className=" flex justify-between">
             <h3 className="mb-4 text-lg font-medium leading-none text-gray-900">
               Skills Details
@@ -73,7 +78,7 @@ export default function SkillsForm() {
             <button
               type="button"
               style={{ backgroundColor: "rgb(29 78 216)" }}
-              className=" mr-1 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              className="transform transition duration-500 hover:scale-110 mr-1 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               onClick={() => addInputField()}
             >
               <FaPlus className="text-white" />
@@ -82,15 +87,16 @@ export default function SkillsForm() {
           {inputFields?.map((data, index) => {
             const { skill, rating } = data;
             return (
-              <>
-                <div className="flex justify-between">
+              <div key={index}>
+                {/* remove button  */}
+                <div className="flex justify-between ">
                   <h3 className="mb-4 text-lg  font-medium leading-none text-gray-900">
                     {index > 0 && "New Details"}
                   </h3>
                   <div className=" flex items-end cursor-pointer ">
                     {index > 0 && (
                       <div
-                        className={`p-1 text-white flex justify-center items-center  bg-red-400 text-center px-5 py-2.5 rounded-lg`}
+                        className={`transform transition duration-500 hover:scale-110 p-1 text-white flex justify-center items-center  bg-red-400 text-center px-5 py-2.5 rounded-lg`}
                         onClick={() => removeInputFields(index)}
                       >
                         <FaTrash className="" />
@@ -98,18 +104,9 @@ export default function SkillsForm() {
                     )}
                   </div>
                 </div>
-                <div
-                  key={index}
-                  className="flex  gap-4 items-end flex-wrap  mt-2 mb-5"
-                >
-                  <div key={index} className="w-2/5 mb-4 ">
-                    <label
-                      htmlFor="countries"
-                      className="block mb-2 text-sm font-medium text-gray-900 "
-                    >
-                      Select Level
-                    </label>
-
+                <div className="flex  gap-4 items-end flex-wrap mb-5">
+                  {/* rating field (select option for expertise ) */}
+                  <div key={index} className="w-full md:w-2/5  relative">
                     <select
                       id="rating"
                       name="rating"
@@ -117,7 +114,7 @@ export default function SkillsForm() {
                         formik.setFieldValue("rating", handleChange(index, e))
                       }
                       value={rating}
-                      className="bg-gray-50 border  border-gray-300 text-red-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+                      className={`${inputCss} `}
                     >
                       {expertise?.map((expert, index) => (
                         <option key={index} value={expert}>
@@ -126,25 +123,25 @@ export default function SkillsForm() {
                       ))}
                     </select>
 
-                    {formik.touched.rating && formik.errors.rating && (
-                      <div className="text-red-400">{formik.errors.rating}</div>
-                    )}
-                  </div>
-                  <div className="w-2/5">
-                    <label
-                      htmlFor="skill"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Enter Skills
+                    <label htmlFor="rating" className={`${labelCss} text-xl`}>
+                      Select Level
                     </label>
 
+                    {formik.touched.rating && formik.errors.rating && (
+                      <div className="text-red-400 ">
+                        {formik.errors.rating}
+                      </div>
+                    )}
+                  </div>
+                  {/* react tags input  */}
+                  <div className="w-full md:w-2/5 relative ">
                     <TagsInput
                       value={skill}
                       onChange={(e) =>
                         formik.setFieldValue("skill", handleChange(index, e))
                       }
                       name="skill"
-                      placeHolder="enter Skill"
+                      placeHolder="Enter Skill"
                     />
 
                     {formik.touched.skill && formik.errors.skill && (
@@ -152,10 +149,10 @@ export default function SkillsForm() {
                     )}
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
-
+          {/* Button group  */}
           <div className=" flex justify-between mt-2">
             <Link to={`/templates/projectform`}>
               <button className="bg-blue-300 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
@@ -166,7 +163,7 @@ export default function SkillsForm() {
             <button
               type="submit"
               style={{ backgroundColor: "rgb(29 78 216)" }}
-              className="bg-blue-700 border text-white  hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
+              className="transform transition duration-500 hover:scale-110 bg-blue-700 border text-white  hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
             >
               <FaArrowRight className="text-white" />
             </button>

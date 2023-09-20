@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { ContactDetails } from "../../Redux/Action/Contact";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { countryCode } from "../../Redux/Action/Data";
+import { inputCss, labelCss } from "../TailwindCss/tailwindCss";
 
 export default function ContactForm() {
   const navigate = useNavigate();
@@ -13,19 +14,17 @@ export default function ContactForm() {
     initialValues: {
       email: "",
       contact: "",
-      countryFlag: "",
+      countryFlag: "🇮🇳 +91",
       address: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("* Please Enter Your Email"),
-      contact: Yup.string()
-        .required("* Please Enter Contact Number")
-        .min(10)
-        .max(10),
-      address: Yup.string().required("* Please Enter Your Address"),
+      email: Yup.string().required("*  Enter Your Email"),
+      contact: Yup.string().required("*  Enter Contact Number").min(10).max(10),
+      address: Yup.string().required("*  Enter Your Address"),
       countryFlag: Yup.string().required("* Select Country Code"),
     }),
     onSubmit: (values, { resetForm }) => {
+      // dispatch for contact detail
       dispatch(ContactDetails(values)).then((res) => {
         if (res) {
           navigate(`/templates/aboutform`);
@@ -44,95 +43,102 @@ export default function ContactForm() {
             Contact Details
           </h3>
           <div className="grid gap-4 mb-4 sm:grid-cols-2">
-            <div>
-              <label
-                htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Email
-              </label>
+            {/* Email input */}
+            <div className="relative">
               <input
                 type="text"
                 name="email"
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="Enter Email"
+                className={`${inputCss}`}
+                placeholder="  "
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 onBlur={formik.handleBlur}
               />
+              <label htmlFor="email" className={`${labelCss}`}>
+                Email
+              </label>
               {formik.touched.email && formik.errors.email && (
                 <div className="text-red-400">{formik.errors.email}</div>
               )}
             </div>
-            <div>
-              <label
-                htmlFor="website-admin"
-                className="block mb-2 text-sm font-medium text-gray-900 "
-              >
-                Contact Number
-              </label>
-              <div className="flex">
-                <div className="w-36 inline-flex items-center px-3 text-sm text-gray-900 bg-blue-200 border border-r-0 border-gray-300 rounded-l-md">
-                  <select
+
+            <div className=" relative mt-1 ">
+              <div className=" flex w-full   ">
+                {/* datalist input for country flag and code */}
+                <div className="w-36 inline-flex items-center  text-sm text-gray-900   border-none rounded-l-md">
+                  <input
+                    type="text"
                     name="countryFlag"
                     id="countryFlag"
+                    list="CountryFlag"
+                    className={`${inputCss}`}
                     onChange={formik.handleChange}
                     value={formik.values.countryFlag}
-                    className="w-full border-none appearance-none bg-transparent   "
-                  >
-                    {countryCode?.map((country, index) => (
+                    placeholder="Country code "
+                  />
+                  <datalist id="CountryFlag">
+                    {countryCode.map((country, index) => (
                       <option
                         key={index}
-                        value={country?.emoji + " " + country?.dial_code}
+                        value={country?.emoji + " " + country.dial_code}
                         className=""
-                      >
-                        {country?.emoji} &nbsp;
-                        {country?.dial_code}&nbsp;
-                      </option>
+                      />
                     ))}
-                  </select>
+                  </datalist>
+                  {formik.touched.countryFlag && formik.errors.countryFlag && (
+                    <div className="text-red-400 absolute top-10 ">
+                      {formik.errors.countryFlag}
+                    </div>
+                  )}
                 </div>
+                {/* number input for contact  */}
                 <input
                   type="number"
                   name="contact"
                   id="contact"
-                  className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none bg-gray-50 border border-gray-300 text-gray-900 text-sm  rounded-tr-lg rounded-br-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                  placeholder="Enter Contact Number"
+                  className={`pl-10 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${inputCss}`}
+                  placeholder=" "
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
+                <label
+                  htmlFor="contact"
+                  className={` ${labelCss}   peer-focus:left-36 left-36 `}
+                >
+                  Enter Contact Number
+                </label>
               </div>
               {formik.touched.contact && formik.errors.contact && (
-                <div className="text-red-400">{formik.errors.contact}</div>
+                <div className="text-red-400 absolute left-36">
+                  {formik.errors.contact}
+                </div>
               )}
               {formik.touched.countryFlag && formik.errors.countryFlag && (
                 <div className="text-red-400">{formik.errors.countryFlag}</div>
               )}
             </div>
-
-            <div>
-              <label
-                htmlFor="address"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Address
-              </label>
+            {/* textarea for address  */}
+            <div className="relative z-99">
               <textarea
                 id="address"
                 name="address"
                 rows="2"
-                className="bg-gray-50 border resize-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="Enter Address..."
+                className={`resize-none ${inputCss}`}
+                placeholder=" "
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               ></textarea>
+              <label htmlFor="address" className={`${labelCss}`}>
+                Enter Address
+              </label>
 
               {formik.touched.address && formik.errors.address && (
                 <div className="text-red-400">{formik.errors.address}</div>
               )}
             </div>
           </div>
+          {/* Button group  */}
           <div className="flex justify-between">
             <Link to={`/templates/info`}>
               <button className="bg-blue-300 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
@@ -142,7 +148,7 @@ export default function ContactForm() {
             <button
               type="submit"
               style={{ backgroundColor: "rgb(29 78 216)" }}
-              className=" border text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
+              className=" transform transition duration-500 hover:scale-110 border text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
             >
               <FaArrowRight className="text-white" />
             </button>

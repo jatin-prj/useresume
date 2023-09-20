@@ -9,32 +9,32 @@ export default function MainSection({ children }) {
     <>
       <div className="p-4 w-full" style={{ height: "calc(100vh - 4.3rem" }}>
         <div className="p-1 relative">
-          <ol className=" flex items-center justify-center  w-full mb-4 sm:mb-5 mx-14   relative right-[3rem]">
+          <ol className=" flex items-center justify-center  w-full mb-4 sm:mb-5 mx-14   relative right-[3rem]   ">
             {stepperArray?.map((stepperData, index) => (
               <Fragment key={index}>
-                <li className={`flex w-[3rem] items-center`}>
-                  <div
-                    key={index}
-                    className={`flex flex-col items-center justify-center w-10 h-10  rounded-full lg:h-12 lg:w-12 shrink-0 text-white  ${
-                      index <
+                {/* stepper list  */}
+                <li key={index} className={`flex w-[3rem] items-center`}>
+                  <Link
+                    to={
                       stepperArray?.findIndex(
                         (e) => e.url === location.pathname
-                      )
-                        ? "bg-blue-800"
-                        : "bg-blue-400"
-                    }   `}
+                      ) >
+                        stepperArray?.findIndex(
+                          (e) => e.url === stepperData?.url
+                        ) && stepperData?.url
+                    }
                   >
-                    <Link
-                      to={
+                    <div
+                      className={`flex flex-col items-center justify-center w-10 h-10  rounded-full lg:h-12 lg:w-12 shrink-0 text-white  ${
+                        index <
                         stepperArray?.findIndex(
                           (e) => e.url === location.pathname
-                        ) >
-                          stepperArray?.findIndex(
-                            (e) => e.url === stepperData?.url
-                          ) && stepperData?.url
-                      }
+                        )
+                          ? "bg-blue-800"
+                          : "bg-blue-400"
+                      }   `}
                     >
-                      <div key={index} className="relative">
+                      <div className="relative">
                         {" "}
                         {index <
                         stepperArray?.findIndex(
@@ -46,21 +46,20 @@ export default function MainSection({ children }) {
                             <span
                               className={`${
                                 stepperData?.url === location?.pathname &&
-                                "animate-ping absolute  h-full w-full rounded-full bg-blue-800 opacity-90"
+                                "animate-ping absolute  h-full w-full rounded-full bg-blue-900 opacity-90"
                               }`}
                             ></span>
                             <span>{stepperData?.icon}</span>
                           </>
                         )}
                       </div>
-                    </Link>
+                    </div>
                     <div
-                      key={index}
-                      className="absolute top-14 text-black mt-2 pb-0 mb-3"
+                      className={`absolute top-12  text-black mt-2 pb-0 mb-3`}
                     >
                       {stepperData?.name}
                     </div>
-                  </div>
+                  </Link>
                 </li>
                 {index < stepperArray?.length - 1 && (
                   <span
@@ -80,11 +79,12 @@ export default function MainSection({ children }) {
             ))}
           </ol>
         </div>
-        <div className="flex items-center w-full justify-center  mt-[4rem] mb-[4rem]">
+        <div className="flex items-center w-full justify-center mt-[4rem] mb-[4rem]  ">
           <div
-            className=" w-full md:w-3/4   border p-5  mt-5 mb-5 rounded-lg 
+            className=" w-full md:w-3/4   border p-5  mt-5 mb-5 rounded-lg
           "
           >
+            {/* children component inside main component  */}
             {children}
           </div>
         </div>

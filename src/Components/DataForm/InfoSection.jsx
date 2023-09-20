@@ -7,9 +7,11 @@ import { useState } from "react";
 import { FaArrowRight, FaCloudUploadAlt } from "react-icons/fa";
 import { designationData } from "../../Redux/Action/Data";
 import profile from "../../Assests/Img/profile.avif";
+import { inputCss, labelCss } from "../TailwindCss/tailwindCss";
 export default function InfoSection() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // state for set user profile image
   const [img, setImg] = useState(profile);
 
   const formik = useFormik({
@@ -19,8 +21,8 @@ export default function InfoSection() {
       Designation: "",
     },
     validationSchema: Yup.object({
-      FullName: Yup.string().required("* Please Enter Your Full Name"),
-      Designation: Yup.string().required("* Please Enter Your Designation"),
+      FullName: Yup.string().required("*  Enter Your Full Name"),
+      Designation: Yup.string().required("*  Enter Your Designation"),
     }),
     onSubmit: (values, { resetForm }) => {
       let FieldData = {
@@ -28,6 +30,7 @@ export default function InfoSection() {
         FullName: values?.FullName,
         Designation: values?.Designation,
       };
+      // dispatch for PersonalDetails
       dispatch(PersonalDetails(FieldData)).then((res) => {
         if (res) {
           navigate(`/templates/contactform`);
@@ -46,40 +49,39 @@ export default function InfoSection() {
         </h3>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid gap-4 mb-4 sm:grid-cols-2 ">
-            <div className="pb-0">
-              <label
-                htmlFor="FullName"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Full Name
-              </label>
+            {/* full Name  */}
+            <div className="pb-0 relative mb-0">
               <input
                 type="text"
                 name="FullName"
                 id="FullName"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="Enter full Name"
+                className={`${inputCss}`}
+                placeholder="  "
                 onChange={formik.handleChange}
                 value={formik.values.FullName}
                 onBlur={formik.handleBlur}
               />
+              <label htmlFor="FullName" className={`${labelCss}`}>
+                Full Name
+              </label>
               {formik.touched.FullName && formik.errors.FullName && (
                 <div className="text-red-400">{formik.errors.FullName}</div>
               )}
             </div>
-            <div className="">
+            {/* profile picture  */}
+            <div className="mt-2 sm:-mt-10">
               <label
                 htmlFor="ImgUrl"
-                className="block mb-2 text-sm font-medium text-gray-900 text-center"
+                className="block mr-[75%] sm:mr-0 mb-2 text-sm font-medium text-gray-900 text-center"
               >
                 Profile Picture
               </label>
 
-              <div className=" mx-auto rounded-full border border-blue-300  w-20 h-20 ">
+              <div className=" sm:mx-auto   rounded-full border border-blue-300  w-20 h-20 ">
                 <img
-                  className=" w-full object-cover w-full h-full rounded-full"
+                  className="  w-full object-cover w-full h-full rounded-full"
                   src={img}
-                  alt="Profile"
+                  alt="profile-img"
                 />
                 <label
                   htmlFor="dropzone-file"
@@ -104,23 +106,23 @@ export default function InfoSection() {
                 <div className="text-red-400">{formik.errors.Profile}</div>
               )}
             </div>
-            <div className="">
-              <label
-                htmlFor="Designation"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Designation
-              </label>
+            {/* Designation(profession) */}
+            <div className="relative">
               <input
                 type="text"
                 name="Designation"
                 list="Designation"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                placeholder="Enter Designation"
+                id="designation"
+                className={`${inputCss}`}
+                placeholder=" "
                 onChange={formik.handleChange}
                 value={formik.values.Designation}
                 onBlur={formik.handleBlur}
               />
+              <label htmlFor="designation" className={`${labelCss}`}>
+                Profession
+              </label>
+
               <datalist id="Designation">
                 {designationData.map((d) => (
                   <option key={d.value} value={d.label} className="" />
@@ -132,11 +134,12 @@ export default function InfoSection() {
               )}
             </div>
           </div>
-          <div className="">
+          <div>
+            {/* next button  */}
             <button
               type="submit"
               style={{ backgroundColor: "rgb(29 78 216)" }}
-              className="bg-blue-700 border text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              className="transform transition duration-500 hover:scale-110  border text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               <FaArrowRight className="text-white" />
             </button>

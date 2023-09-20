@@ -5,17 +5,19 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { ProjectDetails } from "../../Redux/Action/Project";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
+import { inputCss, labelCss } from "../TailwindCss/tailwindCss";
 
 export default function ProjectForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // state for all input field
   const [inputFields, setInputFields] = useState([
     {
       projectName: "",
       projectDetail: "",
     },
   ]);
-
+  // Add field function
   const addInputField = () => {
     setInputFields([
       ...inputFields,
@@ -25,11 +27,13 @@ export default function ProjectForm() {
       },
     ]);
   };
+  // remove field function
   const removeInputFields = (index) => {
     let items = inputFields.filter((_, indexOf) => indexOf !== index);
 
     setInputFields(items);
   };
+  // handleChange function used when user change the field data on particular index
   const handleChange = (index, event) => {
     console.log("event", event?.target?.name);
     const list = [...inputFields];
@@ -43,8 +47,8 @@ export default function ProjectForm() {
       projectDetail: "",
     },
     validationSchema: Yup.object({
-      projectName: Yup.string().required("* Please Enter Company Name"),
-      projectDetail: Yup.string().required("* Please Enter WorkYear"),
+      projectName: Yup.string().required("* Enter Title"),
+      projectDetail: Yup.string().required("* Enter Some Description"),
     }),
     onSubmit: (values, { resetForm }) => {
       let data = {
@@ -64,6 +68,7 @@ export default function ProjectForm() {
     <>
       <div className="mx-5">
         <form onSubmit={formik.handleSubmit}>
+          {/* Add button and heading of form  */}
           <div className="flex justify-between">
             <h3 className="mb-4  text-lg font-medium leading-none text-gray-900">
               Other Details
@@ -71,7 +76,7 @@ export default function ProjectForm() {
             <div
               type="button"
               style={{ backgroundColor: "rgb(29 78 216)" }}
-              className="mr-1 text-white border hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer"
+              className="transform transition duration-500 hover:scale-110 mr-1 text-white border hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer"
               onClick={() => addInputField()}
             >
               <FaPlus className="text-white" />
@@ -80,15 +85,16 @@ export default function ProjectForm() {
           {inputFields?.map((data, index) => {
             const { projectName, projectDetail } = data;
             return (
-              <>
-                <div className="flex justify-between">
+              <div key={index}>
+                {/* remove button  */}
+                <div className="flex justify-between mt-5 ">
                   <h3 className="mb-4 text-lg  font-medium leading-none text-gray-900">
                     {index > 0 && "New Details"}
                   </h3>
                   <div className=" flex items-end cursor-pointer ">
                     {index > 0 && (
                       <div
-                        className={`p-1 text-white flex justify-center items-center  bg-red-400 text-center px-5 py-2.5 rounded-lg`}
+                        className={`transform transition duration-500 hover:scale-110 p-1 text-white flex justify-center items-center  bg-red-400 text-center px-5 py-2.5 rounded-lg`}
                         onClick={() => removeInputFields(index)}
                       >
                         <FaTrash className="" />
@@ -96,21 +102,15 @@ export default function ProjectForm() {
                     )}
                   </div>
                 </div>
+                {/* Project Name  */}
                 <div className="flex w-full  flex-wrap gap-4 mb-2 ">
-                  <div className="w-2/5">
-                    <label
-                      htmlFor="ProjectName"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Title
-                    </label>
+                  <div className=" w-full md:w-2/5 relative mt-5 ">
                     <input
                       type="text"
                       name="projectName"
                       id="projectName"
-                      className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                      placeholder="
-                      Enter Title"
+                      className={`${inputCss} `}
+                      placeholder=" "
                       onChange={(e) =>
                         formik.setFieldValue(
                           "projectName",
@@ -120,6 +120,9 @@ export default function ProjectForm() {
                       value={projectName}
                       onBlur={formik.handleBlur}
                     />
+                    <label htmlFor="projectName" className={`${labelCss}`}>
+                      Title
+                    </label>
                     {formik.touched.projectName &&
                       formik.errors.projectName && (
                         <div className="text-red-400">
@@ -127,19 +130,14 @@ export default function ProjectForm() {
                         </div>
                       )}
                   </div>
-                  <div className="w-2/5">
-                    <label
-                      htmlFor="projectDetail"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Description
-                    </label>
+                  {/* Project Detail  */}
+                  <div className=" w-full md:w-2/5  z-0 relative">
                     <textarea
                       id="projectDetail"
                       name="projectDetail"
-                      rows="3"
-                      className="bg-gray-50 border resize-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
-                      placeholder="Enter  Description..."
+                      rows="2"
+                      className={`resize-none ${inputCss} `}
+                      placeholder=" "
                       onChange={(e) =>
                         formik.setFieldValue(
                           "projectDetail",
@@ -149,6 +147,9 @@ export default function ProjectForm() {
                       value={projectDetail}
                       onBlur={formik.handleBlur}
                     ></textarea>
+                    <label htmlFor="projectDetail" className={`${labelCss}`}>
+                      Description
+                    </label>
 
                     {formik.touched.projectDetail &&
                       formik.errors.projectDetail && (
@@ -158,24 +159,30 @@ export default function ProjectForm() {
                       )}
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
-
-          <div className="flex justify-between mt-2">
+          {/* Button group  */}
+          <div className="flex justify-between mt-4">
             <Link to={`/templates/experienceform`}>
               <button className="bg-blue-300 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 <FaArrowLeft className="text-white" />
               </button>
             </Link>
-
-            <button
-              type="submit"
-              style={{ backgroundColor: "rgb(29 78 216)" }}
-              className=" border text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
-            >
-              <FaArrowRight className="text-white" />
-            </button>
+            <div>
+              <Link to={`/templates/skillform`}>
+                <button className=" bg-blue-300 mr-5 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1.5 pt-2 text-center">
+                  Skip
+                </button>
+              </Link>
+              <button
+                type="submit"
+                style={{ backgroundColor: "rgb(29 78 216)" }}
+                className="transform transition duration-500 hover:scale-110 border text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
+              >
+                <FaArrowRight className="text-white" />
+              </button>
+            </div>
           </div>
         </form>
       </div>

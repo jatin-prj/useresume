@@ -12,9 +12,14 @@ export default function AboutMe() {
   //   console.log(ref.current, ref.current.getBoundingClientRect());
   // }, []);
   return (
-    <div className="" id="about-me">
-      <h2 className="text-3xl font-bold">About Me</h2>
-      <div className="about">{About?.about}</div>
+    <div>
+      {About?.length > 0 && (
+        <div>
+          <h2 className="text-xl font-bold">About Me</h2>
+          <p> {About?.about}</p>
+        </div>
+      )}
+      
     </div>
   );
 }

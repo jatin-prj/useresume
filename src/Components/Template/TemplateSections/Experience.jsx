@@ -10,24 +10,25 @@ export default function Experience() {
       </h2>
       <div className="border-2 w-20 border-gray-300 rounded "></div>
 
-      <div className="flex flex-wrap justify-between w-full h-full">
-        {Experience?.experienceData?.map((ele, index) => (
-          <div className="flex flex-col w-1/2">
-            <p className="text-lg font-bold text-gray-700 ">
-              {ele?.companyName}
-            </p>
-            <p className="font-semibold text-sm text-gray-700 ">
-              {ele?.startYear} - {ele?.endYear ? ele?.endYear : "Present"}
-            </p>
-            <p className="font-semibold text-sm text-gray-700 mt-2 mb-1 ">
-              Key Responsibilities
-            </p>
-            <ul className="text-sm list-disc pl-4 space-y-1 ">
-              <li>{ele?.workOn}</li>
-            </ul>
-          </div>
-        ))}
+        <div className="flex justify-between w-full flex-wrap  ">
+          {Experience?.experienceData?.map((ele, index) => (
+            <div className="flex flex-col w-1/2 " key={index}>
+              <p className="text-lg font-bold text-gray-700 ">
+                {ele?.companyName}
+              </p>
+              <p className="font-semibold text-sm text-gray-700 ">
+                {ele?.startYear} - {ele?.endYear ? ele?.endYear : "Present"}
+              </p>
+              <p className="font-semibold text-sm text-gray-700 mt-2 mb-1 ">
+                Key Responsibilities
+              </p>
+              <ul className="text-sm list-disc pl-4 space-y-1 ">
+                <li>{ele?.workOn}</li>
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+  
   );
 }

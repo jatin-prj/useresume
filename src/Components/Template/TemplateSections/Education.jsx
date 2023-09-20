@@ -12,23 +12,23 @@ export default function Education() {
 
       <div className="flex flex-col space-y-1 education">
         {Education?.educationData?.map((education, index) => (
-          <>
-            <div className="flex flex-col education" key={index}>
-              <p className="font-semibold text-xs text-gray-700 education">
-                {education?.startYear} -{" "}
-                {education?.endYear ? education?.endYear : "Present"}
-              </p>
-              <p className="text-sm font-medium education">
-                <span className="text-green-700 education">
-                  {education?.cource}
-                </span>
-                , {education?.instituteName}
-              </p>
+          <div className="flex flex-col pl-5 education" key={index}>
+            <p className="font-semibold text-xs text-gray-700 education">
+              {education?.startYear} -{" "}
+              {education?.endYear ? education?.endYear : "Present"}
+            </p>
+            <p className="text-sm font-medium education">
+              <span className="text-green-700 education">
+                {education?.course}
+              </span>
+              , {education?.instituteName}
+            </p>
+            {education?.percentage && (
               <p className="font-bold text-xs text-gray-700 mb-2 education">
                 Percentage: {education?.percentage}
               </p>
-            </div>
-          </>
+            )}
+          </div>
         ))}
       </div>
     </div>

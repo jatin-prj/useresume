@@ -14,22 +14,26 @@ export default function Skills() {
       </h2>
       <div className="border-2 w-20 border-gray-300 rounded skills"></div>
 
-      <div className="">
-        {skill?.map((skillElem, index) => (
-          <div className="">
-            <div key={index}>
-              {skillElem?.rating}: &nbsp;
-              <span>
-                {skillElem?.skill?.map((e) => (
-                  <span className="mb-0 text-base font-medium ">
-                    {e},&nbsp;
-                  </span>
-                ))}
-              </span>
+        <div className="">
+          {skill?.map((skillElem, index) => (
+            <div className=" mt-1 mx-5" key={index}>
+              <div>
+                {skillElem?.rating}: &nbsp;
+                <span>
+                  {skillElem?.skill?.map((element, skillIndex) => (
+                    <span
+                      className="mb-0 text-base font-medium "
+                      key={skillIndex}
+                    >
+                      {element},&nbsp;
+                    </span>
+                  ))}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    
   );
 }
