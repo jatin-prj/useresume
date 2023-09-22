@@ -12,7 +12,7 @@ export default function AboutMe() {
   //   console.log(ref.current, ref.current.getBoundingClientRect());
   // }, []);
   return (
-    <div>
+    <div className="w-full h-full">
       {About?.about && (
         <div>
           <h2 className="text-xl font-bold">About Me</h2>

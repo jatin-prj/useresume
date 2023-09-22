@@ -23,17 +23,17 @@ export default function InfoSection() {
     initialValues: {
       Profile: "",
       FullName: "",
-      Profession: "",
+      Designation: "",
     },
     validationSchema: Yup.object({
       FullName: Yup.string().required("*  Enter Your Full Name"),
-      Profession: Yup.string().required("*  Enter Your Profession"),
+      Designation: Yup.string().required("*  Enter Your Designation"),
     }),
     onSubmit: (values, { resetForm }) => {
       let FieldData = {
         Profile: img,
         FullName: values?.FullName,
-        Profession: values?.Profession,
+        Designation: values?.Designation,
       };
       // dispatch for PersonalDetails
       dispatch(PersonalDetails(FieldData)).then((res) => {
@@ -114,27 +114,27 @@ export default function InfoSection() {
             <div className="relative">
               <input
                 type="text"
-                name="Profession"
-                list="profession"
-                id="Profession"
+                name="Designation"
+                list="Designation"
+                id="designation"
                 className={`${inputCss}`}
                 placeholder=" "
                 onChange={formik.handleChange}
-                value={formik.values.Profession}
+                value={formik.values.Designation}
                 onBlur={formik.handleBlur}
               />
-              <label htmlFor="Profession" className={`${labelCss}`}>
+              <label htmlFor="designation" className={`${labelCss}`}>
                 Profession
               </label>
 
-              <datalist id="profession">
+              <datalist id="Designation">
                 {designationData.map((d) => (
                   <option key={d.value} value={d.label} className="" />
                 ))}
               </datalist>
 
-              {formik.touched.Profession && formik.errors.Profession && (
-                <div className="text-red-400">{formik.errors.Profession}</div>
+              {formik.touched.Designation && formik.errors.Designation && (
+                <div className="text-red-400">{formik.errors.Designation}</div>
               )}
             </div>
           </div>

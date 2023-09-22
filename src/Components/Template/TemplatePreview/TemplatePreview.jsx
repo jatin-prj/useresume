@@ -14,14 +14,16 @@ import {
   Template4,
 } from "../TemplateLayouts/Templates";
 import { Templates } from "../TemplateLayouts/TemplateOptions";
+import { AiFillEdit } from "react-icons/ai";
+// import { MdKeyboardArrowRight } from "react-icons/md";
 const Loader = lazy(() => import("../../Loader/Loader"));
-// import Loader from "../../Loader/Loader";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 export default function TemplatePreview() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState();
+  const [onHover, setOnHover] = useState(false);
 
   const handleSelectTemplate = (id) => {
     setIsLoading(true);
@@ -42,19 +44,35 @@ export default function TemplatePreview() {
     ? Template4
     : Template1;
 
+  // const getLayouts = () => {
+  //   const savedLayout = localStorage.getItem("grid-layout");
+  //   const layout = JSON.parse(savedLayout);
+  //   const layoutArray = eval(layout);
+  //   const desireLayout = Layout.map((ele, i) => {
+  //     if (localStorage.getItem(ele.id) !== null) {
+  //       console.log("desireLayout", [ele]);
+  //       // return ele;
+  //     }
+  //   });
+  //   return savedLayout ? layoutArray : desireLayout;
+  // };
+
   const getLayouts = () => {
-    const savedLayout = localStorage.getItem("grid-layout");
-    const layout = JSON.parse(savedLayout);
-    const layoutArray = eval(layout);
-    // console.log("??????????????", typeof eval(savedLayout), eval(savedLayout));
-    // return savedLayout ? console.log("true") : console.log("false");
-    return savedLayout ? layoutArray : Layout;
+    const savedLayouts = localStorage.getItem("grid-layout");
+    return savedLayouts
+      ? JSON.parse(savedLayouts)
+      : JSON.parse(localStorage.getItem("grid-layout"));
   };
 
   const handleLayoutChange = (layout, layouts) => {
     localStorage.setItem("grid-layout", JSON.stringify(layout));
-    // console.log("layout", localStorage.getItem("grid-layout"));
+    localStorage.setItem("update-layout", JSON.stringify(layout));
   };
+
+  // const handleLayoutChange = (layout, layouts) => {
+  //   localStorage.setItem("grid-layout", JSON.stringify(layout));
+  //   // console.log("layout", localStorage.getItem("grid-layout"));
+  // };
   return (
     <>
       <div className="sm:w-full ">
@@ -72,44 +90,51 @@ export default function TemplatePreview() {
                               <Loader />
                             </div>
                           ) : (
-                            <div className="flex justify-center w-full ">
+                            <div className="flex justify-center w-full">
                               <ResponsiveReactGridLayout
                                 className={"layout bg-white"}
                                 style={{ width: "800px" }}
-                                layout={getLayouts()}
-                                breakpoints={{
-                                  lg: 1200,
-                                  md: 996,
-                                  sm: 768,
-                                  xs: 480,
-                                  xxs: 0,
-                                }}
-                                rowHeight={20}
-                                cols={{ lg: 6, md: 5, sm: 3, xs: 2, xxs: 1 }}
+                                layout={Layout}
+                                // breakpoints={{
+                                //   lg: 1200,
+                                //   md: 996,
+                                //   sm: 768,
+                                //   xs: 480,
+                                //   xxs: 0,
+                                // }}
+                                rowHeight={30}
+                                // cols={{ lg: 12, md: 12, sm: 3, xs: 2, xxs: 1 }}
                                 compactType={"vertical"}
+                                autoSize={true}
                                 isBounded={true}
-                                // isResizable={false}
+                                margin={[8, 2]}
+                                isResizable={onHover}
                                 onLayoutChange={handleLayoutChange}
                               >
                                 {Layout.map((layout, index) => (
                                   <div
-                                    // id={`${layout.id}`}
                                     key={index}
                                     data-grid={layout}
-                                    className="cursor-grab w-full h-full p-2 border-b-2 bg-slate-500"
-                                    // onClick={() => {
-                                    //   layout.static
-                                    // }}
+                                    className="cursor-grab w-full h-full border-b-2 bg-cyan-900 p-1"
                                   >
                                     {Sections.map((section, index) => {
-                                      if (layout.id === section.id) {
+                                      if (layout && layout.i === section.id) {
                                         return (
                                           <div
                                             key={index}
                                             id={`${section.id}`}
-                                            className="w-full h-full"
+                                            className={`w-full h-full`}
+                                            // onMouseOver={() =>
+                                            //   setOnHover(!onHover)
+                                            // }
+                                            onMouseMove={() =>
+                                              setOnHover(!onHover)
+                                            }
+                                            // onMouseLeave={() =>
+                                            //   setOnHover(false)
+                                            // }
                                           >
-                                            {section.name}
+                                            {section.component}
                                           </div>
                                         );
                                       }
@@ -129,19 +154,29 @@ export default function TemplatePreview() {
                     >
                       <div className="flex justify-center">Sections</div>
                       <div className="sm:p-5">
-                        <ul className="sm:text-base list-disc">
+                        {/* <ul className="sm:text-base list-disc"> */}
+                        <div className="w-full">
                           {Sections.map((section, index) => (
-                            <li key={index}>{section.id}</li>
+                            <div
+                              className={`flex text-base font-bold text-cyan-700`}
+                              key={index}
+                            >
+                              <div
+                                type="button"
+                                className={`block w-[40%] text-left text-lg `}
+                                aria-current="true"
+                              >
+                                {section.name}
+                              </div>
+                              <span>
+                                <button>
+                                  <AiFillEdit className="w-full h-full text-lg mt-1" />
+                                </button>
+                              </span>
+                            </div>
                           ))}
-                          {/* <li>
-                            At least 10 characters (and up to 100 characters)
-                          </li>
-                          <li>At least one lowercase character</li>
-                          <li>
-                            Inclusion of at least one special character, e.g., !
-                            @ # ?
-                          </li> */}
-                        </ul>
+                        </div>
+                        {/* </ul> */}
                       </div>
                     </div>
                   </div>
@@ -181,65 +216,6 @@ export default function TemplatePreview() {
             </div>
           </div>
         </div>
-
-        {/* <div className="mx-auto pt-4">
-        <div className="flex gap-4 w-full">
-          <div className="w-[69%] flex justify-center">
-            <div className="bg-slate-100  w-[52rem] flex justify-center items-center">
-              {isLoading ? (
-                <div className="h-[51rem] flex justify-center items-center">
-                  <Loader />
-                </div>
-              ) : (
-                <div className="flex relative w-full">
-                  <ResponsiveReactGridLayout
-                    className={"layout"}
-                    style={{ width: "50rem", marginLeft: "1rem" }}
-                    rowHeight={15}
-                    cols={{ lg: 6, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                    layout={Layout}
-                    compactType={"vertical"}
-                    isBounded={true}
-                  >
-                    {Layout.map((layout, index) => (
-                      <div
-                        key={index}
-                        data-grid={layout}
-                        className="bg-slate-500 w-full cursor-grab"
-                      >
-                        {Sections.map((section, index) => {
-                          if (layout.id === section.id) {
-                            return <div key={index}>{section.name}</div>;
-                          }
-                        })}
-                      </div>
-                    ))}
-                  </ResponsiveReactGridLayout>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="h-[55rem] bg-slate-50">
-            <div className="w-[33rem]">
-              <div className="border flex justify-center">
-                <div className="flex flex-wrap justify-center gap-4 p-2">
-                  {Templates.map((template, index) => (
-                    <div
-                      key={index}
-                      className="cursor-pointer w-40"
-                      onClick={() => {
-                        handleSelectTemplate(template.id);
-                      }}
-                    >
-                      {template.template}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
       </div>
     </>
   );

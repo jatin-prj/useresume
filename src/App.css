@@ -12,5 +12,28 @@
 }
 
 .form-button {
-  background-color: #0E7490;
+  background-color: #0e7490;
+}
+
+.hero-heading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  /* color: #3498db; */
+  /* font-size: 7vw; */
+  /* font-family: "Open Sans", sans-serif; */
+  /* font-weight: 700; */
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.hero-heading::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: attr(data-split);
+  height: 50%;
+  color: #dae5e1;
+  overflow: hidden;
 }

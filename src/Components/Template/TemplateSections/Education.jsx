@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 export default function Education() {
   const Education = useSelector((state) => state?.ResumeDetails?.education);
-  console.log("Edu", Education?.educationData);
+  // console.log("Edu", Education?.educationData);
   return (
     <div className="py-3 education" id="education">
       <h2 className="text-lg font-poppins font-bold text-top-color education">

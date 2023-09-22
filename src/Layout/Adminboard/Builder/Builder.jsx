@@ -16,7 +16,7 @@ export default function Builder() {
   return (
     <>
       <div className="relative top-4">
-        <div className="text-center">
+        <div className="text-center flex flex-col items-center">
           <div className="flex justify-around">
             <h3 className={`w-[60%] ${mainHeadingCss}`}>Choose Templates</h3>
             <div>
@@ -32,11 +32,11 @@ export default function Builder() {
               </Link>
             </div>
           </div>
-          <div className="flex w- justify-center gap-4 mt-5">
+          <div className="flex justify-center gap-4 mt-5 lg:w-full sm:w-96">
             {Templates.map((template, index) => (
               <div
                 key={index}
-                className="w-40 transition duration-250 hover:scale-125 "
+                className="md:w-40 sm:w-24 transition duration-250 hover:scale-125 "
               >
                 <button
                   onClick={() => {
