@@ -11,7 +11,7 @@ export default function Education() {
       <div className="border-2 w-20 border-gray-300 rounded mb-2 education"></div>
 
       <div className="flex flex-col space-y-1 education">
-        {Education?.educationData?.map((education, index) => (
+        {Education?.map((education, index) => (
           <div className="flex flex-col pl-5 education" key={index}>
             <p className="font-semibold text-xs text-gray-700 education">
               {education?.startYear} -{" "}

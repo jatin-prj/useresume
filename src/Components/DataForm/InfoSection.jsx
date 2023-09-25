@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PersonalDetails } from "../../Redux/Action/Information";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
@@ -16,6 +16,8 @@ import { designationData } from "../../Redux/Action/Data";
 export default function InfoSection() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const templateId = localStorage.getItem("template-id");
   // state for set user profile image
   const [img, setImg] = useState(profile);
 
@@ -38,7 +40,11 @@ export default function InfoSection() {
       // dispatch for PersonalDetails
       dispatch(PersonalDetails(FieldData)).then((res) => {
         if (res) {
-          navigate(`/templates/contactform`);
+          if (location.pathname.includes("/edit-section")) {
+            navigate(`/templates/preview/template-${templateId}`);
+          } else {
+            navigate(`/templates/contactform`);
+          }
         }
       });
       console.log("values", values);
@@ -48,7 +54,7 @@ export default function InfoSection() {
 
   return (
     <>
-      <div className="mx-5 ">
+      <div className="mx-5">
         <h3 className={`${formHeadingCss}`}>Personal Information</h3>
         <form onSubmit={formik.handleSubmit}>
           <div className="grid gap-4 mb-4 sm:grid-cols-2 ">

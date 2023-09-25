@@ -1,7 +1,4 @@
-/* eslint-disable no-eval */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable array-callback-return */
-/* eslint-disable no-unused-vars */
 import { useLocation, useNavigate } from "react-router-dom";
 import { lazy, useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -15,23 +12,23 @@ import {
 } from "../TemplateLayouts/Templates";
 import { Templates } from "../TemplateLayouts/TemplateOptions";
 import { AiFillEdit } from "react-icons/ai";
-// import { MdKeyboardArrowRight } from "react-icons/md";
+import EditSection from "../TemplateSections/EditSections/EditSection";
 const Loader = lazy(() => import("../../Loader/Loader"));
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 export default function TemplatePreview() {
   const location = useLocation();
   const navigate = useNavigate();
+  const templateId = localStorage.getItem("template-id");
   const [isLoading, setIsLoading] = useState();
   const [onHover, setOnHover] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [section, setSection] = useState();
 
-  const handleSelectTemplate = (id) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, "300");
-    localStorage.setItem("template-id", id);
-    navigate(`/templates/preview/template-${id}`);
+  const handleEdit = (sectionId) => {
+    setOpen(true);
+    setSection(sectionId);
+    navigate(`/templates/preview/template-${templateId}/edit-section`);
   };
 
   const Layout = location.pathname.includes("template-1")
@@ -44,35 +41,15 @@ export default function TemplatePreview() {
     ? Template4
     : Template1;
 
-  // const getLayouts = () => {
-  //   const savedLayout = localStorage.getItem("grid-layout");
-  //   const layout = JSON.parse(savedLayout);
-  //   const layoutArray = eval(layout);
-  //   const desireLayout = Layout.map((ele, i) => {
-  //     if (localStorage.getItem(ele.id) !== null) {
-  //       console.log("desireLayout", [ele]);
-  //       // return ele;
-  //     }
-  //   });
-  //   return savedLayout ? layoutArray : desireLayout;
-  // };
-
-  const getLayouts = () => {
-    const savedLayouts = localStorage.getItem("grid-layout");
-    return savedLayouts
-      ? JSON.parse(savedLayouts)
-      : JSON.parse(localStorage.getItem("grid-layout"));
+  const handleSelectTemplate = (id) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, "300");
+    localStorage.setItem("template-id", id);
+    navigate(`/templates/preview/template-${id}`);
   };
 
-  const handleLayoutChange = (layout, layouts) => {
-    localStorage.setItem("grid-layout", JSON.stringify(layout));
-    localStorage.setItem("update-layout", JSON.stringify(layout));
-  };
-
-  // const handleLayoutChange = (layout, layouts) => {
-  //   localStorage.setItem("grid-layout", JSON.stringify(layout));
-  //   // console.log("layout", localStorage.getItem("grid-layout"));
-  // };
   return (
     <>
       <div className="sm:w-full ">
@@ -95,21 +72,12 @@ export default function TemplatePreview() {
                                 className={"layout bg-white"}
                                 style={{ width: "800px" }}
                                 layout={Layout}
-                                // breakpoints={{
-                                //   lg: 1200,
-                                //   md: 996,
-                                //   sm: 768,
-                                //   xs: 480,
-                                //   xxs: 0,
-                                // }}
                                 rowHeight={30}
-                                // cols={{ lg: 12, md: 12, sm: 3, xs: 2, xxs: 1 }}
                                 compactType={"vertical"}
                                 autoSize={true}
                                 isBounded={true}
                                 margin={[8, 2]}
                                 isResizable={onHover}
-                                onLayoutChange={handleLayoutChange}
                               >
                                 {Layout.map((layout, index) => (
                                   <div
@@ -118,21 +86,15 @@ export default function TemplatePreview() {
                                     className="cursor-grab w-full h-full border-b-2 bg-cyan-900 p-1"
                                   >
                                     {Sections.map((section, index) => {
-                                      if (layout && layout.i === section.id) {
+                                      if (layout && layout.id === section.id) {
                                         return (
                                           <div
                                             key={index}
                                             id={`${section.id}`}
                                             className={`w-full h-full`}
-                                            // onMouseOver={() =>
-                                            //   setOnHover(!onHover)
-                                            // }
                                             onMouseMove={() =>
                                               setOnHover(!onHover)
                                             }
-                                            // onMouseLeave={() =>
-                                            //   setOnHover(false)
-                                            // }
                                           >
                                             {section.component}
                                           </div>
@@ -169,7 +131,7 @@ export default function TemplatePreview() {
                                 {section.name}
                               </div>
                               <span>
-                                <button>
+                                <button onClick={() => handleEdit(section)}>
                                   <AiFillEdit className="w-full h-full text-lg mt-1" />
                                 </button>
                               </span>
@@ -202,21 +164,19 @@ export default function TemplatePreview() {
                     ))}
                   </div>
                 </div>
-                <a
-                  className="block mt-3 text-base text-slate-900 py-2.5 px-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white mt-auto"
-                  // href="#"
-                >
+                <div className="block mt-3 text-base text-slate-900 py-2.5 px-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white mt-auto">
                   Kuldip Chatrala
-                </a>
+                </div>
                 <div className="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mt-2"></div>
-                <p className="mb-1 px-5 py-3 text-left text-xs text-cyan-100">
-                  Copyright WCG@2023
-                </p>
+                <div className="mb-1 px-5 py-3 text-left text-sm text-cyan-100 flex ">
+                  <span className="mr-1">©️</span> WCG@2023
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {open && <EditSection open={open} setOpen={setOpen} section={section} />}
     </>
   );
 }

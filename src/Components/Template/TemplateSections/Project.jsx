@@ -6,13 +6,12 @@ export default function Project() {
   return (
     <>
       <div className="py-3 project">
+        <h2 className="text-lg font-poppins font-bold text-top-color project">
+          Projects
+        </h2>
+        <div className="border-2 w-20 border-gray-300 rounded project"></div>
         {Project?.projectData && (
           <div>
-            <h2 className="text-lg font-poppins font-bold text-top-color project">
-              Projects
-            </h2>
-            <div className="border-2 w-20 border-gray-300 rounded project"></div>
-
             <div className="project">
               <div className="flex flex-col space-y-1 education">
                 {Project?.projectData?.map((project, index) => (

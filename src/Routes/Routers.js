@@ -6,7 +6,6 @@ import { Suspense, lazy } from "react";
 import HomePage from "../Layout/Adminboard/LandingPage/HomePage";
 import Team from "../Layout/Adminboard/Team/Team";
 import Loader from "../Components/Loader/Loader";
-import Navbar from "../Components/Navbar/Navbar";
 const LostPage = lazy(() => import("../Components/Error/LostServer"));
 const Profile = lazy(() => import("../Layout/Adminboard/Profile/Profile"));
 const InfoSection = lazy(() => import("../Components/DataForm/InfoSection"));
@@ -24,6 +23,9 @@ const ContactForm = lazy(() => import("../Components/DataForm/ContactForm"));
 const Builder = lazy(() => import("../Layout/Adminboard/Builder/Builder"));
 const TemplatePreview = lazy(() =>
   import("../Components/Template/TemplatePreview/TemplatePreview")
+);
+const EditSection = lazy(() =>
+  import("../Components/Template/TemplateSections/EditSections/EditSection")
 );
 
 export default function Routers() {
@@ -158,7 +160,14 @@ export default function Routers() {
             }
             // element={<Template1 />}
           />
-          {/* <Route path="single-column" element={<SingleColumnTemplate />} /> */}
+          <Route
+            path={`preview/:id/edit-section`}
+            element={
+              <Dashboard>
+                <TemplatePreview />
+              </Dashboard>
+            }
+          />
         </Route>
 
         <Route path="/builder" element={<Builder />} />
