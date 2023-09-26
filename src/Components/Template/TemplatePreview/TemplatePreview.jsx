@@ -81,14 +81,14 @@ export default function TemplatePreview() {
                                 compactType={"vertical"}
                                 autoSize={true}
                                 isBounded={true}
-                                margin={[5, 2]}
+                                margin={[3, 0]}
                                 // isResizable={onHover}
                               >
                                 {Layout.map((layout, index) => (
                                   <div
                                     key={index}
                                     data-grid={layout}
-                                    className="cursor-grab w-full h-full border-b-2 bg-cyan-900 p-1"
+                                    className="cursor-grab w-full h-full border-b-2  p-1"
                                   >
                                     {Sections.map((section, index) => {
                                       if (layout && layout.id === section.id) {

@@ -11,14 +11,10 @@ export default function Contact() {
         <h2 className=" text-lg font-poppins font-bold text-top-color ">
           My Contact
         </h2>
-        <div className=" border-2 w-20 border-gray-300 rounded "></div>
 
-        <div
-          className={`w-full h-20 flex flex-col justify-around mt-1`}
-        >
-          <div className="flex items-center justify-start my-2">
-            <FaEnvelope className="w-6 text-gray-700" />
-
+        <div className={`w-full flex flex-col justify-between mt-2`}>
+          <div className="flex items-center justify-start mt-2">
+            <FaEnvelope className="w-6 " />
             <div className="ml-2">{Contact?.email}</div>
           </div>
           <div
@@ -26,13 +22,14 @@ export default function Contact() {
             
             `}
           >
-            <PiDeviceMobileFill className="w-6 text-gray-700" />
+            <PiDeviceMobileFill className="w-6 " />
 
-            <div className="w-full">{Contact?.contact}</div>
+            <div className="ml-2">{Contact?.contact}</div>
           </div>
-          <div className="flex items-center justify-start my-2 ">
-            <IoLocationSharp size={20} className="w-6 text-gray-700" />
-            <div className="">{Contact?.address}</div>
+
+          <div className="flex items-center justify-start my-1">
+            <IoLocationSharp size={20} className="w-6 " />
+            <div className="ml-2">{Contact?.address}</div>
           </div>
         </div>
       </div>

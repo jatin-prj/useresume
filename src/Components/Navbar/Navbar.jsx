@@ -36,7 +36,7 @@ export default function Navbar() {
                       <Link to={"/"}>
                         <div className="flex items-center w-52">
                           <p className="inline-block align-middle text-[#0e7490] text-3xl font-semibold w-full">
-                            <sup></sup>useResume
+                            useResume
                           </p>
                         </div>
                       </Link>

@@ -1,4 +1,4 @@
-import { useFormik } from "formik";
+import { FieldArray, Form, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -6,31 +6,15 @@ import { useState } from "react";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 import { designationData } from "../../Redux/Action/Data";
 import { ExperienceDetails } from "../../Redux/Action/Experience";
-import {
-  formButtonCss,
-  formHeadingCss,
-  inputCss,
-  labelCss,
-} from "../TailwindCss/tailwindCss";
+import { formButtonCss, formHeadingCss } from "../TailwindCss/tailwindCss";
+import CustomInput from "./CustomInput";
 
 export default function ExperienceForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // state for all input fields
-  const [inputFields, setInputFields] = useState([
-    {
-      companyName: "",
-      startYear: "",
-      endYear: "",
-      presentcheck: false,
-      workOn: "",
-      Designation: "",
-    },
-  ]);
-  // Add field functoin
-  const addInputField = () => {
-    setInputFields([
-      ...inputFields,
+  // intialvalues
+  const initialValues = {
+    info: [
       {
         companyName: "",
         startYear: "",
@@ -39,305 +23,229 @@ export default function ExperienceForm() {
         workOn: "",
         Designation: "",
       },
-    ]);
+    ],
   };
-  // Remove field function
-  const removeInputFields = (index) => {
-    let items = inputFields.filter((_, indexOf) => indexOf !== index);
-    setInputFields(items);
-  };
-  // checktick function for check true and false for present or not
-  const checktick = (e, ind) => {
-    if (e.presentcheck === true) {
-      return ind + 1;
-    }
-  };
-  // handleChange function is used when user change the data of particular field
-  const handleChange = (index, event) => {
-    console.log("event", event?.target?.name);
-    const list = [...inputFields];
-    let ind = list?.map((e, index) => {
-      return checktick(e, index);
-    });
-    if (event?.target?.name === "presentcheck") {
-      if (ind?.filter((e) => e)?.length) {
-        list[ind?.filter((e) => e) - 1][event?.target?.name] = false;
-      }
-      list[index][event?.target?.name] = event?.target?.checked;
-    } else {
-      return (list[index][event?.target?.name] = event?.target?.value);
-    }
-    setInputFields(list);
-  };
+  // create yup validation
+  const handleValidation = Yup.object().shape({
+    info: Yup.array().of(
+      Yup.object().shape({
+        companyName: Yup.string().required("*  Enter Company Name"),
+        startYear: Yup.string().required("* Enter Start Date"),
+        presentcheck: Yup.boolean(),
+        endYear: Yup.string().when("presentcheck", {
+          is: false,
+          then: () => Yup.string().required("* Enter End Date"),
+        }),
+        workOn: Yup.string().required("*  Enter Some details on work"),
+        Designation: Yup.string().required("*  Enter Position"),
+      })
+    ),
+  });
 
-  const formik = useFormik({
-    initialValues: {
+  // Add field functoin
+  const addInputField = (values, setValues) => {
+    const data = {
       companyName: "",
       startYear: "",
       endYear: "",
       presentcheck: false,
       workOn: "",
       Designation: "",
-    },
-    validationSchema: Yup.object({
-      companyName: Yup.string().required("*  Enter Company Name"),
-      startYear: Yup.string().required("* Enter Start Date"),
-      presentcheck: Yup.boolean(),
-      endYear: Yup.string().when("presentcheck", {
-        is: false,
-        then: () => Yup.string().required("* Enter End Date"),
-      }),
-      workOn: Yup.string().required("*  Enter Some details on work"),
-      Designation: Yup.string().required("*  Enter Position"),
-    }),
-    onSubmit: (values, { resetForm }) => {
-      let data = {
-        experienceData: inputFields,
-      };
-      // dispatch for ExperienceDetails
-      dispatch(ExperienceDetails(data)).then((res) => {
-        if (res) {
-          navigate(`/templates/projectform`);
+    };
+    setValues({ ...values, info: [...values?.info, data] });
+  };
+  //remove field function
+  const removeInputFields = (i, values, setValues) => {
+    const infoFilter = values?.info?.filter((item, index) => i !== index);
+    setValues({ ...values, info: infoFilter });
+  };
+  // onSubmit function
+  const handleSubmit = (values, { resetForm }) => {
+    let data = {
+      experienceData: values?.info,
+    };
+    // dispatch for experience
+    dispatch(ExperienceDetails(data)).then((res) => {
+      if (res) {
+        localStorage?.removeItem("checked");
+        navigate(`/templates/projectform`);
+      }
+    });
+    console.log("values", data);
+    resetForm({ values: "" });
+  };
+  // handleCheck function is used when user change the checkbox
+
+  const handleCheck = (item, i, values, setValues) => {
+    console.log("");
+    localStorage?.setItem("checked", i + 1);
+    if (localStorage?.getItem("checked")) {
+      let currentCheck = Number(localStorage.getItem("checked")) - 1;
+      let formData = values?.info?.map((e, ind) => {
+        if (ind === currentCheck) {
+          return { ...e, presentcheck: e.presentcheck ? false : true };
+        } else {
+          return { ...e, presentcheck: false };
         }
       });
-      console.log("values", data);
-      resetForm({ values: "" });
-    },
-  });
+      setValues({ ...values, info: formData });
+    }
+  };
+
   return (
     <>
       <div className="mx-5 p-5">
-        <form onSubmit={formik.handleSubmit}>
-          {/* Add button and heading of form  */}
-          <div className="flex justify-between">
-            <h3 className={` ${formHeadingCss}`}>Experience Details</h3>
-            <button
-              type="button"
-              className={`${formButtonCss}`}
-              onClick={() => addInputField()}
-            >
-              <FaPlus className="text-white" />
-            </button>
-          </div>
-          {inputFields.map((data, index) => {
-            const {
-              companyName,
-              startYear,
-              endYear,
-              presentcheck,
-              workOn,
-              Designation,
-            } = data;
-            return (
-              <div key={index}>
-                {/* remove button  */}
-                <div className="flex justify-between">
-                  <h3 className={`${formHeadingCss}`}>
-                    {index > 0 && "New Details"}
-                  </h3>
-                  <div className=" flex items-end cursor-pointer ">
-                    {index > 0 && (
-                      <div
-                        className={`${formButtonCss}`}
-                        onClick={() => removeInputFields(index)}
-                      >
-                        <FaTrash className="" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="flex w-full  flex-wrap gap-4 mb-2 ">
-                  {/* company name  */}
-                  <div className=" w-full md:w-2/5 relative">
-                    <input
-                      type="text"
-                      name="companyName"
-                      id="companyName"
-                      className={`${inputCss} mb-3 mb-3`}
-                      placeholder=" "
-                      onChange={(e) =>
-                        formik.setFieldValue(
-                          "companyName",
-                          handleChange(index, e)
-                        )
-                      }
-                      value={companyName}
-                      onBlur={formik.handleBlur}
-                      autoComplete="off"
-                    />
-                    <label htmlFor="companyName" className={`${labelCss}`}>
-                      Company Name
-                    </label>
-                    {formik.touched.companyName &&
-                      formik.errors.companyName && (
-                        <div className="text-red-400">
-                          {formik.errors.companyName}
-                        </div>
-                      )}
-                  </div>
-                  {/* Designation (profession ) */}
-                  <div className="w-full md:w-2/5 relative">
-                    <input
-                      type="text"
-                      name="Designation"
-                      list="Designation"
-                      className={`${inputCss} mb-3`}
-                      placeholder=" "
-                      onChange={(e) =>
-                        formik.setFieldValue(
-                          "Designation",
-                          handleChange(index, e)
-                        )
-                      }
-                      value={Designation}
-                      onBlur={formik.handleBlur}
-                    />
-                    <datalist id="Designation">
-                      {designationData?.map((d) => (
-                        <option key={d.value} value={d.label} className="" />
-                      ))}
-                    </datalist>
-                    <label htmlFor="Designation" className={`${labelCss}`}>
-                      Profession
-                    </label>
-
-                    {formik.touched.Designation &&
-                      formik.errors.Designation && (
-                        <div className="text-red-400">
-                          {formik.errors.Designation}
-                        </div>
-                      )}
-                  </div>
-                  {/* start year date  */}
-                  <div className="w-full md:w-2/5 relative ">
-                    <input
-                      type="date"
-                      min="1949-01-01"
-                      max={new Date().toISOString().split("T")[0]}
-                      name="startYear"
-                      id="startYear"
-                      className={`${inputCss} mb-3`}
-                      placeholder="mm/dd/yyyy"
-                      onChange={(e) =>
-                        formik.setFieldValue(
-                          "startYear",
-                          handleChange(index, e)
-                        )
-                      }
-                      onBlur={formik.handleBlur}
-                      value={startYear}
-                    />
-                    <label
-                      htmlFor="startYear"
-                      className={`${labelCss} text-xl`}
-                    >
-                      Start Year
-                    </label>
-                    {formik.touched.startYear && formik.errors.startYear && (
-                      <div className="text-red-400">
-                        {formik.errors.startYear}
-                      </div>
-                    )}
-                  </div>
-                  {/* present checkbox  */}
-                  <div className="w-full md:w-2/5 mt-4">
-                    <div className=" mr-4">
-                      <input
-                        id="presentcheck"
-                        type="checkbox"
-                        name="presentcheck"
-                        onChange={(e) =>
-                          formik.setFieldValue(
-                            "presentcheck",
-                            handleChange(index, e)
-                          )
-                        }
-                        checked={presentcheck}
-                        className="w-4 h-4 text-blue-600 bg-blue-100 border-blue-300 rounded focus:ring-blue-500 focus:ring-2"
-                      />
-                      <label
-                        htmlFor="presentcheck"
-                        className={`ml-2 text-sm ${formHeadingCss}`}
-                      >
-                        Currently Work
-                      </label>
-                    </div>
-                  </div>
-                  {/* End year date  */}
-                  {!presentcheck && (
-                    <div className="w-full md:w-2/5 relative mt-5 ">
-                      <input
-                        type="date"
-                        max={new Date().toISOString().split("T")[0]}
-                        min={startYear}
-                        name="endYear"
-                        id="endYear"
-                        className={`${inputCss} mb-3`}
-                        placeholder=" "
-                        onChange={(e) =>
-                          formik.setFieldValue(
-                            "endYear",
-                            handleChange(index, e)
-                          )
-                        }
-                        onBlur={formik.handleBlur}
-                        value={endYear}
-                      />
-                      <label
-                        htmlFor="endYear"
-                        className={`${labelCss}  text-xl`}
-                      >
-                        End Year
-                      </label>
-                      {formik.touched.endYear && formik.errors.endYear && (
-                        <div className="text-red-400">
-                          {formik.errors.endYear}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {/* textarea for about work  */}
-                  <div
-                    className={`${
-                      presentcheck && "md:w-[81.2%]"
-                    } w-full md:w-2/5 relative`}
-                  >
-                    <textarea
-                      id="workOn"
-                      name="workOn"
-                      rows="2"
-                      className={`resize-none ${inputCss} mb-3`}
-                      placeholder=" "
-                      onChange={(e) =>
-                        formik.setFieldValue("workOn", handleChange(index, e))
-                      }
-                      onBlur={formik.handleBlur}
-                      value={workOn}
-                    ></textarea>
-                    <label htmlFor="workOn" className={`${labelCss}`}>
-                      About Your work
-                    </label>
-                    {formik.touched.workOn && formik.errors.workOn && (
-                      <div className="text-red-400">{formik.errors.workOn}</div>
-                    )}
-                  </div>
-                </div>
+        <Formik
+          validationSchema={handleValidation}
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+        >
+          {({ values, setValues }) => (
+            <>
+              {/* Add button and heading of form  */}
+              <div className="flex justify-between">
+                <h3 className={` ${formHeadingCss}`}>Experience Details</h3>
+                <button
+                  type="button"
+                  className={`${formButtonCss}`}
+                  onClick={() => addInputField(values, setValues)}
+                >
+                  <FaPlus className="text-white" />
+                </button>
               </div>
-            );
-          })}
-          {/* Button group  */}
-          <div className="flex justify-between mt-2">
-            <Link to={`/templates/educationform`}>
-              <button className={`bg-[#309ba0] ${formButtonCss.split("form-button")}`}>
-                <FaArrowLeft className="text-white" />
-              </button>
-            </Link>
 
-            <button type="submit" className={`${formButtonCss}`}>
-              <FaArrowRight className="text-white" />
-            </button>
-          </div>
-        </form>
+              <Form>
+                <FieldArray name="info">
+                  {() =>
+                    values?.info?.map((item, index) => {
+                      const {
+                        startYear,
+                        presentcheck,
+                        endYear,
+                        course,
+                        instituteName,
+                        percentage,
+                      } = item;
+
+                      return (
+                        <div key={index}>
+                          {/* remove button  */}
+                          <div className="flex justify-between">
+                            <h3 className={`${formHeadingCss}`}>
+                              {index > 0 && "New Details"}
+                            </h3>
+                            <div className=" flex items-end cursor-pointer ">
+                              {index > 0 && (
+                                <div
+                                  className={`${formButtonCss}`}
+                                  onClick={() =>
+                                    removeInputFields(index, values, setValues)
+                                  }
+                                >
+                                  <FaTrash className="" />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex w-full  flex-wrap gap-4 mb-2 ">
+                            {/* company name  */}
+                            <div className=" w-full md:w-2/5 relative">
+                              <CustomInput
+                                name={`info.${index}.companyName`}
+                                placeholder="Enter Compnay Name"
+                              />
+                            </div>
+
+                            {/* Designation (profession ) */}
+                            <div className="w-full md:w-2/5 relative">
+                              <CustomInput
+                                name={`info.${index}.Designation`}
+                                placeholder="Enter Profession"
+                                id="Designation"
+                                list={`info.${index}.Designation`}
+                              />
+                              <datalist id={`info.${index}.Designation`}>
+                                {designationData?.map((d) => (
+                                  <option
+                                    key={d.value}
+                                    value={d.label}
+                                    className=""
+                                  />
+                                ))}
+                              </datalist>
+                            </div>
+                            {/* start year date  */}
+                            <div className="w-full md:w-2/5 relative ">
+                              <CustomInput
+                                name={`info.${index}.startYear`}
+                                placeholder=" Enter startYear"
+                                type="date"
+                                min="1947-01-01"
+                                max={new Date().toISOString().split("T")[0]}
+                              />
+                            </div>
+                            {/* present checkbox  */}
+                            <div className="flex w-full md:w-2/5 mt-1">
+                              <CustomInput
+                                name={`info.${index}.presentcheck`}
+                                placeholder=" Pursuing"
+                                type="checkbox"
+                                onChange={(e) =>
+                                  handleCheck(item, index, values, setValues)
+                                }
+                              />
+                              <span className="mt-4 ml-2">Currently Work</span>
+                            </div>
+                            {/* End year date  */}
+                            {presentcheck !== true && (
+                              <div className="w-full md:w-2/5 relative mt-10 mb-4 ">
+                                <CustomInput
+                                  name={`info.${index}.endYear`}
+                                  placeholder=" Enter EndYear"
+                                  type="date"
+                                  min={startYear}
+                                  max={new Date().toISOString().split("T")[0]}
+                                />
+                              </div>
+                            )}
+                            {/* textarea for about work  */}
+                            <div
+                              className={`${
+                                presentcheck == true && "md:w-[81.2%]"
+                              } w-full md:w-2/5 relative mt-5`}
+                            >
+                              <CustomInput
+                                name={`info.${index}.workOn`}
+                                placeholder="Enter About work"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  }
+                </FieldArray>
+                {/* Button group  */}
+                <div className="flex justify-between mt-2">
+                  <Link to={`/templates/educationform`}>
+                    <button
+                      className={`bg-[#309ba0] ${formButtonCss.split(
+                        "form-button"
+                      )}`}
+                    >
+                      <FaArrowLeft className="text-white" />
+                    </button>
+                  </Link>
+
+                  <button type="submit" className={`${formButtonCss}`}>
+                    <FaArrowRight className="text-white" />
+                  </button>
+                </div>
+              </Form>
+            </>
+          )}
+        </Formik>
       </div>
     </>
   );

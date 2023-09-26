@@ -10,26 +10,26 @@ import {
 
 const initialState = {
   infoSection:
-    localStorage.getItem("Personal-info") &&
-    JSON.parse(localStorage.getItem("Personal-info")),
+    localStorage.getItem("personal-details") &&
+    JSON.parse(localStorage.getItem("personal-details")),
   experience:
-    localStorage.getItem("Experience-info") &&
-    JSON.parse(localStorage.getItem("Experience-info")),
+    localStorage.getItem("experience-details") &&
+    JSON.parse(localStorage.getItem("experience-details")),
   education:
-    localStorage.getItem("Education-info") &&
-    JSON.parse(localStorage.getItem("Education-info")),
+    localStorage.getItem("education-details") &&
+    JSON.parse(localStorage.getItem("education-details")),
   skill:
-    localStorage.getItem("Skill-info") &&
-    JSON.parse(localStorage.getItem("Skill-info")),
+    localStorage.getItem("skills-details") &&
+    JSON.parse(localStorage.getItem("skills-details")),
   project:
-    localStorage.getItem("Project-info") &&
-    JSON.parse(localStorage.getItem("Project-info")),
+    localStorage.getItem("project-details") &&
+    JSON.parse(localStorage.getItem("project-details")),
   about:
-    localStorage.getItem("About-info") &&
-    JSON.parse(localStorage.getItem("About-info")),
+    localStorage.getItem("user-short-pitch") &&
+    JSON.parse(localStorage.getItem("user-short-pitch")),
   contact:
-    localStorage.getItem("Contact-info") &&
-    JSON.parse(localStorage.getItem("Contact-info")),
+    localStorage.getItem("contact-details") &&
+    JSON.parse(localStorage.getItem("contact-details")),
 };
 export default function ResumeDetails(state = initialState, action) {
   const { type, payload } = action;

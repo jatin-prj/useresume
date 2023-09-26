@@ -13,7 +13,7 @@ export const Template1 = [
     x: 0,
     y: 0,
     w: 10,
-    h: 6,
+    h: 4 ,
     static: true,
   },
   {
@@ -22,7 +22,7 @@ export const Template1 = [
     x: 0,
     y: 1,
     w: 5,
-    h: 4,
+    h: 5,
   },
   {
     i: "",
@@ -30,7 +30,7 @@ export const Template1 = [
     x: 5,
     y: 2,
     w: 5,
-    h: 6,
+    h: 5,
   },
   {
     i: "",
@@ -38,7 +38,7 @@ export const Template1 = [
     x: 0,
     y: 3,
     w: 5,
-    h: 15,
+    h: 13,
   },
   {
     i: "",
@@ -72,7 +72,7 @@ export const Template2 = [
     x: 0,
     y: 0,
     w: 10,
-    h: 5,
+    h:  4,
     static: true,
   },
   {
@@ -131,7 +131,7 @@ export const Template3 = [
     x: 0,
     y: 0,
     w: 10,
-    h: 5,
+    h:  4,
     static: true,
   },
   {
@@ -140,7 +140,7 @@ export const Template3 = [
     x: 4,
     y: 1,
     w: 6,
-    h: 4,
+    h: 5,
   },
   {
     i: "",
@@ -148,7 +148,7 @@ export const Template3 = [
     x: 0,
     y: 1,
     w: 4,
-    h: 4,
+    h: 5,
   },
   {
     i: "",
