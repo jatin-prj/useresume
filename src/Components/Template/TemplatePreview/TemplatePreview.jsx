@@ -8,7 +8,6 @@ import {
   Template1,
   Template2,
   Template3,
-  Template4,
 } from "../TemplateLayouts/Templates";
 import { Templates } from "../TemplateLayouts/TemplateOptions";
 import { AiFillEdit } from "react-icons/ai";
@@ -37,8 +36,6 @@ export default function TemplatePreview() {
     ? Template2
     : location.pathname.includes("template-3")
     ? Template3
-    : location.pathname.includes("template-4")
-    ? Template4
     : Template1;
 
   const handleSelectTemplate = (id) => {
@@ -73,11 +70,19 @@ export default function TemplatePreview() {
                                 style={{ width: "800px" }}
                                 layout={Layout}
                                 rowHeight={30}
+                                breakpoints={{
+                                  lg: 768,
+                                  md: 640,
+                                  sm: 480,
+                                  xs: 200,
+                                  xxs: 0,
+                                }}
+                                cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
                                 compactType={"vertical"}
                                 autoSize={true}
                                 isBounded={true}
-                                margin={[8, 2]}
-                                isResizable={onHover}
+                                margin={[5, 2]}
+                                // isResizable={onHover}
                               >
                                 {Layout.map((layout, index) => (
                                   <div
