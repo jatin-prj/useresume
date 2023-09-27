@@ -27,9 +27,11 @@ export default function Contact() {
             <div className="ml-2">{Contact?.contact}</div>
           </div>
 
-          <div className="flex items-center justify-start my-1">
+          <div className="flex items-center justify-start my-1 ">
             <IoLocationSharp size={20} className="w-6 " />
-            <div className="ml-2">{Contact?.address}</div>
+            <div className="ml-2 w-full overflow-hidden">
+              {Contact?.address}
+            </div>
           </div>
         </div>
       </div>

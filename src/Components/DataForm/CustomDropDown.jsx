@@ -1,5 +1,3 @@
-import * as Yup from "yup";
-
 import { ErrorMessage, useField } from "formik";
 import React from "react";
 import { inputCss, labelCss } from "../TailwindCss/tailwindCss";

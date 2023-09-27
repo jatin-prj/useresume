@@ -1,5 +1,4 @@
 import { FieldArray, Form, Formik } from "formik";
-import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { SkillDetails } from "../../Redux/Action/skill";
@@ -67,7 +66,6 @@ export default function SkillsForm() {
     <>
       <div className="mx-5 p-5">
         <Formik
-          // validationSchema={handleValidation}
           initialValues={initialValues}
           onSubmit={handleSubmit}
         >
@@ -144,7 +142,6 @@ export default function SkillsForm() {
                 <div className=" flex justify-between mt-2">
                   <Link to={`/templates/projectform`}>
                     <button
-                      // type="button"
                       className={`bg-[#309ba0] ${formButtonCss.split(
                         "form-button"
                       )}`}
@@ -152,7 +149,6 @@ export default function SkillsForm() {
                       <FaArrowLeft className="text-white" />
                     </button>
                   </Link>
-
                   <button type="submit" className={`${formButtonCss}`}>
                     <FaArrowRight className="text-white" />
                   </button>
@@ -164,108 +160,4 @@ export default function SkillsForm() {
       </div>
     </>
   );
-
-  // return (
-  //   <>
-  //     <div className="mx-5">
-  //       <form onSubmit={formik.handleSubmit}>
-  //         {/* Add button and heading of form  */}
-  //         <div className=" flex justify-between">
-  //           <h3 className={` ${formHeadingCss}`}>Skills Details</h3>
-  //           <button
-  //             type="button"
-  //             className={`${formButtonCss}`}
-  //             onClick={() => addInputField()}
-  //           >
-  //             <FaPlus className="text-white" />
-  //           </button>
-  //         </div>
-  //         {inputFields?.map((data, index) => {
-  //           const { skill, rating } = data;
-
-  //           return (
-  //             <div key={index}>
-  //               {/* remove button  */}
-  //               <div className="flex justify-between ">
-  //                 <h3 className={`${formHeadingCss}`}>
-  //                   {index > 0 && "More Skills"}
-  //                 </h3>
-  //                 <div className=" flex items-end cursor-pointer ">
-  //                   {index > 0 && (
-  //                     <div
-  //                       className={`${formButtonCss}`}
-  //                       onClick={() => removeInputFields(index)}
-  //                     >
-  //                       <FaTrash className="" />
-  //                     </div>
-  //                   )}
-  //                 </div>
-  //               </div>
-  //               <div className="flex  gap-4 items-end flex-wrap mb-5">
-  //                 {/* rating field (select option for expertise ) */}
-  //                 <div key={index} className="w-full md:w-2/5  relative">
-  //                   <select
-  //                     id="rating"
-  //                     name="rating"
-  //                     onChange={(e) =>
-  //                       formik.setFieldValue("rating", handleChange(index, e))
-  //                     }
-  //                     value={rating}
-  //                     className={`${inputCss} `}
-  //                   >
-  //                     {expertise?.map((expert, index) => (
-  //                       <option key={index} value={expert}>
-  //                         {expert}
-  //                       </option>
-  //                     ))}
-  //                   </select>
-
-  //                   <label htmlFor="rating" className={`${labelCss} text-xl`}>
-  //                     Select Level
-  //                   </label>
-
-  //                   {formik.touched.rating && formik.errors.rating && (
-  //                     <div className="text-red-400 ">
-  //                       {formik.errors.rating}
-  //                     </div>
-  //                   )}
-  //                 </div>
-  //                 {/* react tags input  */}
-  //                 <div className="w-full md:w-2/5 relative ">
-  //                   <TagsInput
-  //                     value={skill}
-  //                     onChange={(e) =>
-  //                       formik.setFieldValue("skill", handleChange(index, e))
-  //                     }
-  //                     name="skill"
-  //                     placeHolder="Enter Skill"
-  //                   />
-
-  //                   {formik.touched.skill && formik.errors.skill && (
-  //                     <div className="text-red-400">{formik.errors.skill}</div>
-  //                   )}
-  //                 </div>
-  //               </div>
-  //             </div>
-  //           );
-  //         })}
-
-  //         {/* Button group  */}
-  //         <div className=" flex justify-between mt-2">
-  //           <Link to={`/templates/projectform`}>
-  //             <button
-  //               className={`bg-[#309ba0] ${formButtonCss.split("form-button")}`}
-  //             >
-  //               <FaArrowLeft className="text-white" />
-  //             </button>
-  //           </Link>
-
-  //           <button type="submit" className={`${formButtonCss}`}>
-  //             <FaArrowRight className="text-white" />
-  //           </button>
-  //         </div>
-  //       </form>
-  //     </div>
-  //   </>
-  // );
 }

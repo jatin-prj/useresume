@@ -116,10 +116,6 @@ export default function EducationForm() {
                 {() =>
                   values?.info?.map((item, index) => {
                     const {
-                      course,
-                      endYear,
-                      instituteName,
-                      percentage,
                       presentcheck,
                       startYear,
                     } = item;

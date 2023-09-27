@@ -1,8 +1,7 @@
-import { FieldArray, Form, Formik, useFormik } from "formik";
+import { FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 import { designationData } from "../../Redux/Action/Data";
 import { ExperienceDetails } from "../../Redux/Action/Experience";
@@ -121,10 +120,6 @@ export default function ExperienceForm() {
                       const {
                         startYear,
                         presentcheck,
-                        endYear,
-                        course,
-                        instituteName,
-                        percentage,
                       } = item;
 
                       return (
@@ -212,7 +207,7 @@ export default function ExperienceForm() {
                             {/* textarea for about work  */}
                             <div
                               className={`${
-                                presentcheck == true && "md:w-[81.2%]"
+                                presentcheck === true && "md:w-[81.2%]"
                               } w-full md:w-2/5 relative mt-5`}
                             >
                               <CustomInput

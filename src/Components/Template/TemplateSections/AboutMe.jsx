@@ -7,7 +7,7 @@ export default function AboutMe() {
       {About?.about && (
         <div>
           <h2 className="text-xl font-bold">About Me</h2>
-          <p> {About?.about}</p>
+          <p className="">{About?.about}</p>
         </div>
       )}
     </div>

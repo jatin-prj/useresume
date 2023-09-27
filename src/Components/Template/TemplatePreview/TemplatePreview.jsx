@@ -11,7 +11,7 @@ import {
 } from "../TemplateLayouts/Templates";
 import { Templates } from "../TemplateLayouts/TemplateOptions";
 import { AiFillEdit } from "react-icons/ai";
-import EditSection from "../TemplateSections/EditSections/EditSection";
+import EditSection from "../TemplatePreview/EditSections/EditSection";
 const Loader = lazy(() => import("../../Loader/Loader"));
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -20,9 +20,9 @@ export default function TemplatePreview() {
   const navigate = useNavigate();
   const templateId = localStorage.getItem("template-id");
   const [isLoading, setIsLoading] = useState();
-  const [onHover, setOnHover] = useState(false);
   const [open, setOpen] = useState(false);
   const [section, setSection] = useState();
+  const [enableEditing, setEnableEditing] = useState(false);
 
   const handleEdit = (sectionId) => {
     setOpen(true);
@@ -47,7 +47,7 @@ export default function TemplatePreview() {
     navigate(`/templates/preview/template-${id}`);
   };
 
-  return (
+  return ( 
     <>
       <div className="sm:w-full ">
         <div className="sm:w-full h-full">
@@ -82,13 +82,14 @@ export default function TemplatePreview() {
                                 autoSize={true}
                                 isBounded={true}
                                 margin={[3, 0]}
-                                // isResizable={onHover}
+                                isDraggable={enableEditing}
+                                isResizable={enableEditing}
                               >
                                 {Layout.map((layout, index) => (
                                   <div
                                     key={index}
                                     data-grid={layout}
-                                    className="cursor-grab w-full h-full border-b-2  p-1"
+                                    className="cursor-grab w-full h-full border-b-2 p-1 bg-cyan-700"
                                   >
                                     {Sections.map((section, index) => {
                                       if (layout && layout.id === section.id) {
@@ -97,9 +98,6 @@ export default function TemplatePreview() {
                                             key={index}
                                             id={`${section.id}`}
                                             className={`w-full h-full`}
-                                            onMouseMove={() =>
-                                              setOnHover(!onHover)
-                                            }
                                           >
                                             {section.component}
                                           </div>
@@ -119,32 +117,43 @@ export default function TemplatePreview() {
                       className=" md:w-[25%] md:p-2 sm:text-2xl 
                     "
                     >
-                      <div className="flex justify-center">Sections</div>
+                      <div
+                        className={`flex text-white font-medium rounded-lg justify-center text-base bg-cyan-700 active:bg-cyan-600 active:scale-[0.99] py-1`}
+                      >
+                        <button
+                          onClick={() => {
+                            setEnableEditing(!enableEditing);
+                          }}
+                        >
+                          {enableEditing
+                            ? "Save Changes"
+                            : "Enable Customization"}
+                        </button>
+                      </div>
                       <div className="sm:p-5">
                         {/* <ul className="sm:text-base list-disc"> */}
                         <div className="w-full">
                           {Sections.map((section, index) => (
                             <div
-                              className={`flex text-base font-bold text-cyan-700`}
+                              className={`flex text-base font-bold text-cyan-700 justify-between`}
                               key={index}
                             >
                               <div
-                                type="button"
-                                className={`block w-[40%] text-left text-lg `}
+                                className={`block text-left text-lg `}
                                 aria-current="true"
                               >
                                 {section.name}
                               </div>
-                              <span>
+                              <div className={`${!enableEditing && "hidden"}`}>
                                 <button onClick={() => handleEdit(section)}>
-                                  <AiFillEdit className="w-full h-full text-lg mt-1" />
+                                  <AiFillEdit className="w-full h-full text-lg" />
                                 </button>
-                              </span>
+                              </div>
                             </div>
                           ))}
                         </div>
-                        {/* </ul> */}
                       </div>
+                      {/* Edit Section  */}
                     </div>
                   </div>
                 </div>
@@ -154,7 +163,7 @@ export default function TemplatePreview() {
                 className="p-2 bg-cyan-700 md:w-[18%] flex flex-col md:flex hidden md:fixed right-0"
                 id="sideNav"
               >
-                <div className="bg-white h-[45rem]">
+                <div className="bg-white h-[45rem] py-4">
                   <div className="flex flex-wrap justify-center items-center gap-2 h-full overflow-y-auto">
                     {Templates.map((template, index) => (
                       <div
@@ -170,7 +179,7 @@ export default function TemplatePreview() {
                   </div>
                 </div>
                 <div className="block mt-3 text-base text-slate-900 py-2.5 px-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white mt-auto">
-                  Kuldip Chatrala
+                  Kuldip Chhatrala
                 </div>
                 <div className="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mt-2"></div>
                 <div className="mb-1 px-5 py-3 text-left text-sm text-cyan-100 flex ">

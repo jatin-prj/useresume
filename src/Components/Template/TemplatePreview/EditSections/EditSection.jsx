@@ -1,11 +1,14 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable no-unused-vars */
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
-export default function TemplateModal({ open, setOpen, template }) {
+import { Forms } from "../EditSections/FormList";
+export default function EditSection({ open, setOpen, section }) {
   const navigate = useNavigate();
-
   const cancelButtonRef = useRef(null);
+  const templateId = localStorage.getItem("template-id");
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -44,12 +47,16 @@ export default function TemplateModal({ open, setOpen, template }) {
             >
               <Dialog.Panel
                 className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full"
-                style={{ width: "85.5rem", height: "50rem" }}
+                style={{ width: "85.5rem" }}
               >
-                {/* sm:max-w-lg */}
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="relative flex items-center justify-end bottom-[1.4rem] left-[1rem] sm:mx-0 sm:h-10">
-                    <button onClick={() => setOpen(false)}>
+                    <button
+                      onClick={() => {
+                        navigate(`/templates/preview/template-${templateId}`);
+                        setOpen(false);
+                      }}
+                    >
                       <RxCross2 className="text-[2rem]" />
                     </button>
                   </div>
@@ -57,46 +64,21 @@ export default function TemplateModal({ open, setOpen, template }) {
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
                       <div className="flex justify-between mt-2">
-                        <div className="w-[63%] h-[35rem] bg-slate-50 flex items-center justify-center">
-                          <div className="w-[20rem]">
-                            <div>{template.template}</div>
-                          </div>
-                        </div>
-                        <div className="flex flex-wrap w-[34%]">
-                          <div className="w-full">
-                            <Dialog.Title
-                              as="h3"
-                              className="text-base font-semibold leading-6 text-gray-900"
-                            >
-                              {`Template ${template.id}`}
-                            </Dialog.Title>
-                            <div className="mt-2">
-                              <p className="text-sm text-gray-600 font-bold">
-                                One of the Best Templates for your Resume.
-                              </p>
-                              <p className="mt-3">
-                                Lorem ipsum dolor, sit amet consectetur
-                                adipisicing elit. Aliquid illo voluptatibus
-                                minima voluptate alias totam deserunt, adipisci
-                                in animi quae vel vitae nostrum, amet veritatis
-                                aspernatur deleniti quos mollitia doloribus!
-                                Omnis, libero? Rem, earum facilis officia
-                                ratione recusandae impedit suscipit deserunt?
-                                Dolorum, molestiae placeat optio cupiditate quod
-                                soluta facere doloremque culpa ad dolorem, sunt
-                                totam repudiandae praesentium, amet assumenda
-                                quia.
-                              </p>
+                        <div className="w-full bg-slate-50 flex justify-center">
+                          <div className="w-3/4 mt-3">
+                            <div className="bg-cyan-700 rounded-t-lg">
+                              {section.component}
                             </div>
-                            <div className="relative top-[12rem] text-center">
-                              <button
-                                className="rounded text-white p-3 bg-cyan-700 active:bg-cyan-600 active:scale-[0.99]"
-                                onClick={() => {
-                                  navigate("/templates/info");
-                                }}
-                              >
-                                Customize this template
-                              </button>
+                            <div className="my-[5rem] border-2 border-cyan-500">
+                              {Forms.map((form, index) => {
+                                if (section.id === form.id) {
+                                  return (
+                                    <div key={index} className="p-[2rem]">
+                                      {form.component}
+                                    </div>
+                                  );
+                                }
+                              })}
                             </div>
                           </div>
                         </div>

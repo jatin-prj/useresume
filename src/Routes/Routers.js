@@ -25,7 +25,7 @@ const TemplatePreview = lazy(() =>
   import("../Components/Template/TemplatePreview/TemplatePreview")
 );
 const EditSection = lazy(() =>
-  import("../Components/Template/TemplateSections/EditSections/EditSection")
+  import("../Components/Template/TemplatePreview/EditSections/EditSection")
 );
 
 export default function Routers() {

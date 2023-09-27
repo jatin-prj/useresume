@@ -1,5 +1,3 @@
-import * as Yup from "yup";
-
 import { ErrorMessage, useField } from "formik";
 import React from "react";
 import { inputCss, labelCss } from "../TailwindCss/tailwindCss";
@@ -10,7 +8,7 @@ const CustomInput = ({ label, ...props }) => {
   return (
     <>
       <div>
-        {fieldName == "workOn" || fieldName == "projectDetail" ? (
+        {fieldName === "workOn" || fieldName === "projectDetail" ? (
           <textarea
             {...field}
             {...props}

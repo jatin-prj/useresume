@@ -13,7 +13,7 @@ export const Template1 = [
     x: 0,
     y: 0,
     w: 10,
-    h: 4 ,
+    h: 4,
     static: true,
   },
   {
@@ -72,7 +72,7 @@ export const Template2 = [
     x: 0,
     y: 0,
     w: 10,
-    h:  4,
+    h: 4,
     static: true,
   },
   {
@@ -131,7 +131,7 @@ export const Template3 = [
     x: 0,
     y: 0,
     w: 10,
-    h:  4,
+    h: 4,
     static: true,
   },
   {
@@ -187,8 +187,13 @@ export const Template3 = [
 export const Sections = [
   {
     id: "personal-details",
-    name: "Header",
+    name: "Info",
     component: <Header />,
+  },
+  {
+    id: "user-short-pitch",
+    name: "Short Pitch",
+    component: <AboutMe />,
   },
   {
     id: "contact-details",
@@ -196,15 +201,10 @@ export const Sections = [
     y: 1,
     w: 5,
     h: 7,
-    name: "Contact",
+    name: "Contact Details",
     component: <Contact />,
   },
-  {
-    id: "user-short-pitch",
-    name: "Short Pitch",
-    component: <AboutMe />,
-  },
-  { id: "experience-details", name: "Experiences", component: <Experience /> },
+  { id: "experience-details", name: "Experiences ", component: <Experience /> },
   { id: "skills-details", name: "Skills", component: <Skills /> },
   { id: "project-details", name: "Projects", component: <Project /> },
   { id: "education-details", name: "Education", component: <Education /> },

@@ -1,15 +1,12 @@
-import { FieldArray, Form, Formik, useFormik } from "formik";
+import { FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
 import { ProjectDetails } from "../../Redux/Action/Project";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 import {
   formButtonCss,
   formHeadingCss,
-  inputCss,
-  labelCss,
 } from "../TailwindCss/tailwindCss";
 import CustomInput from "./CustomInput";
 
@@ -85,7 +82,6 @@ export default function ProjectForm() {
               <FieldArray name="info">
                 {() =>
                   values.info.map((item, index) => {
-                    const { projectName, projectDetail } = item;
                     return (
                       <div key={index}>
                         {console.log("val", values)}

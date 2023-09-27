@@ -1,11 +1,4 @@
-import {
-  ErrorMessage,
-  Field,
-  FieldArray,
-  Form,
-  Formik,
-  useFormik,
-} from "formik";
+import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useNavigate, useLocation } from "react-router-dom";
 import { PersonalDetails } from "../../Redux/Action/Information";
@@ -20,7 +13,6 @@ import {
   labelCss,
 } from "../TailwindCss/tailwindCss";
 import { designationData } from "../../Redux/Action/Data";
-import CustomInput from "./CustomInput";
 export default function InfoSection() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
