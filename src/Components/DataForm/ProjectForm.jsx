@@ -1,4 +1,10 @@
-import { FieldArray, Form, Formik } from "formik";
+import {
+  ErrorMessage,
+  Field,
+  FieldArray,
+  Form,
+  Formik,
+} from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -7,9 +13,10 @@ import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 import {
   formButtonCss,
   formHeadingCss,
+  inputCss,
+  labelCss,
 } from "../TailwindCss/tailwindCss";
 import CustomInput from "./CustomInput";
-
 export default function ProjectForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -84,7 +91,6 @@ export default function ProjectForm() {
                   values.info.map((item, index) => {
                     return (
                       <div key={index}>
-                        {console.log("val", values)}
                         <div className="flex justify-between mt-5 mb-5">
                           <h3 className={`${formHeadingCss}`}>
                             {index > 0 && "New Details"}
@@ -110,11 +116,25 @@ export default function ProjectForm() {
                             />
                           </div>
 
-                          <div className=" w-full md:w-2/5 relative">
-                            <CustomInput
+                          <div className=" w-full md:w-2/5 relative ">
+                            <Field
+                              component="textarea"
+                              rows="2"
+                              placeholder=" "
+                              className={`resize-none ${inputCss}`}
                               name={`info.${index}.projectDetail`}
-                              placeholder="Enter Details"
                             />
+                            <ErrorMessage
+                              component="div"
+                              name={`info.${index}.projectDetail`}
+                              className="text-red-400"
+                            />
+                            <label
+                              htmlFor={`info.${index}.projectDetail`}
+                              className={`${labelCss}`}
+                            >
+                              Enter Details
+                            </label>
                           </div>
                         </div>
                       </div>

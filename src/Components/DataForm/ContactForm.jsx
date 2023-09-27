@@ -75,11 +75,13 @@ export default function ContactForm() {
                   </div>
                 </div>
 
-                <div className=" w-full md:w-2/5 relative mt-1 ">
-                  <div className=" flex w-full ">
+                <div className=" w-full md:w-2/5 relative  ">
+                  <div className=" flex  ">
                     {/* datalist input for country flag and code */}
-                    <div className="w-36 inline-flex items-center  text-sm text-gray-900   border-none rounded-l-md">
-                      <div className="flex flex-col">
+                    <div
+                      className={`w-36   text-sm text-gray-900   border-none rounded-l-md`}
+                    >
+                      <div className={`flex flex-col `}>
                         <Field
                           name="countryFlag"
                           type="text"
@@ -105,37 +107,28 @@ export default function ContactForm() {
                       </div>
                     </div>
                     {/* number input for contact  */}
-                    <div>
-                      <div className="flex flex-col">
-                        <Field
-                          type="number"
-                          name="contact"
-                          placeholder=" "
-                          className={`pl-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${inputCss}`}
-                          autoComplete="off"
-                        />
-                        <ErrorMessage
-                          component="span"
-                          style={{ color: "red" }}
-                          name={`contact`}
-                        />
 
-                        <label
-                          htmlFor="contact"
-                          className={` ${labelCss}   peer-focus:left-36 left-36 `}
-                        >
-                          Enter Contact Number
-                        </label>
-                        <datalist id="CountryFlag">
-                          {countryCode.map((country, index) => (
-                            <option
-                              key={index}
-                              value={country?.emoji + " " + country.dial_code}
-                              className=""
-                            />
-                          ))}
-                        </datalist>
-                      </div>
+                    <div className="flex w-full flex-col">
+                      <Field
+                        type="number"
+                        name="contact"
+                        placeholder=" "
+                        className={`pl-8 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${inputCss}`}
+                        autoComplete="off"
+                      />
+                      <ErrorMessage
+                        component="span"
+                        style={{ color: "red" }}
+                        className="pl-8"
+                        name={`contact`}
+                      />
+
+                      <label
+                        htmlFor="contact"
+                        className={` ${labelCss}   peer-focus:left-36 left-36 `}
+                      >
+                        Enter Contact Number
+                      </label>
                     </div>
                   </div>
                 </div>

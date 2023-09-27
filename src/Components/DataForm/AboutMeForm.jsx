@@ -20,15 +20,12 @@ import {
 export default function AboutMeForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const initialValues = {
     about: "",
   };
-
   const handleValidation = Yup.object().shape({
     about: Yup.string().required("* Enter Some word about you").min(50),
   });
-
   // onSubmit function
   const handleSubmit = (values, { resetForm }) => {
     // call dispatch for about data
@@ -64,7 +61,7 @@ export default function AboutMeForm() {
                     />
                     <ErrorMessage
                       component="span"
-                      style={{ color: "red" }}
+                      className="text-red-400"
                       name={`about`}
                     />
 

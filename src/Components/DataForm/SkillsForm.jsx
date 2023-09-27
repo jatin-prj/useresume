@@ -142,7 +142,8 @@ export default function SkillsForm() {
                 <div className=" flex justify-between mt-2">
                   <Link to={`/templates/projectform`}>
                     <button
-                      className={`bg-[#309ba0] ${formButtonCss.split(
+                      type="button"
+                      className={`Back-button ${formButtonCss.split(
                         "form-button"
                       )}`}
                     >

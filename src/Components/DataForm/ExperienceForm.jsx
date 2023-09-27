@@ -1,11 +1,22 @@
-import { FieldArray, Form, Formik } from "formik";
+import {
+  ErrorMessage,
+  Field,
+  FieldArray,
+  Form,
+  Formik,
+} from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 import { designationData } from "../../Redux/Action/Data";
 import { ExperienceDetails } from "../../Redux/Action/Experience";
-import { formButtonCss, formHeadingCss } from "../TailwindCss/tailwindCss";
+import {
+  formButtonCss,
+  formHeadingCss,
+  inputCss,
+  labelCss,
+} from "../TailwindCss/tailwindCss";
 import CustomInput from "./CustomInput";
 
 export default function ExperienceForm() {
@@ -125,7 +136,7 @@ export default function ExperienceForm() {
                       return (
                         <div key={index}>
                           {/* remove button  */}
-                          <div className="flex justify-between">
+                          <div className="flex justify-between mt-5">
                             <h3 className={`${formHeadingCss}`}>
                               {index > 0 && "New Details"}
                             </h3>
@@ -153,7 +164,7 @@ export default function ExperienceForm() {
                             </div>
 
                             {/* Designation (profession ) */}
-                            <div className="w-full md:w-2/5 relative">
+                            <div className="w-full md:w-2/5 relative mb-2">
                               <CustomInput
                                 name={`info.${index}.Designation`}
                                 placeholder="Enter Profession"
@@ -181,20 +192,26 @@ export default function ExperienceForm() {
                               />
                             </div>
                             {/* present checkbox  */}
-                            <div className="flex w-full md:w-2/5 mt-1">
+                            <div className="flex w-full md:w-2/5 md:mt-1">
                               <CustomInput
                                 name={`info.${index}.presentcheck`}
+                                id={`info.${index}.presentcheck`}
                                 placeholder=" Pursuing"
                                 type="checkbox"
                                 onChange={(e) =>
                                   handleCheck(item, index, values, setValues)
                                 }
                               />
-                              <span className="mt-4 ml-2">Currently Work</span>
+                              <label
+                                htmlFor={`info.${index}.presentcheck`}
+                                className="mt-4 ml-2"
+                              >
+                                Currently Work
+                              </label>
                             </div>
                             {/* End year date  */}
                             {presentcheck !== true && (
-                              <div className="w-full md:w-2/5 relative mt-10 mb-4 ">
+                              <div className="w-full md:w-2/5 relative mt-10  ">
                                 <CustomInput
                                   name={`info.${index}.endYear`}
                                   placeholder=" Enter EndYear"
@@ -208,12 +225,27 @@ export default function ExperienceForm() {
                             <div
                               className={`${
                                 presentcheck === true && "md:w-[81.2%]"
-                              } w-full md:w-2/5 relative mt-5`}
+                              } w-full md:w-2/5 relative mt-5 `}
                             >
-                              <CustomInput
+                              <Field
+                                component="textarea"
+                                rows="2"
+                                placeholder=" "
+                                className={`resize-none ${inputCss}`}
                                 name={`info.${index}.workOn`}
-                                placeholder="Enter About work"
                               />
+                              <ErrorMessage
+                                component="div"
+                                name={`info.${index}.workOn`}
+                                className="text-red-400"
+                              />
+                              <label
+                                htmlFor={`info.${index}.workOn`}
+                                className={`${labelCss}`}
+                              >
+                                Enter About work
+                              </label>
+                              
                             </div>
                           </div>
                         </div>

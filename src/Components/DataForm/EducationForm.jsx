@@ -122,7 +122,7 @@ export default function EducationForm() {
                     return (
                       <div key={index}>
                         {console.log("val", values)}
-                        <div className="flex justify-between mt-5 mb-5">
+                        <div className="flex justify-between mt-5">
                           <h3 className={`${formHeadingCss}`}>
                             {index > 0 && "New Details"}
                           </h3>
@@ -168,11 +168,17 @@ export default function EducationForm() {
                               name={`info.${index}.presentcheck`}
                               placeholder=" Pursuing"
                               type="checkbox"
+                              id={`info.${index}.presentcheck`}
                               onChange={(e) =>
                                 handleCheck(index, values, setValues)
                               }
                             />
-                            <span className="mt-4 ml-2">Pursuing</span>
+                            <label
+                              className="mt-4 ml-2"
+                              htmlFor={`info.${index}.presentcheck`}
+                            >
+                              Pursuing
+                            </label>
                           </div>
                           {presentcheck !== true && (
                             <>

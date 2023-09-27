@@ -209,3 +209,4 @@ export const Sections = [
   { id: "project-details", name: "Projects", component: <Project /> },
   { id: "education-details", name: "Education", component: <Education /> },
 ];
+
