@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import { useLocation, useNavigate } from "react-router-dom";
-import { lazy, useState } from "react";
+import { cloneElement, lazy, useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
 import {
@@ -12,6 +12,11 @@ import {
 import { Templates } from "../TemplateLayouts/TemplateOptions";
 import { AiFillEdit } from "react-icons/ai";
 import EditSection from "../TemplatePreview/EditSections/EditSection";
+import { IoTabletLandscape } from "react-icons/io5";
+import { GrStatusInfoSmall } from "react-icons/gr";
+import { PiTextTBold } from "react-icons/pi";
+import { BsBorderAll } from "react-icons/bs";
+import { GoCircle, GoCircleSlash } from "react-icons/go";
 const Loader = lazy(() => import("../../Loader/Loader"));
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -23,6 +28,12 @@ export default function TemplatePreview() {
   const [open, setOpen] = useState(false);
   const [section, setSection] = useState();
   const [enableEditing, setEnableEditing] = useState(false);
+  const [headBgColor, setHeadBgColor] = useState("#3a82f6");
+  const [headTextColor, setHeadTextColor] = useState("#000004");
+  const [bgColor, setBgColor] = useState("#13758f");
+  const [textColor, setTextColor] = useState("#000004");
+  const [borderNone, setBorderNone] = useState(true);
+  const [borderColor, setBorderColor] = useState();
 
   const handleEdit = (sectionId) => {
     setOpen(true);
@@ -47,7 +58,7 @@ export default function TemplatePreview() {
     navigate(`/templates/preview/template-${id}`);
   };
 
-  return ( 
+  return (
     <>
       <div className="sm:w-full ">
         <div className="sm:w-full h-full">
@@ -57,7 +68,7 @@ export default function TemplatePreview() {
                 <div className="shadow p-2 flex  justify-between md:w-full">
                   <div className="flex justify-between  md:w-full">
                     <div className="md:w-[75%]">
-                      <div className="bg-slate-200 h-full flex justify-center items-center md:p-1">
+                      <div className="bg-slate-100 h-full flex justify-center items-center p-2">
                         <div className="">
                           {isLoading ? (
                             <div className="h-[51rem] flex justify-center items-center">
@@ -66,7 +77,7 @@ export default function TemplatePreview() {
                           ) : (
                             <div className="flex justify-center w-full">
                               <ResponsiveReactGridLayout
-                                className={"layout bg-white"}
+                                className={`layout bg-[${bgColor}] p-0`}
                                 style={{ width: "800px" }}
                                 layout={Layout}
                                 rowHeight={30}
@@ -81,7 +92,7 @@ export default function TemplatePreview() {
                                 compactType={"vertical"}
                                 autoSize={true}
                                 isBounded={true}
-                                margin={[3, 0]}
+                                margin={enableEditing ? [5, 5] : [0, 1]}
                                 isDraggable={enableEditing}
                                 isResizable={enableEditing}
                               >
@@ -89,18 +100,28 @@ export default function TemplatePreview() {
                                   <div
                                     key={index}
                                     data-grid={layout}
-                                    className="cursor-grab w-full h-full border-b-2 p-1 bg-cyan-700"
+                                    className={`w-full h-full ${
+                                      borderNone &&
+                                      `border border-[${borderColor}]`
+                                    }   ${
+                                      enableEditing && `cursor-grab`
+                                    } text-[${textColor}]`}
                                   >
                                     {Sections.map((section, index) => {
                                       if (layout && layout.id === section.id) {
                                         return (
-                                          <div
-                                            key={index}
-                                            id={`${section.id}`}
-                                            className={`w-full h-full`}
-                                          >
-                                            {section.component}
-                                          </div>
+                                          
+                                            <div
+                                              key={index}
+                                              id={`${section.id}`}
+                                              className={`w-full h-full`}
+                                            >
+                                              {cloneElement(section.component, {
+                                                headBgColor,
+                                                headTextColor,
+                                              })}
+                                            </div>
+                                          
                                         );
                                       }
                                     })}
@@ -131,12 +152,11 @@ export default function TemplatePreview() {
                         </button>
                       </div>
                       <div className="sm:p-5">
-                        {/* <ul className="sm:text-base list-disc"> */}
                         <div className="w-full">
                           {Sections.map((section, index) => (
                             <div
-                              className={`flex text-base font-bold text-cyan-700 justify-between`}
                               key={index}
+                              className={`flex text-base font-bold text-cyan-700 justify-between`}
                             >
                               <div
                                 className={`block text-left text-lg `}
@@ -153,7 +173,143 @@ export default function TemplatePreview() {
                           ))}
                         </div>
                       </div>
+                      <hr />
                       {/* Edit Section  */}
+                      {enableEditing && (
+                        <div className=" bg-[#fcfcfc] sm:p-5 mt-2">
+                          <div className="w-full">
+                            <div
+                              className={`flex text-base font-bold justify-between w-full`}
+                            >
+                              <div className="flex flex-col w-full">
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center ">
+                                    <GrStatusInfoSmall
+                                      className={`text-[${bgColor}]`}
+                                    />
+                                    <p className={`ml-1 text-[${bgColor}]`}>
+                                      Background
+                                    </p>
+                                  </div>
+
+                                  <div className="flex justify-center w-6">
+                                    <input
+                                      type="color"
+                                      value={bgColor}
+                                      onChange={(e) => {
+                                        setBgColor(e.target.value);
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center">
+                                    <PiTextTBold
+                                      className={`text-[${textColor}]`}
+                                    />
+                                    <p className={`ml-1 text-[${textColor}]`}>
+                                      Text Color
+                                    </p>
+                                  </div>
+
+                                  <div className="flex justify-center w-6">
+                                    <input
+                                      type="color"
+                                      value={textColor}
+                                      onChange={(e) => {
+                                        setTextColor(e.target.value);
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center">
+                                    <IoTabletLandscape
+                                      className={`text-[${headBgColor}]`}
+                                    />
+                                    <p className={`ml-1 text-[${headBgColor}]`}>
+                                      Header background
+                                    </p>
+                                  </div>
+
+                                  <div className="flex justify-center w-6">
+                                    <input
+                                      type="color"
+                                      value={headBgColor}
+                                      onChange={(e) => {
+                                        setHeadBgColor(e.target.value);
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center">
+                                    <PiTextTBold
+                                      className={`text-[${headTextColor}]`}
+                                    />
+                                    <p
+                                      className={`ml-1 text-[${headTextColor}]`}
+                                    >
+                                      Header Text Color
+                                    </p>
+                                  </div>
+
+                                  <div className="flex justify-center w-6">
+                                    <input
+                                      type="color"
+                                      value={headTextColor}
+                                      onChange={(e) => {
+                                        setHeadTextColor(e.target.value);
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center">
+                                    <BsBorderAll
+                                      className={`text-[${borderColor}]`}
+                                    />
+                                    <p className={`ml-1 text-[${borderColor}]`}>
+                                      Border
+                                    </p>
+                                  </div>
+
+                                  <div className="flex justify-between items-center">
+                                    <div
+                                      className="text-lg"
+                                      onClick={() => setBorderNone(!borderNone)}
+                                    >
+                                      {borderNone ? (
+                                        <GoCircleSlash />
+                                      ) : (
+                                        <GoCircle />
+                                      )}
+                                    </div>
+
+                                    <div className="flex justify-center w-6">
+                                      <input
+                                        type="color"
+                                        className={`${
+                                          !borderNone && `opacity-25`
+                                        }  `}
+                                        disabled={!borderNone}
+                                        value={borderColor}
+                                        onChange={(e) => {
+                                          setBorderColor(e.target.value);
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

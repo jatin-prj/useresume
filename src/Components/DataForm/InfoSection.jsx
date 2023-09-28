@@ -95,7 +95,7 @@ export default function InfoSection() {
                     Profile Picture
                   </label>
 
-                  <div className=" md:mx-auto   rounded-full border border-blue-300  w-20 h-20 ">
+                  <div className=" md:mx-auto  rounded-full border border-blue-300  w-20 h-20 ">
                     <img
                       className="  w-full object-cover w-full h-full rounded-full"
                       src={img}

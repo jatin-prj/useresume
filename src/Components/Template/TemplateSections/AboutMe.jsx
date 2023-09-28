@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
+import { sectionHeadingCss } from "../../TailwindCss/tailwindCss";
 
 export default function AboutMe() {
   const About = useSelector((state) => state?.ResumeDetails?.about);
   return (
-    <div>
+    <div className="p-2">
       {About?.about && (
         <div>
-          <h2 className="text-xl font-bold">About Me</h2>
+          <h2 className={`${sectionHeadingCss}`}>About Me</h2>
           <p className="">{About?.about}</p>
         </div>
       )}

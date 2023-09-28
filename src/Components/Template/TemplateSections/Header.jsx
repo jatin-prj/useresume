@@ -1,10 +1,12 @@
 import { useSelector } from "react-redux";
 import profile from "../../../Assests/Img/profile.avif";
-export default function Header() {
+export default function Header({ headBgColor, headTextColor }) {
   const info = useSelector((state) => state?.ResumeDetails?.infoSection);
   // console.log("info", info);
   return (
-    <div className="flex rounded-t-lg bg-top-color p-2 border mb-5 bg-blue-500 w-full ">
+    <div
+      className={`w-full h-full flex bg-top-color p-2 bg-[${headBgColor}]  text-[${headTextColor}]`}
+    >
       <div className="h-20 w-20 overflow-hidden rounded-full  border ml-5 ">
         <img
           src={profile}
@@ -22,4 +24,3 @@ export default function Header() {
     </div>
   );
 }
-  

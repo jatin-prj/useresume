@@ -13,7 +13,7 @@ export const Template1 = [
     x: 0,
     y: 0,
     w: 10,
-    h: 4,
+    h: 3.5,
     static: true,
   },
   {
@@ -38,7 +38,7 @@ export const Template1 = [
     x: 0,
     y: 3,
     w: 5,
-    h: 13,
+    h: 15,
   },
   {
     i: "",
@@ -51,18 +51,18 @@ export const Template1 = [
   {
     i: "",
     id: "education-details",
-    x: 0,
+    x: 5,
     y: 6,
     w: 5,
-    h: 12,
+    h: 15,
   },
   {
     i: "",
     id: "project-details",
-    x: 5,
+    x: 0,
     y: 5,
     w: 5,
-    h: 15,
+    h: 12,
   },
 ];
 export const Template2 = [
@@ -72,7 +72,7 @@ export const Template2 = [
     x: 0,
     y: 0,
     w: 10,
-    h: 4,
+    h: 3.5,
     static: true,
   },
   {
@@ -97,7 +97,7 @@ export const Template2 = [
     x: 0,
     y: 2,
     w: 7,
-    h: 18,
+    h: 15,
   },
   {
     i: "",
@@ -105,7 +105,7 @@ export const Template2 = [
     x: 7,
     y: 2,
     w: 3,
-    h: 18,
+    h: 15,
   },
   {
     i: "",
@@ -113,7 +113,7 @@ export const Template2 = [
     x: 0,
     y: 3,
     w: 7,
-    h: 18,
+    h: 15,
   },
   {
     i: "",
@@ -121,7 +121,7 @@ export const Template2 = [
     x: 7,
     y: 3,
     w: 3,
-    h: 18,
+    h: 15,
   },
 ];
 export const Template3 = [
@@ -131,7 +131,7 @@ export const Template3 = [
     x: 0,
     y: 0,
     w: 10,
-    h: 4,
+    h: 3.5,
     static: true,
   },
   {
@@ -156,7 +156,7 @@ export const Template3 = [
     x: 4,
     y: 2,
     w: 6,
-    h: 11,
+    h: 15,
   },
   {
     i: "",
@@ -164,7 +164,7 @@ export const Template3 = [
     x: 0,
     y: 2,
     w: 4,
-    h: 11,
+    h: 15,
   },
   {
     i: "",
@@ -172,7 +172,7 @@ export const Template3 = [
     x: 0,
     y: 3,
     w: 4,
-    h: 11,
+    h: 15,
   },
   {
     i: "",
@@ -180,7 +180,7 @@ export const Template3 = [
     x: 4,
     y: 4,
     w: 6,
-    h: 11,
+    h: 15,
   },
 ];
 
@@ -209,4 +209,3 @@ export const Sections = [
   { id: "project-details", name: "Projects", component: <Project /> },
   { id: "education-details", name: "Education", component: <Education /> },
 ];
-
