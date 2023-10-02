@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { sectionHeadingCss } from "../../TailwindCss/tailwindCss";
+import { sectionHeadingCss } from "Components/TailwindCss/tailwindCss";
 
 export default function AboutMe() {
   const About = useSelector((state) => state?.ResumeDetails?.about);

@@ -1,4 +1,4 @@
-import { EXPERIENCE } from "../Type";
+import { EXPERIENCE } from "Redux/Type";
 
 export const EducationDetails = (values) => async (dispatch) => {
   try {

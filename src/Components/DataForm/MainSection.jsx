@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
-import { stepperArray } from "../../Redux/Action/Data";
+import { stepperArray } from "Redux/Action/Data";
 import { Fragment } from "react";
 
 export default function MainSection({ children }) {

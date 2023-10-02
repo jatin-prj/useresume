@@ -1,9 +1,6 @@
-/* eslint-disable no-unused-vars */
-
-// Initialization for ES Users
 import { Carousel, initTE } from "tw-elements";
-import HeroImage4 from "../../../Assests/Img/HeroImage4.jpg";
 import { useEffect } from "react";
+import HeroImage4 from "Assests/Img/HeroImage4.jpg";
 
 export default function HomePage() {
   useEffect(() => {
@@ -48,9 +45,7 @@ export default function HomePage() {
               ></button>
             </div>
 
-            
             <div className="relative w-full h-full object-cover overflow-hidden after:clear-both after:block after:content-['']">
-              
               <div
                 className="relative float-left -mr-[100%] w-full h-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
                 data-te-carousel-active
@@ -68,11 +63,7 @@ export default function HomePage() {
                   </h5>
                 </div>
               </div>
-
-             
             </div>
-
-            
           </div>
         </div>
 

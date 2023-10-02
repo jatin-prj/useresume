@@ -1,11 +1,16 @@
 import { FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { lazy } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { EducationDetails } from "../../Redux/Action/Education";
+import { EducationDetails } from "Redux/Action/Education";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
-import { formButtonCss, formHeadingCss } from "../TailwindCss/tailwindCss";
-import CustomInput from "./CustomInput";
+import {
+  formButtonCss,
+  formHeadingCss,
+} from "Components/TailwindCss/tailwindCss";
+const CustomInput = lazy(()=>import("Components/DataForm/CustomInput"));
+
 
 export default function EducationForm() {
   const navigate = useNavigate();
@@ -115,10 +120,7 @@ export default function EducationForm() {
               <FieldArray name="info">
                 {() =>
                   values?.info?.map((item, index) => {
-                    const {
-                      presentcheck,
-                      startYear,
-                    } = item;
+                    const { presentcheck, startYear } = item;
                     return (
                       <div key={index}>
                         {console.log("val", values)}

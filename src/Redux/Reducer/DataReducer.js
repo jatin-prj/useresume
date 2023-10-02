@@ -6,7 +6,7 @@ import {
   INFOSECTION,
   PROJECT,
   SKILL,
-} from "../Type";
+} from "Redux/Type";
 
 const initialState = {
   infoSection:

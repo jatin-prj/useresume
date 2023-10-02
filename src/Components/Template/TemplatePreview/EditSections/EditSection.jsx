@@ -4,7 +4,7 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
-import { Forms } from "../EditSections/FormList";
+import { Forms } from "Components/Template/TemplatePreview/EditSections/FormList";
 export default function EditSection({ open, setOpen, section }) {
   const navigate = useNavigate();
   const cancelButtonRef = useRef(null);

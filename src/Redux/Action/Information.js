@@ -1,4 +1,4 @@
-import { INFOSECTION } from "../Type";
+import { INFOSECTION } from "Redux/Type";
 
 export const PersonalDetails = (values) => async (dispatch) => {
   try {

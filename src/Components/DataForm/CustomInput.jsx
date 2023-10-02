@@ -1,6 +1,5 @@
 import { ErrorMessage, useField } from "formik";
-import React from "react";
-import { inputCss, labelCss } from "../TailwindCss/tailwindCss";
+import { inputCss, labelCss } from "Components/TailwindCss/tailwindCss";
 const CustomInput = ({ label, ...props }) => {
   const [field] = useField(props);
   return (

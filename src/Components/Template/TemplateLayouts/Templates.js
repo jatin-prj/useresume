@@ -1,10 +1,26 @@
-import AboutMe from "../TemplateSections/AboutMe";
-import Contact from "../TemplateSections/Contact";
-import Education from "../TemplateSections/Education";
-import Experience from "../TemplateSections/Experience";
-import Header from "../TemplateSections/Header";
-import Project from "../TemplateSections/Project";
-import Skills from "../TemplateSections/Skills";
+import { lazy } from "react";
+
+const AboutMe = lazy(() =>
+  import("Components/Template/TemplateSections/AboutMe")
+);
+const Contact = lazy(() =>
+  import("Components/Template/TemplateSections/Contact")
+);
+const Education = lazy(() =>
+  import("Components/Template/TemplateSections/Education")
+);
+const Experience = lazy(() =>
+  import("Components/Template/TemplateSections/Experience")
+);
+const Header = lazy(() =>
+  import("Components/Template/TemplateSections/Header")
+);
+const Project = lazy(() =>
+  import("Components/Template/TemplateSections/Project")
+);
+const Skills = lazy(() =>
+  import("Components/Template/TemplateSections/Skills")
+);
 
 export const Template1 = [
   {

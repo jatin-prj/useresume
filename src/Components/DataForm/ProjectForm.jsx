@@ -1,22 +1,17 @@
-import {
-  ErrorMessage,
-  Field,
-  FieldArray,
-  Form,
-  Formik,
-} from "formik";
+import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { lazy } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ProjectDetails } from "../../Redux/Action/Project";
+import { ProjectDetails } from "Redux/Action/Project";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 import {
   formButtonCss,
   formHeadingCss,
   inputCss,
   labelCss,
-} from "../TailwindCss/tailwindCss";
-import CustomInput from "./CustomInput";
+} from "Components/TailwindCss/tailwindCss";
+const CustomInput = lazy(() => import("Components/DataForm/CustomInput"));
 export default function ProjectForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();

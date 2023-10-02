@@ -1,6 +1,7 @@
-import ContentBody from "../../../Components/ContentBody/ContentBody";
-import Navbar from "../../../Components/Navbar/Navbar";
-// import Sidebar from "../../../Components/Sidebar/Sidebar";
+import { lazy } from "react";
+
+const ContentBody = lazy(() => import("Components/ContentBody/ContentBody"));
+const Navbar = lazy(() => import("Components/Navbar/Navbar"));
 
 export default function Dashboard({ children }) {
   return (

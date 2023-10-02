@@ -1,14 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon } from "@heroicons/react/24/outline";
-import { navigation, userNavigation } from "../../Routes/Paths";
-import { user } from "../../Layout/Adminboard/Profile/Profile";
 import { Link, useLocation } from "react-router-dom";
-
-// function classNames(...classes) {
-//   return classes.filter(Boolean).join(" ");
-// }
+import { navigation, userNavigation } from "Routes/Paths";
+import { user } from "Layout/Adminboard/Profile/Profile";
 
 export default function Navbar() {
   const location = useLocation();
@@ -27,12 +22,6 @@ export default function Navbar() {
                 <div className="flex h-[4.5rem] items-center justify-between ">
                   <div className="flex ">
                     <div className="flex">
-                      {/* <div className="flex items-center w-14 h-14">
-                        <button className="rounded-md w-full text-white hover:bg-gray-700">
-                          {Icons.barIcon}
-                        </button>
-                      </div> */}
-
                       <Link to={"/"}>
                         <div className="flex items-center w-52">
                           <p className="inline-block align-middle text-[#0e7490] text-3xl font-semibold w-full">
@@ -155,14 +144,6 @@ export default function Navbar() {
                         {user.email}
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      className="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (

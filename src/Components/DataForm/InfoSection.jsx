@@ -1,18 +1,18 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useNavigate, useLocation } from "react-router-dom";
-import { PersonalDetails } from "../../Redux/Action/Information";
-import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import profile from "Assests/Img/profile.avif";
+import { PersonalDetails } from "Redux/Action/Information";
 import { FaArrowRight, FaCloudUploadAlt } from "react-icons/fa";
-import profile from "../../Assests/Img/profile.avif";
 import {
   formButtonCss,
   formHeadingCss,
   inputCss,
   labelCss,
-} from "../TailwindCss/tailwindCss";
-import { designationData } from "../../Redux/Action/Data";
+} from "Components/TailwindCss/tailwindCss";
+import { designationData } from "Redux/Action/Data";
 export default function InfoSection() {
   const navigate = useNavigate();
   const dispatch = useDispatch();

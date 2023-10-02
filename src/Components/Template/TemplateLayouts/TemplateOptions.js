@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import t1 from "../../../Assests/Img/t1.png";
-import t2 from "../../../Assests/Img/t2.png";
-import t3 from "../../../Assests/Img/t3.png";
+import t1 from "Assests/Img/t1.png";
+import t2 from "Assests/Img/t2.png";
+import t3 from "Assests/Img/t3.png";
 export const Templates = [
   {
     id: 1,

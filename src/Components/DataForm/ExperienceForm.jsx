@@ -1,23 +1,18 @@
-import {
-  ErrorMessage,
-  Field,
-  FieldArray,
-  Form,
-  Formik,
-} from "formik";
+import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { lazy } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
-import { designationData } from "../../Redux/Action/Data";
-import { ExperienceDetails } from "../../Redux/Action/Experience";
+import { designationData } from "Redux/Action/Data";
+import { ExperienceDetails } from "Redux/Action/Experience";
 import {
   formButtonCss,
   formHeadingCss,
   inputCss,
   labelCss,
-} from "../TailwindCss/tailwindCss";
-import CustomInput from "./CustomInput";
+} from "Components/TailwindCss/tailwindCss";
+const CustomInput = lazy(() => import("Components/DataForm/CustomInput"));
 
 export default function ExperienceForm() {
   const navigate = useNavigate();
@@ -128,10 +123,7 @@ export default function ExperienceForm() {
                 <FieldArray name="info">
                   {() =>
                     values?.info?.map((item, index) => {
-                      const {
-                        startYear,
-                        presentcheck,
-                      } = item;
+                      const { startYear, presentcheck } = item;
 
                       return (
                         <div key={index}>
@@ -245,7 +237,6 @@ export default function ExperienceForm() {
                               >
                                 Enter About work
                               </label>
-                              
                             </div>
                           </div>
                         </div>

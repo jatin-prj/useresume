@@ -1,21 +1,15 @@
-import {
-  ErrorMessage,
-  Field,
-  FieldArray,
-  Form,
-  Formik,
-} from "formik";
+import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { AboutDetails } from "../../Redux/Action/About";
+import { AboutDetails } from "Redux/Action/About";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import {
   formButtonCss,
   formHeadingCss,
   inputCss,
   labelCss,
-} from "../TailwindCss/tailwindCss";
+} from "Components/TailwindCss/tailwindCss";
 
 export default function AboutMeForm() {
   const navigate = useNavigate();

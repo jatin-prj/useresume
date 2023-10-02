@@ -2,15 +2,15 @@ import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ContactDetails } from "../../Redux/Action/Contact";
+import { ContactDetails } from "Redux/Action/Contact";
+import { countryCode } from "Redux/Action/Data";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { countryCode } from "../../Redux/Action/Data";
 import {
   formButtonCss,
   formHeadingCss,
   inputCss,
   labelCss,
-} from "../TailwindCss/tailwindCss";
+} from "Components/TailwindCss/tailwindCss";
 
 export default function ContactForm() {
   const navigate = useNavigate();

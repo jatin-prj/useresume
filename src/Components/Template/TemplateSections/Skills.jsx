@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import {
   sectionHeadingCss,
   sectionSubHeadingCss,
-} from "../../TailwindCss/tailwindCss";
+} from "Components/TailwindCss/tailwindCss";
 export default function Skills() {
   const skill = useSelector((state) => state?.ResumeDetails?.skill);
   // console.log("skill", skill);

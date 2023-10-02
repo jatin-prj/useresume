@@ -1,12 +1,16 @@
 import { FieldArray, Form, Formik } from "formik";
+import { lazy } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { SkillDetails } from "../../Redux/Action/skill";
+import { SkillDetails } from "Redux/Action/skill";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 import { TagsInput } from "react-tag-input-component";
-import "../../App.css";
-import { formButtonCss, formHeadingCss } from "../TailwindCss/tailwindCss";
-import CustomDropDown from "./CustomDropDown";
+import "App.css";
+import {
+  formButtonCss,
+  formHeadingCss,
+} from "Components/TailwindCss/tailwindCss";
+const CustomDropDown = lazy(() => import("Components/DataForm/CustomInput"));
 
 export default function SkillsForm() {
   const navigate = useNavigate();
@@ -65,10 +69,7 @@ export default function SkillsForm() {
   return (
     <>
       <div className="mx-5 p-5">
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-        >
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({ values, setValues }) => (
             <>
               {/* Add button and heading of form  */}

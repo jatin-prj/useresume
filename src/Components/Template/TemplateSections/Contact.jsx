@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { FaEnvelope } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { PiDeviceMobileFill } from "react-icons/pi";
-import { sectionHeadingCss } from "../../TailwindCss/tailwindCss";
+import { sectionHeadingCss } from "Components/TailwindCss/tailwindCss";
 
 export default function Contact() {
   const Contact = useSelector((state) => state?.ResumeDetails?.contact);

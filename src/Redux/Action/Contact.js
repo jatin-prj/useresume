@@ -1,4 +1,4 @@
-import { CONTACT } from "../Type";
+import { CONTACT } from "Redux/Type";
 
 export const ContactDetails = (values) => async (dispatch) => {
   try {

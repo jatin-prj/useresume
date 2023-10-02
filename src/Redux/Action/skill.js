@@ -1,4 +1,4 @@
-import { SKILL } from "../Type";
+import { SKILL } from "Redux/Type";
 
 export const SkillDetails = (values) => async (dispatch) => {
   try {

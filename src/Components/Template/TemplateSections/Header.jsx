@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import profile from "../../../Assests/Img/profile.avif";
+import profile from "Assests/Img/profile.avif";
+
 export default function Header({ headBgColor, headTextColor }) {
   const info = useSelector((state) => state?.ResumeDetails?.infoSection);
-  // console.log("info", info);
   return (
     <div
       className={`w-full h-full flex bg-top-color p-2 bg-[${headBgColor}]  text-[${headTextColor}]`}

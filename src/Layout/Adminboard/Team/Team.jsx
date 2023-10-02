@@ -1,4 +1,4 @@
-import { mainHeadingCss } from "../../../Components/TailwindCss/tailwindCss";
+import { mainHeadingCss } from "Components/TailwindCss/tailwindCss";
 
 export default function Team() {
   return (

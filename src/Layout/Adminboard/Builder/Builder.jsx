@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { Link } from "react-router-dom";
-import { Templates } from "../../../Components/Template/TemplateLayouts/TemplateOptions";
-import TemplateModal from "../../../Components/Template/TemplateModal/TemplateModal";
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { LuArrowUpRightFromCircle } from "react-icons/lu";
-import { mainHeadingCss } from "../../../Components/TailwindCss/tailwindCss";
+import { mainHeadingCss } from "Components/TailwindCss/tailwindCss";
+import { Templates } from "Components/Template/TemplateLayouts/TemplateOptions";
+const TemplateModal = lazy(() =>
+  import("Components/Template/TemplateModal/TemplateModal")
+);
 export default function Builder() {
   const [open, setOpen] = useState(false);
   const [template, setTemplate] = useState();

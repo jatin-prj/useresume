@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Link } from "react-router-dom";
-import LostPage from "../../Assests/Img/LostPage.png";
+import LostPage from "Assests/Img/LostPage.png";
 export default function LostServer() {
   return (
     <section className={`bg-white dark:bg-gray-900`}>
@@ -9,7 +9,7 @@ export default function LostServer() {
           <img
             src={LostPage}
             alt="Oops! lost"
-            className="w-full relative top-[5rem]    "
+            className="w-full relative top-[5rem]"
           />
         </div>
         <div className="mx-auto max-w-screen-sm text-center">

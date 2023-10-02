@@ -1,4 +1,4 @@
-import { PROJECT } from "../Type";
+import { PROJECT } from "Redux/Type";
 
 export const ProjectDetails = (values) => async (dispatch) => {
   try {

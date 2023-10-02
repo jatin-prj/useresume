@@ -1,23 +1,25 @@
 /* eslint-disable array-callback-return */
-import { useLocation, useNavigate } from "react-router-dom";
 import { cloneElement, lazy, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
-import {
-  Sections,
-  Template1,
-  Template2,
-  Template3,
-} from "../TemplateLayouts/Templates";
-import { Templates } from "../TemplateLayouts/TemplateOptions";
 import { AiFillEdit } from "react-icons/ai";
-import EditSection from "../TemplatePreview/EditSections/EditSection";
 import { IoTabletLandscape } from "react-icons/io5";
 import { GrStatusInfoSmall } from "react-icons/gr";
 import { PiTextTBold } from "react-icons/pi";
 import { BsBorderAll } from "react-icons/bs";
 import { GoCircle, GoCircleSlash } from "react-icons/go";
-const Loader = lazy(() => import("../../Loader/Loader"));
+import {
+  Sections,
+  Template1,
+  Template2,
+  Template3,
+} from "Components/Template/TemplateLayouts/Templates";
+import { Templates } from "Components/Template/TemplateLayouts/TemplateOptions";
+const Loader = lazy(() => import("Components/Loader/Loader"));
+const EditSection = lazy(() =>
+  import("Components/Template/TemplatePreview/EditSections/EditSection")
+);
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 export default function TemplatePreview() {
@@ -60,25 +62,27 @@ export default function TemplatePreview() {
 
   return (
     <>
-      <div className="sm:w-full ">
-        <div className="sm:w-full h-full">
-          <div className="flex h-screen sm:w-full sm:h-full ">
+      <div className="w-full">
+        <div className="w-full h-full">
+          <div className="flex w-full h-full ">
+            {/* Preview section Start */}
             <div className="flex sm:w-full sm:h-full">
-              <div className="relative md:w-[82%] flex sm:p-1 ">
+              <div className="relative sm:w-[100%] xl:w-[82%] flex sm:p-1 ">
                 <div className="shadow p-2 flex  justify-between md:w-full">
-                  <div className="flex justify-between  md:w-full">
-                    <div className="md:w-[75%]">
+                  <div className="flex justify-around xl:justify-normal md:w-full">
+                    {/* Template preview section Start */}
+                    <div className="xl:w-[75%] w-[70%]">
                       <div className="bg-slate-100 h-full flex justify-center items-center p-2">
-                        <div className="">
+                        <div className="xl:w-[800px] md:w-[600px] w-[400px]">
                           {isLoading ? (
                             <div className="h-[51rem] flex justify-center items-center">
                               <Loader />
                             </div>
                           ) : (
-                            <div className="flex justify-center w-full">
+                            <div className="flex w-full">
                               <ResponsiveReactGridLayout
-                                className={`layout bg-[${bgColor}] p-0`}
-                                style={{ width: "800px" }}
+                                className={`layout bg-[${bgColor}] p-0 w-full`}
+                                // style={{ width: "800px" }}
                                 layout={Layout}
                                 rowHeight={30}
                                 breakpoints={{
@@ -88,12 +92,27 @@ export default function TemplatePreview() {
                                   xs: 200,
                                   xxs: 0,
                                 }}
-                                cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
+                                cols={{
+                                  lg: 10,
+                                  md: 10,
+                                  sm: 10,
+                                  xs: 10,
+                                  xxs: 10,
+                                }}
                                 compactType={"vertical"}
-                                autoSize={true}
                                 isBounded={true}
                                 margin={enableEditing ? [5, 5] : [0, 1]}
                                 isDraggable={enableEditing}
+                                // resizeHandles={[
+                                //   "se",
+                                //   "sw",
+                                //   "w",
+                                //   "e",
+                                //   "s",
+                                //   "n",
+                                //   "ne",
+                                //   "nw",
+                                // ]}
                                 isResizable={enableEditing}
                               >
                                 {Layout.map((layout, index) => (
@@ -110,18 +129,16 @@ export default function TemplatePreview() {
                                     {Sections.map((section, index) => {
                                       if (layout && layout.id === section.id) {
                                         return (
-                                          
-                                            <div
-                                              key={index}
-                                              id={`${section.id}`}
-                                              className={`w-full h-full`}
-                                            >
-                                              {cloneElement(section.component, {
-                                                headBgColor,
-                                                headTextColor,
-                                              })}
-                                            </div>
-                                          
+                                          <div
+                                            key={index}
+                                            id={`${section.id}`}
+                                            className={`w-full h-full overflow-hidden`}
+                                          >
+                                            {cloneElement(section.component, {
+                                              headBgColor,
+                                              headTextColor,
+                                            })}
+                                          </div>
                                         );
                                       }
                                     })}
@@ -133,9 +150,10 @@ export default function TemplatePreview() {
                         </div>
                       </div>
                     </div>
+                    {/* Template preview section End */}
 
                     <div
-                      className=" md:w-[25%] md:p-2 sm:text-2xl 
+                      className="xl:w-[25%] w-[20%] md:p-2 sm:text-2xl 
                     "
                     >
                       <div
@@ -314,9 +332,11 @@ export default function TemplatePreview() {
                   </div>
                 </div>
               </div>
+              {/* Preview section End */}
 
+              {/* Tempalte Option section Start */}
               <div
-                className="p-2 bg-cyan-700 md:w-[18%] flex flex-col md:flex hidden md:fixed right-0"
+                className="p-2 bg-cyan-700 lg:w-[18%] flex flex-col flex xl:block hidden right-0 fixed"
                 id="sideNav"
               >
                 <div className="bg-white h-[45rem] py-4">
@@ -343,6 +363,7 @@ export default function TemplatePreview() {
                 </div>
               </div>
             </div>
+            {/* Te  mpalte Option section End */}
           </div>
         </div>
       </div>

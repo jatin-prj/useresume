@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import profile from "../../../Assests/Img/profile.avif";
+import profile from "Assests/Img/profile.avif";
 
 export const user = {
   name: "Jatin Prajapati",
