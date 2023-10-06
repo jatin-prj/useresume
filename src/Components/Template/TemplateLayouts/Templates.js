@@ -208,7 +208,7 @@ export const Sections = [
   },
   {
     id: "user-short-pitch",
-    name: "Short Pitch",
+    name: "About Me",
     component: <AboutMe />,
   },
   {

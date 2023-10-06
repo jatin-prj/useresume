@@ -1,9 +1,9 @@
 import { ErrorMessage, useField } from "formik";
-import { inputCss, labelCss } from "Components/TailwindCss/tailwindCss";
 const CustomInput = ({ label, ...props }) => {
   const [field] = useField(props);
   return (
     <>
+      {/* input and error message for all field   */}
       <div>
         <input
           {...field}
@@ -13,10 +13,10 @@ const CustomInput = ({ label, ...props }) => {
           className={` ${
             props?.type === "checkbox"
               ? "w-4 h-4 text-blue-600 bg-blue-100 rounded mt-5"
-              : inputCss
+              : 'input peer'
           }`}
         />
-        <label htmlFor={props?.placeholder} className={`${labelCss}`}>
+        <label htmlFor={props?.placeholder} className={` label`}>
           {props?.placeholder}
         </label>
         <ErrorMessage

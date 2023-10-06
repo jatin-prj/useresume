@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import SignUp from "Layout/Authboard/SignUp";
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 const Builder = lazy(() => import("Layout/Adminboard/Builder/Builder"));
@@ -43,6 +44,7 @@ export default function Routers() {
           }
         />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard">
           <Route
             index
@@ -162,7 +164,14 @@ export default function Routers() {
         </Route>
 
         <Route path="/builder" element={<Builder />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <Dashboard>
+              <Profile />
+            </Dashboard>
+          }
+        />
 
         <Route path="*" element={<LostServer />} />
       </Routes>

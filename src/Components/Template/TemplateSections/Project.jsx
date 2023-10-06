@@ -1,27 +1,22 @@
 import { useSelector } from "react-redux";
-import {
-  sectionHeadingCss,
-  sectionSubHeadingCss,
-} from "Components/TailwindCss/tailwindCss";
-
 export default function Project() {
   const Project = useSelector((state) => state?.ResumeDetails?.project);
   // console.log("pro", Project);
   return (
     <>
-      <div className="w-full h-full p-2">
+      <div className="w-full h-full">
         {Project?.projectData && (
           <div>
-            <h2 className={`${sectionHeadingCss}`}>Projects</h2>
+            <h2 className={`sectionHeading`}>Projects</h2>
 
             <div className="project">
               <div className="flex flex-col space-y-1 education">
                 {Project?.projectData?.map((project, index) => (
                   <div className="flex flex-col education" key={index}>
-                    <p className={`${sectionSubHeadingCss}`}>
+                    <p className={`sectionSubHeading`}>
                       {project?.projectName}
                     </p>
-                    <ul className="list-disc ml-5 font-normal text-sm mb-1 pl-2 project">
+                    <ul className="list-disc ml-5 font-normal text-sm mb-1 pl-2 ">
                       <li>{project?.projectDetail}</li>
                     </ul>
                   </div>

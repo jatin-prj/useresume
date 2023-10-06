@@ -1,16 +1,11 @@
 import { ErrorMessage, useField } from "formik";
-import { inputCss, labelCss } from "Components/TailwindCss/tailwindCss";
 const CustomDropDown = ({ label, ...props }) => {
   const [field] = useField(props);
-
   return (
     <>
+      {/* dropdown for select option  */}
       <div>
-        <label htmlFor={props?.placeholder} className={`${labelCss}`}>
-          {props?.placeholder}
-        </label>
-
-        <select className={`${inputCss} `} {...field} {...props}>
+        <select className={`input peer `} {...field} {...props}>
           {props?.expertise?.map((expert, index) => (
             <option key={index} value={expert}>
               {expert}
@@ -23,6 +18,9 @@ const CustomDropDown = ({ label, ...props }) => {
           name={field.name}
           className="text-red-400"
         />
+        <label htmlFor={props?.placeholder} className={`label`}>
+          {props?.placeholder}
+        </label>
       </div>
     </>
   );

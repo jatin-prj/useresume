@@ -1,27 +1,23 @@
 import { useSelector } from "react-redux";
-import {
-  sectionHeadingCss,
-  sectionSubHeadingCss,
-} from "Components/TailwindCss/tailwindCss";
 export default function Skills() {
   const skill = useSelector((state) => state?.ResumeDetails?.skill);
   // console.log("skill", skill);
   return (
-    <div className="w-full h-full p-2">
-      <h2 className={`${sectionHeadingCss}`}>Skills</h2>
+    <div className="w-full h-full ">
+      <h2 className={`sectionHeading`}>Skills</h2>
 
       <div className="">
         {skill?.skillData?.map((skillElem, index) => (
           <div className=" mt-1 mx-5" key={index}>
-            <div className={`${sectionSubHeadingCss}`}>
-              {skillElem?.rating}: &nbsp;
-              <span>
+            <div className={`sectionSubHeading flex gap-2 mt-2`}>
+              <div className="w-28">{skillElem?.rating}: &nbsp;</div>
+              <div className="flex flex-wrap ">
                 {skillElem?.skill?.map((element, skillIndex) => (
-                  <span className="text-base font-normal" key={skillIndex}>
+                  <div className="text-base font-normal" key={skillIndex}>
                     {element},&nbsp;
-                  </span>
+                  </div>
                 ))}
-              </span>
+              </div>
             </div>
           </div>
         ))}

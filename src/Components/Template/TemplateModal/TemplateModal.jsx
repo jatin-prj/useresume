@@ -14,6 +14,7 @@ export default function TemplateModal({ open, setOpen, template }) {
         className="relative z-10 transition ease-in-out delay-150"
         initialFocus={cancelButtonRef}
         onClose={setOpen}
+        open={open}
       >
         <Transition.Child
           as={Fragment}
@@ -88,15 +89,17 @@ export default function TemplateModal({ open, setOpen, template }) {
                                 quia.
                               </p>
                             </div>
-                            <div className="relative top-[12rem] text-center">
-                              <button
-                                className="rounded text-white p-3 bg-cyan-700 active:bg-cyan-600 active:scale-[0.99]"
-                                onClick={() => {
-                                  navigate("/templates/info");
-                                }}
-                              >
-                                Customize this template
-                              </button>
+                            <div className="relative top-[12rem] text-center flex justify-center">
+                              <div className="btn-text w-64 h-10">
+                                <button
+                                  // className="rounded text-white p-3 bg-cyan-700 active:bg-cyan-600 active:scale-[0.99]"
+                                  onClick={() => {
+                                    navigate("/templates/info");
+                                  }}
+                                >
+                                  Customize this template
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>

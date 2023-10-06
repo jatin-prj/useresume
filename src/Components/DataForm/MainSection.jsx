@@ -8,8 +8,8 @@ export default function MainSection({ children }) {
   return (
     <>
       <div className="p-4 w-full" style={{ height: "calc(100vh - 4.3rem" }}>
-        <div className="p-1 relative">
-          <ol className=" flex items-center justify-center  w-full mb-4 sm:mb-5 mx-14   relative right-[3rem]   ">
+        <div className="p-1">
+          <ol className="  flex items-center justify-center  w-full mb-4 sm:mb-5 mx-14   relative right-[3rem]   ">
             {stepperArray?.map((stepperData, index) => (
               <Fragment key={index}>
                 {/* stepper list  */}
@@ -40,7 +40,7 @@ export default function MainSection({ children }) {
                         stepperArray?.findIndex(
                           (e) => e.url === location.pathname
                         ) ? (
-                          <FaCheck className="transform transition duration-500 hover:scale-125" />
+                          <FaCheck className="icon-scale" />
                         ) : (
                           <>
                             <span

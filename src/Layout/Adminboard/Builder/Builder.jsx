@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 import { lazy, useState } from "react";
 import { LuArrowUpRightFromCircle } from "react-icons/lu";
-import { mainHeadingCss } from "Components/TailwindCss/tailwindCss";
 import { Templates } from "Components/Template/TemplateLayouts/TemplateOptions";
 const TemplateModal = lazy(() =>
   import("Components/Template/TemplateModal/TemplateModal")
@@ -20,7 +19,7 @@ export default function Builder() {
       <div className="relative top-4">
         <div className="text-center flex flex-col items-center">
           <div className="flex justify-around">
-            <h3 className={`w-[60%] ${mainHeadingCss}`}>Choose Templates</h3>
+            <h3 className={`w-[60%] heading mainHeading`}>Choose Templates</h3>
             <div>
               <Link
                 to={`/templates/preview/template-${localStorage.getItem(
@@ -36,17 +35,25 @@ export default function Builder() {
           </div>
           <div className="flex justify-center gap-4 mt-5 lg:w-full sm:w-96">
             {Templates.map((template, index) => (
-              <div
-                key={index}
-                className="md:w-40 sm:w-24 transition duration-250 hover:scale-125 "
-              >
+              <div key={index} className="md:w-40 sm:w-24 image-scale ">
                 <button
                   onClick={() => {
                     handleSelect(template);
                     localStorage.setItem("template-id", template.id);
                   }}
                 >
-                  {template.template}
+                  <div className="flex flex-col">
+                    {template.template}
+                    <p>{` ${
+                      template.id === 1
+                        ? "50-50 Layout"
+                        : template.id === 2
+                        ? "30-70 Layout"
+                        : template.id === 3
+                        ? "60-40 Layout"
+                        : ""
+                    }`}</p>
+                  </div>
                 </button>
               </div>
             ))}

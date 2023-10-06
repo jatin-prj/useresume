@@ -7,6 +7,7 @@ import {
   FaHeadSideVirus,
   FaInfoCircle,
 } from "react-icons/fa";
+// array of object for datalist
 export const designationData = [
   { value: "1", label: "Student" },
   { value: "2", label: "Software Developer" },
@@ -17,14 +18,14 @@ export const designationData = [
   { value: "7", label: "Twitter" },
   { value: "8", label: "YouTube" },
 ];
-
+// array of object stepper (form step)
 export const stepperArray = [
   {
     name: "Personal Info",
     icon: (
       <FaUser
         size={20}
-        className="transform transition duration-500 hover:scale-125"
+        className="icon-scale"
       />
     ),
     url: "/templates/info",
@@ -34,7 +35,7 @@ export const stepperArray = [
     icon: (
       <FaAddressCard
         size={20}
-        className="transform transition duration-500 hover:scale-125"
+        className="icon-scale"
       />
     ),
     url: "/templates/contactform",
@@ -44,7 +45,7 @@ export const stepperArray = [
     icon: (
       <FaInfoCircle
         size={20}
-        className="transform transition duration-500 hover:scale-125"
+        className="icon-scale"
       />
     ),
     url: "/templates/aboutform",
@@ -54,7 +55,7 @@ export const stepperArray = [
     icon: (
       <FaGraduationCap
         size={20}
-        className="transform transition duration-500 hover:scale-125"
+        className="icon-scale"
       />
     ),
     url: "/templates/educationform",
@@ -64,7 +65,7 @@ export const stepperArray = [
     icon: (
       <FaBusinessTime
         size={20}
-        className="transform transition duration-500 hover:scale-125"
+        className="icon-scale"
       />
     ),
     url: "/templates/experienceform",
@@ -74,7 +75,7 @@ export const stepperArray = [
     icon: (
       <FaProjectDiagram
         size={20}
-        className="transform transition duration-500 hover:scale-125"
+        className="icon-scale"
       />
     ),
     url: "/templates/projectform",
@@ -84,13 +85,13 @@ export const stepperArray = [
     icon: (
       <FaHeadSideVirus
         size={20}
-        className="transform transition duration-500 hover:scale-125"
+        className="icon-scale"
       />
     ),
     url: "/templates/skillform",
   },
 ];
-
+// array of object for country code,flag and name
 export const countryCode = [
   {
     name: "India",

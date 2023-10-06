@@ -1,35 +1,36 @@
 import { FieldArray, Form, Formik } from "formik";
 import { lazy } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { SkillDetails } from "Redux/Action/skill";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 import { TagsInput } from "react-tag-input-component";
 import "App.css";
-import {
-  formButtonCss,
-  formHeadingCss,
-} from "Components/TailwindCss/tailwindCss";
-const CustomDropDown = lazy(() => import("Components/DataForm/CustomInput"));
 
-export default function SkillsForm() {
+const CustomDropDown = lazy(() => import("Components/DataForm/CustomDropDown"));
+export default function SkillsForm({ setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const templateId = localStorage.getItem("template-id");
   const expertise = ["Expert", "Intermediate", "Beginner"];
-
-  // state for input fields
+  const local = JSON.parse(localStorage.getItem("skills-details"));
+  // initialvalues
+  let initial = [
+    {
+      skill: [],
+      rating: "Expert",
+    },
+  ];
+  // if edit-section then previous data else initial
   const initialValues = {
-    info: [
-      {
-        skill: [],
-        rating: "Expert",
-      },
-    ],
+    info:
+      location.pathname.includes("/edit-section") &&
+      localStorage.getItem("skills-details")
+        ? local?.skillData
+        : initial,
   };
-
   // Add field function
-
   const addInputField = (values, setValues) => {
     // Add dynamic form
     const data = {
@@ -46,12 +47,11 @@ export default function SkillsForm() {
 
   // handleChange funtion is used when user change on Tagsinput
   const handleChange = (index, event, value, setValues) => {
-    console.log("event", event);
     let list = [...value?.info];
     list[index]["skill"] = event;
     setValues({ ...value, info: list });
   };
-
+  // onSubmit function
   const handleSubmit = (values, { resetForm }) => {
     let data = {
       skillData: values?.info,
@@ -60,9 +60,11 @@ export default function SkillsForm() {
     dispatch(SkillDetails(data)).then((res) => {
       if (res) {
         navigate(`/templates/preview/template-${templateId}`);
+        if (location.pathname.includes("/edit-section")) {
+          setOpen(false);
+        }
       }
     });
-    console.log("data", data);
     resetForm({ values: "" });
   };
 
@@ -74,14 +76,16 @@ export default function SkillsForm() {
             <>
               {/* Add button and heading of form  */}
               <div className=" flex justify-between">
-                <h3 className={` ${formHeadingCss}`}>Skills Details</h3>
-                <button
-                  type="button"
-                  className={`${formButtonCss}`}
-                  onClick={() => addInputField(values, setValues)}
-                >
-                  <FaPlus className="text-white" />
-                </button>
+                <h3 className={`heading formHeading`}>Skills Details</h3>
+                <div>
+                  <button
+                    type="button"
+                    className={`btn btn-add`}
+                    onClick={() => addInputField(values, setValues)}
+                  >
+                    <FaPlus />
+                  </button>
+                </div>
               </div>
 
               <Form>
@@ -89,29 +93,29 @@ export default function SkillsForm() {
                   {() =>
                     values?.info?.map((item, index) => {
                       const { skill, rating } = item;
-
                       return (
                         <div key={index}>
                           {/* remove button  */}
                           <div className="flex justify-between ">
-                            <h3 className={`${formHeadingCss}`}>
+                            <h3 className={`heading formHeading`}>
                               {index > 0 && "More Skills"}
                             </h3>
                             <div className=" flex items-end cursor-pointer ">
                               {index > 0 && (
                                 <div
-                                  className={`${formButtonCss}`}
+                                  className={`btn  btn-delete`}
                                   onClick={() =>
                                     removeInputFields(index, values, setValues)
                                   }
                                 >
-                                  <FaTrash className="" />
+                                  <FaTrash />
                                 </div>
                               )}
                             </div>
                           </div>
                           <div className="flex  gap-4 items-end flex-wrap mb-5">
-                            <div className="w-full md:w-2/5  relative">
+                            {/* dropdown for expertise  */}
+                            <div className="w-full md:w-2/5  relative z-0">
                               <CustomDropDown
                                 name={`info.${index}.rating`}
                                 placeholder="Select Expertise"
@@ -119,8 +123,8 @@ export default function SkillsForm() {
                                 value={rating}
                               />
                             </div>
-
-                            <div className="w-full md:w-2/5 flex relative ">
+                            {/* react tags-input  */}
+                            <div className="w-full md:w-2/5 flex relative z-0 ">
                               <TagsInput
                                 name={`info.${index}.skill`}
                                 value={skill}
@@ -142,17 +146,12 @@ export default function SkillsForm() {
                 {/* Button group  */}
                 <div className=" flex justify-between mt-2">
                   <Link to={`/templates/projectform`}>
-                    <button
-                      type="button"
-                      className={`Back-button ${formButtonCss.split(
-                        "form-button"
-                      )}`}
-                    >
-                      <FaArrowLeft className="text-white" />
+                    <button type="button" className={`btn btn-back`}>
+                      <FaArrowLeft />
                     </button>
                   </Link>
-                  <button type="submit" className={`${formButtonCss}`}>
-                    <FaArrowRight className="text-white" />
+                  <button type="submit" className={`btn btn-next`}>
+                    <FaArrowRight />
                   </button>
                 </div>
               </Form>

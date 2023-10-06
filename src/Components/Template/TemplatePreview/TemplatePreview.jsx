@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { cloneElement, lazy, useState } from "react";
+import { cloneElement, lazy, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "/node_modules/react-grid-layout/css/styles.css";
@@ -9,6 +9,9 @@ import { GrStatusInfoSmall } from "react-icons/gr";
 import { PiTextTBold } from "react-icons/pi";
 import { BsBorderAll } from "react-icons/bs";
 import { GoCircle, GoCircleSlash } from "react-icons/go";
+import { ImDownload } from "react-icons/im";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import {
   Sections,
   Template1,
@@ -26,7 +29,10 @@ export default function TemplatePreview() {
   const location = useLocation();
   const navigate = useNavigate();
   const templateId = localStorage.getItem("template-id");
+  const downloadRef = useRef();
+  const divRef = useRef();
   const [isLoading, setIsLoading] = useState();
+  const [rowHeight, setRowHeight] = useState();
   const [open, setOpen] = useState(false);
   const [section, setSection] = useState();
   const [enableEditing, setEnableEditing] = useState(false);
@@ -60,6 +66,30 @@ export default function TemplatePreview() {
     navigate(`/templates/preview/template-${id}`);
   };
 
+  const onBreakpointChange = (newBreakpoint, newCols) => {
+    if (newBreakpoint === "md") {
+      console.log("md", newBreakpoint);
+      setRowHeight(31);
+    } else if (newBreakpoint === "sm") {
+      console.log("sm", newBreakpoint);
+      setRowHeight(22);
+    } else if (newBreakpoint === "xs") {
+      console.log("xs", newBreakpoint);
+      setRowHeight(15);
+    }
+  };
+
+  const printDocument = (downloadRef) => {
+    console.log("downloadRef", downloadRef);
+    html2canvas(downloadRef.current).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "JPEG", 0, 0);
+      // pdf.output('dataurlnewwindow');
+      pdf.save("download.pdf");
+    });
+  };
+
   return (
     <>
       <div className="w-full">
@@ -73,47 +103,37 @@ export default function TemplatePreview() {
                     {/* Template preview section Start */}
                     <div className="xl:w-[75%] w-[70%]">
                       <div className="bg-slate-100 h-full flex justify-center items-center p-2">
-                        <div className="xl:w-[800px] md:w-[600px] w-[400px]">
+                        <div className="xl:w-[793px] md:w-[600px] w-[400px]">
                           {isLoading ? (
                             <div className="h-[51rem] flex justify-center items-center">
                               <Loader />
                             </div>
                           ) : (
-                            <div className="flex w-full">
+                            <div className="" ref={downloadRef}>
                               <ResponsiveReactGridLayout
                                 className={`layout bg-[${bgColor}] p-0 w-full`}
-                                // style={{ width: "800px" }}
                                 layout={Layout}
-                                rowHeight={30}
                                 breakpoints={{
-                                  lg: 768,
-                                  md: 640,
-                                  sm: 480,
-                                  xs: 200,
-                                  xxs: 0,
+                                  xl: 1280,
+                                  lg: 1024,
+                                  md: 768,
+                                  sm: 640,
+                                  xs: 480,
                                 }}
                                 cols={{
+                                  xl: 10,
                                   lg: 10,
                                   md: 10,
                                   sm: 10,
                                   xs: 10,
-                                  xxs: 10,
                                 }}
-                                compactType={"vertical"}
-                                isBounded={true}
-                                margin={enableEditing ? [5, 5] : [0, 1]}
+                                rowHeight={rowHeight}
+                                margin={enableEditing ? [5, 5] : [1, 1]}
                                 isDraggable={enableEditing}
-                                // resizeHandles={[
-                                //   "se",
-                                //   "sw",
-                                //   "w",
-                                //   "e",
-                                //   "s",
-                                //   "n",
-                                //   "ne",
-                                //   "nw",
-                                // ]}
                                 isResizable={enableEditing}
+                                onBreakpointChange={(newBreakpoint, newCols) =>
+                                  onBreakpointChange(newBreakpoint, newCols)
+                                }
                               >
                                 {Layout.map((layout, index) => (
                                   <div
@@ -125,12 +145,14 @@ export default function TemplatePreview() {
                                     }   ${
                                       enableEditing && `cursor-grab`
                                     } text-[${textColor}]`}
+                                    id="download"
                                   >
                                     {Sections.map((section, index) => {
                                       if (layout && layout.id === section.id) {
                                         return (
                                           <div
                                             key={index}
+                                            ref={divRef}
                                             id={`${section.id}`}
                                             className={`w-full h-full overflow-hidden`}
                                           >
@@ -153,13 +175,12 @@ export default function TemplatePreview() {
                     {/* Template preview section End */}
 
                     <div
-                      className="xl:w-[25%] w-[20%] md:p-2 sm:text-2xl 
+                      className="xl:w-[25%] w-[20%] md:p-2 sm:text-2xl
                     "
                     >
-                      <div
-                        className={`flex text-white font-medium rounded-lg justify-center text-base bg-cyan-700 active:bg-cyan-600 active:scale-[0.99] py-1`}
-                      >
+                      <div className={`btn-text`}>
                         <button
+                          className="w-full"
                           onClick={() => {
                             setEnableEditing(!enableEditing);
                           }}
@@ -193,7 +214,7 @@ export default function TemplatePreview() {
                       </div>
                       <hr />
                       {/* Edit Section  */}
-                      {enableEditing && (
+                      {enableEditing ? (
                         <div className=" bg-[#fcfcfc] sm:p-5 mt-2">
                           <div className="w-full">
                             <div
@@ -327,6 +348,20 @@ export default function TemplatePreview() {
                             </div>
                           </div>
                         </div>
+                      ) : (
+                        <div className={`btn-text mt-2`}>
+                          <button
+                            className="w-full flex justify-center"
+                            onClick={() => {
+                              printDocument(downloadRef);
+                            }}
+                          >
+                            <div className="flex items-center">
+                              <ImDownload className={``} />
+                              <p className={`ml-1 `}>Download</p>
+                            </div>
+                          </button>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -344,12 +379,23 @@ export default function TemplatePreview() {
                     {Templates.map((template, index) => (
                       <div
                         key={index}
-                        className="cursor-pointer w-32 h-max"
+                        className="cursor-pointer w-32 h-max image-scale"
                         onClick={() => {
                           handleSelectTemplate(template.id);
                         }}
                       >
-                        {template.template}
+                        <div className="flex flex-col text-center">
+                          {template.template}
+                          <p>{` ${
+                            template.id === 1
+                              ? "50-50 Layout"
+                              : template.id === 2
+                              ? "30-70 Layout"
+                              : template.id === 3
+                              ? "60-40 Layout"
+                              : ""
+                          }`}</p>
+                        </div>
                       </div>
                     ))}
                   </div>

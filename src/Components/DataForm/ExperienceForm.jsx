@@ -1,45 +1,49 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { lazy } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
 import { designationData } from "Redux/Action/Data";
 import { ExperienceDetails } from "Redux/Action/Experience";
-import {
-  formButtonCss,
-  formHeadingCss,
-  inputCss,
-  labelCss,
-} from "Components/TailwindCss/tailwindCss";
 const CustomInput = lazy(() => import("Components/DataForm/CustomInput"));
 
-export default function ExperienceForm() {
+export default function ExperienceForm({ setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const templateId = localStorage.getItem("template-id");
+  const local = JSON.parse(localStorage.getItem("experience-details"));
+  console.log("education-detail from local", local);
   // intialvalues
+  let initial = [
+    {
+      companyName: "",
+      startYear: "",
+      endYear: "",
+      presentcheck: false,
+      workOn: "",
+      Designation: "",
+    },
+  ];
+  // if edit-section then previous data else initial
   const initialValues = {
-    info: [
-      {
-        companyName: "",
-        startYear: "",
-        endYear: "",
-        presentcheck: false,
-        workOn: "",
-        Designation: "",
-      },
-    ],
+    info:
+      location.pathname.includes("/edit-section") &&
+      localStorage.getItem("experience-details")
+        ? local?.experienceData
+        : initial,
   };
   // create yup validation
   const handleValidation = Yup.object().shape({
     info: Yup.array().of(
       Yup.object().shape({
         companyName: Yup.string().required("*  Enter Company Name"),
-        startYear: Yup.string().required("* Enter Start Date"),
+        startYear: Yup.string().required("* Select Start Date"),
         presentcheck: Yup.boolean(),
         endYear: Yup.string().when("presentcheck", {
           is: false,
-          then: () => Yup.string().required("* Enter End Date"),
+          then: () => Yup.string().required("* Select End Date"),
         }),
         workOn: Yup.string().required("*  Enter Some details on work"),
         Designation: Yup.string().required("*  Enter Position"),
@@ -72,17 +76,20 @@ export default function ExperienceForm() {
     // dispatch for experience
     dispatch(ExperienceDetails(data)).then((res) => {
       if (res) {
-        localStorage?.removeItem("checked");
-        navigate(`/templates/projectform`);
+        if (location.pathname.includes("/edit-section")) {
+          localStorage?.removeItem("checked");
+          navigate(`/templates/preview/template-${templateId}`);
+          setOpen(false);
+        } else {
+          localStorage?.removeItem("checked");
+          navigate(`/templates/projectform`);
+        }
       }
     });
-    console.log("values", data);
     resetForm({ values: "" });
   };
   // handleCheck function is used when user change the checkbox
-
   const handleCheck = (item, i, values, setValues) => {
-    console.log("");
     localStorage?.setItem("checked", i + 1);
     if (localStorage?.getItem("checked")) {
       let currentCheck = Number(localStorage.getItem("checked")) - 1;
@@ -109,14 +116,16 @@ export default function ExperienceForm() {
             <>
               {/* Add button and heading of form  */}
               <div className="flex justify-between">
-                <h3 className={` ${formHeadingCss}`}>Experience Details</h3>
-                <button
-                  type="button"
-                  className={`${formButtonCss}`}
-                  onClick={() => addInputField(values, setValues)}
-                >
-                  <FaPlus className="text-white" />
-                </button>
+                <h3 className={`heading formHeading`}>Experience Details</h3>
+                <div>
+                  <button
+                    type="button"
+                    className={`btn btn-add`}
+                    onClick={() => addInputField(values, setValues)}
+                  >
+                    <FaPlus />
+                  </button>
+                </div>
               </div>
 
               <Form>
@@ -129,13 +138,13 @@ export default function ExperienceForm() {
                         <div key={index}>
                           {/* remove button  */}
                           <div className="flex justify-between mt-5">
-                            <h3 className={`${formHeadingCss}`}>
+                            <h3 className={`heading formHeading`}>
                               {index > 0 && "New Details"}
                             </h3>
                             <div className=" flex items-end cursor-pointer ">
                               {index > 0 && (
                                 <div
-                                  className={`${formButtonCss}`}
+                                  className={`btn btn-delete`}
                                   onClick={() =>
                                     removeInputFields(index, values, setValues)
                                   }
@@ -148,7 +157,7 @@ export default function ExperienceForm() {
 
                           <div className="flex w-full  flex-wrap gap-4 mb-2 ">
                             {/* company name  */}
-                            <div className=" w-full md:w-2/5 relative">
+                            <div className=" w-full md:w-2/5 relative z-0">
                               <CustomInput
                                 name={`info.${index}.companyName`}
                                 placeholder="Enter Compnay Name"
@@ -156,7 +165,7 @@ export default function ExperienceForm() {
                             </div>
 
                             {/* Designation (profession ) */}
-                            <div className="w-full md:w-2/5 relative mb-2">
+                            <div className="w-full md:w-2/5 relative z-0 mb-2">
                               <CustomInput
                                 name={`info.${index}.Designation`}
                                 placeholder="Enter Profession"
@@ -165,19 +174,15 @@ export default function ExperienceForm() {
                               />
                               <datalist id={`info.${index}.Designation`}>
                                 {designationData?.map((d) => (
-                                  <option
-                                    key={d.value}
-                                    value={d.label}
-                                    className=""
-                                  />
+                                  <option key={d.value} value={d.label} />
                                 ))}
                               </datalist>
                             </div>
                             {/* start year date  */}
-                            <div className="w-full md:w-2/5 relative ">
+                            <div className="w-full md:w-2/5 relative z-0 ">
                               <CustomInput
                                 name={`info.${index}.startYear`}
-                                placeholder=" Enter startYear"
+                                placeholder=" Select startYear"
                                 type="date"
                                 min="1947-01-01"
                                 max={new Date().toISOString().split("T")[0]}
@@ -203,10 +208,10 @@ export default function ExperienceForm() {
                             </div>
                             {/* End year date  */}
                             {presentcheck !== true && (
-                              <div className="w-full md:w-2/5 relative mt-10  ">
+                              <div className="w-full md:w-2/5 relative z-0 mt-10  ">
                                 <CustomInput
                                   name={`info.${index}.endYear`}
-                                  placeholder=" Enter EndYear"
+                                  placeholder=" Select EndYear"
                                   type="date"
                                   min={startYear}
                                   max={new Date().toISOString().split("T")[0]}
@@ -217,13 +222,13 @@ export default function ExperienceForm() {
                             <div
                               className={`${
                                 presentcheck === true && "md:w-[81.2%]"
-                              } w-full md:w-2/5 relative mt-5 `}
+                              } w-full md:w-2/5 relative z-0 mt-5 `}
                             >
                               <Field
                                 component="textarea"
                                 rows="2"
                                 placeholder=" "
-                                className={`resize-none ${inputCss}`}
+                                className={`resize-none input peer`}
                                 name={`info.${index}.workOn`}
                               />
                               <ErrorMessage
@@ -233,7 +238,7 @@ export default function ExperienceForm() {
                               />
                               <label
                                 htmlFor={`info.${index}.workOn`}
-                                className={`${labelCss}`}
+                                className={`label`}
                               >
                                 Enter About work
                               </label>
@@ -247,17 +252,13 @@ export default function ExperienceForm() {
                 {/* Button group  */}
                 <div className="flex justify-between mt-2">
                   <Link to={`/templates/educationform`}>
-                    <button
-                      className={`bg-[#309ba0] ${formButtonCss.split(
-                        "form-button"
-                      )}`}
-                    >
-                      <FaArrowLeft className="text-white" />
+                    <button className={`btn btn-back`}>
+                      <FaArrowLeft />
                     </button>
                   </Link>
 
-                  <button type="submit" className={`${formButtonCss}`}>
-                    <FaArrowRight className="text-white" />
+                  <button type="submit" className={`btn btn-next`}>
+                    <FaArrowRight />
                   </button>
                 </div>
               </Form>

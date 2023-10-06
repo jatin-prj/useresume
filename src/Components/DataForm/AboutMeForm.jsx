@@ -1,22 +1,26 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AboutDetails } from "Redux/Action/About";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import {
-  formButtonCss,
-  formHeadingCss,
-  inputCss,
-  labelCss,
-} from "Components/TailwindCss/tailwindCss";
 
-export default function AboutMeForm() {
+export default function AboutMeForm({ setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const templateId = localStorage.getItem("template-id");
+  const local = JSON.parse(localStorage.getItem("user-short-pitch"));
+
+  // Intialvalues
   const initialValues = {
-    about: "",
+    about:
+      location.pathname.includes("/edit-section") &&
+      localStorage.getItem("user-short-pitch")
+        ? local?.about
+        : "",
   };
+  // validation schema
   const handleValidation = Yup.object().shape({
     about: Yup.string().required("* Enter Some word about you").min(50),
   });
@@ -25,10 +29,14 @@ export default function AboutMeForm() {
     // call dispatch for about data
     dispatch(AboutDetails(values)).then((res) => {
       if (res) {
-        navigate(`/templates/educationform`);
+        if (location.pathname.includes("/edit-section")) {
+          navigate(`/templates/preview/template-${templateId}`);
+          setOpen(false);
+        } else {
+          navigate(`/templates/educationform`);
+        }
       }
     });
-    console.log("values", values);
     resetForm({ values: "" });
   };
   return (
@@ -39,18 +47,18 @@ export default function AboutMeForm() {
     >
       {({ values, setValues }) => (
         <>
-          <h3 className={` ${formHeadingCss}`}>Summary</h3>
-
+          <h3 className={`heading formHeading`}>Summary</h3>
           <Form>
             <FieldArray name="info">
               <div className="flex w-full  flex-wrap gap-4 mb-2">
-                <div className=" w-full md:w-2/5 relative">
+                {/* About field  */}
+                <div className=" w-full md:w-2/5 relative z-0">
                   <div className="flex flex-col">
                     <Field
                       name="about"
                       component="textarea"
                       rows="2"
-                      className={`resize-none ${inputCss}`}
+                      className={`resize-none input peer`}
                       placeholder=" "
                     />
                     <ErrorMessage
@@ -59,7 +67,7 @@ export default function AboutMeForm() {
                       name={`about`}
                     />
 
-                    <label htmlFor="about" className={`${labelCss}`}>
+                    <label htmlFor="about" className={`label`}>
                       Enter About You
                     </label>
                   </div>
@@ -69,26 +77,18 @@ export default function AboutMeForm() {
             {/* button group */}
             <div className="flex justify-between w-full ">
               <Link to={`/templates/contactform`}>
-                <button
-                  className={`bg-cyan-500 ${formButtonCss.split(
-                    "form-button"
-                  )}`}
-                >
-                  <FaArrowLeft className="text-white" />
+                <button className={`btn btn-back`}>
+                  <FaArrowLeft />
                 </button>
               </Link>
               <div>
-                <Link to={`/templates/educationform`}>
-                  <button
-                    className={`bg-cyan-500 px-5 pt-2 pb-1.5 ${formButtonCss
-                      .split("px-5 py-2.5")
-                      .reverse()}`}
-                  >
-                    Skip
-                  </button>
-                </Link>
-                <button type="submit" className={`${formButtonCss}`}>
-                  <FaArrowRight className="text-white" />
+                {!location.pathname.includes("/edit-section") && (
+                  <Link to={`/templates/educationform`}>
+                    <button className={`btn btn-skip`}>Skip</button>
+                  </Link>
+                )}
+                <button type="submit" className={`btn btn-next`}>
+                  <FaArrowRight />
                 </button>
               </div>
             </div>

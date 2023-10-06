@@ -1,42 +1,46 @@
 import { FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { lazy } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { EducationDetails } from "Redux/Action/Education";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
-import {
-  formButtonCss,
-  formHeadingCss,
-} from "Components/TailwindCss/tailwindCss";
-const CustomInput = lazy(()=>import("Components/DataForm/CustomInput"));
 
-
-export default function EducationForm() {
+const CustomInput = lazy(() => import("Components/DataForm/CustomInput"));
+export default function EducationForm({ setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const templateId = localStorage.getItem("template-id");
+  const local = JSON.parse(localStorage.getItem("education-details"));
   // intialvalues
+  let initial = [
+    {
+      startYear: "",
+      presentcheck: false,
+      endYear: "",
+      course: "",
+      instituteName: "",
+      percentage: "",
+    },
+  ];
+  // if edit-section then previous data else initial
   const initialValues = {
-    info: [
-      {
-        startYear: "",
-        presentcheck: false,
-        endYear: "",
-        course: "",
-        instituteName: "",
-        percentage: "",
-      },
-    ],
+    info:
+      location.pathname.includes("/edit-section") &&
+      localStorage.getItem("education-details")
+        ? local?.educationData
+        : initial,
   };
   // create yup validation
   const handleValidation = Yup.object().shape({
     info: Yup.array().of(
       Yup.object().shape({
-        startYear: Yup.string().required("* Enter Start Date"),
+        startYear: Yup.string().required("* Select Start Date"),
         presentcheck: Yup.boolean(),
         endYear: Yup.string().when(`presentcheck`, {
           is: false,
-          then: () => Yup.string().required("* Enter End Date"),
+          then: () => Yup.string().required("* Select End Date"),
         }),
         course: Yup.string().required("*  Enter Cource"),
         instituteName: Yup.string().required("* Enter School or College Name"),
@@ -52,7 +56,6 @@ export default function EducationForm() {
     const infoFilter = values?.info?.filter((item, index) => i !== index);
     setValues({ ...values, info: infoFilter });
   };
-
   // Add input fields
   const addInputField = (values, setValues) => {
     const data = {
@@ -66,7 +69,6 @@ export default function EducationForm() {
     setValues({ ...values, info: [...values?.info, data] });
   };
   // onSubmit function
-
   const handleSubmit = (values, { resetForm }) => {
     let data = {
       educationData: values?.info,
@@ -74,15 +76,20 @@ export default function EducationForm() {
     // dispatch for education
     dispatch(EducationDetails(data)).then((res) => {
       if (res) {
-        localStorage?.removeItem("checked");
-        navigate(`/templates/experienceform`);
+        if (location.pathname.includes("/edit-section")) {
+          localStorage?.removeItem("checked");
+          navigate(`/templates/preview/template-${templateId}`);
+          setOpen(false);
+        } else {
+          localStorage?.removeItem("checked");
+          navigate(`/templates/experienceform`);
+        }
       }
     });
     resetForm({ values: "" });
   };
   // handle check function for check uncheck checkbox
   const handleCheck = (i, values, setValues) => {
-    console.log("");
     localStorage?.setItem("checked", i + 1);
     if (localStorage?.getItem("checked")) {
       let currentCheck = Number(localStorage.getItem("checked")) - 1;
@@ -98,7 +105,7 @@ export default function EducationForm() {
   };
 
   return (
-    <div className="App">
+    <div className="App ">
       <Formik
         validationSchema={handleValidation}
         initialValues={initialValues}
@@ -106,15 +113,18 @@ export default function EducationForm() {
       >
         {({ values, setValues }) => (
           <>
+            {/* Add button and heading of form  */}
             <div className="flex justify-between">
-              <h3 className={`${formHeadingCss}`}>Education Details</h3>
-              <button
-                type="button"
-                className={`${formButtonCss}`}
-                onClick={(e) => addInputField(values, setValues)}
-              >
-                <FaPlus className="text-white " />
-              </button>
+              <h3 className={`heading formHeading`}>Education Details</h3>
+              <div>
+                <button
+                  type="button"
+                  className={`btn btn-add`}
+                  onClick={(e) => addInputField(values, setValues)}
+                >
+                  <FaPlus />
+                </button>
+              </div>
             </div>
             <Form>
               <FieldArray name="info">
@@ -123,48 +133,50 @@ export default function EducationForm() {
                     const { presentcheck, startYear } = item;
                     return (
                       <div key={index}>
-                        {console.log("val", values)}
+                        {/* Remove button  */}
                         <div className="flex justify-between mt-5">
-                          <h3 className={`${formHeadingCss}`}>
+                          <h3 className={`heading formHeading`}>
                             {index > 0 && "New Details"}
                           </h3>
-                          <div className=" flex items-end cursor-pointer ">
+                          <div className=" flex items-end">
                             {index > 0 && (
                               <button
-                                className={`${formButtonCss}`}
+                                className={`btn btn-delete`}
                                 onClick={() =>
                                   removeInputFields(index, values, setValues)
                                 }
                               >
-                                <FaTrash className="" />
+                                <FaTrash />
                               </button>
                             )}
                           </div>
                         </div>
                         <div className="flex w-full  flex-wrap gap-4 mb-2">
-                          <div className=" w-full md:w-2/5 relative">
+                          {/* InstituteName or collegename  */}
+                          <div className=" w-full md:w-2/5 relative z-0">
                             <CustomInput
                               name={`info.${index}.instituteName`}
                               placeholder="Enter School or College Name"
                             />
                           </div>
-
-                          <div className=" w-full md:w-2/5 relative">
+                          {/* Course  */}
+                          <div className=" w-full md:w-2/5 relative z-0 ">
                             <CustomInput
                               name={`info.${index}.course`}
                               placeholder="Enter course"
                             />
                           </div>
-
-                          <div className=" w-full md:w-2/5 relative">
+                          {/* start Year  */}
+                          <div className=" w-full md:w-2/5 relative z-0">
                             <CustomInput
                               name={`info.${index}.startYear`}
-                              placeholder=" Enter startYear"
+                              placeholder=" Select startYear"
                               type="date"
                               min="1947-01-01"
                               max={new Date().toISOString().split("T")[0]}
                             />
                           </div>
+                          {/* Present Checkbox */}
                           <div className="flex w-full md:w-2/5 mt-1 mb-4">
                             <CustomInput
                               name={`info.${index}.presentcheck`}
@@ -182,18 +194,20 @@ export default function EducationForm() {
                               Pursuing
                             </label>
                           </div>
+                          {/* End Year  */}
                           {presentcheck !== true && (
                             <>
-                              <div className="  w-full md:w-2/5 relative">
+                              <div className="  w-full md:w-2/5 relative z-0">
                                 <CustomInput
                                   name={`info.${index}.endYear`}
-                                  placeholder=" Enter EndYear"
+                                  placeholder=" Select EndYear"
                                   type="date"
                                   min={startYear}
                                   max={new Date().toISOString().split("T")[0]}
                                 />
                               </div>
-                              <div className=" w-full md:w-2/5 relative">
+                              {/* Percentage  */}
+                              <div className=" w-full md:w-2/5 relative z-0">
                                 <CustomInput
                                   name={`info.${index}.percentage`}
                                   placeholder=" Enter percentage"
@@ -210,18 +224,13 @@ export default function EducationForm() {
               {/* button group */}
               <div className="flex justify-between mt-2">
                 <Link to={`/templates/aboutform`}>
-                  <button
-                    type="button "
-                    className={`bg-[#309ba0] ${formButtonCss.split(
-                      "form-button"
-                    )}`}
-                  >
-                    <FaArrowLeft className="text-white " />
+                  <button type="button " className={`btn btn-back`}>
+                    <FaArrowLeft />
                   </button>
                 </Link>
 
-                <button type="submit" className={`${formButtonCss}`}>
-                  <FaArrowRight className="text-white " />
+                <button type="submit" className={`btn btn-next`}>
+                  <FaArrowRight />
                 </button>
               </div>
             </Form>

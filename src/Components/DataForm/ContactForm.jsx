@@ -1,27 +1,31 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ContactDetails } from "Redux/Action/Contact";
 import { countryCode } from "Redux/Action/Data";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import {
-  formButtonCss,
-  formHeadingCss,
-  inputCss,
-  labelCss,
-} from "Components/TailwindCss/tailwindCss";
 
-export default function ContactForm() {
+export default function ContactForm({ setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const initialValues = {
+  const location = useLocation();
+  const templateId = localStorage.getItem("template-id");
+  const local = JSON.parse(localStorage.getItem("contact-details"));
+  // IntialValues
+  let initial = {
     email: "",
     contact: "",
     countryFlag: "🇮🇳 +91",
     address: "",
   };
-
+  // if edit-section then previous data else initial
+  const initialValues =
+    location.pathname.includes("/edit-section") &&
+    localStorage.getItem("contact-details")
+      ? local
+      : initial;
+  // validation schema
   const handleValidation = Yup.object().shape({
     email: Yup.string().required("*  Enter Your Email"),
     contact: Yup.string().required("*  Enter Contact Number").min(10).max(10),
@@ -34,10 +38,14 @@ export default function ContactForm() {
     // dispatch for contact detail
     dispatch(ContactDetails(values)).then((res) => {
       if (res) {
-        navigate(`/templates/aboutform`);
+        if (location.pathname.includes("/edit-section")) {
+          navigate(`/templates/preview/template-${templateId}`);
+          setOpen(false);
+        } else {
+          navigate(`/templates/aboutform`);
+        }
       }
     });
-    console.log("values", values);
     resetForm({ values: "" });
   };
 
@@ -49,37 +57,37 @@ export default function ContactForm() {
     >
       {({ values, setValues }) => (
         <>
-          <h3 className={` ${formHeadingCss}`}>Contact Detail</h3>
-
+          <h3 className={`heading formHeading`}>Contact Detail</h3>
           <Form>
             <FieldArray name="info">
               <div className="flex w-full  flex-wrap gap-4 mb-2">
-                <div className=" w-full md:w-2/5 relative">
+                {/* Email  */}
+                <div className=" w-full md:w-2/5 relative z-0">
                   <div className="flex flex-col">
                     <Field
                       name="email"
                       type="email"
                       placeholder=" "
-                      className={`${inputCss}`}
+                      className={`input peer`}
                       autoComplete="off"
                     />
                     <ErrorMessage
                       component="span"
-                      style={{ color: "red" }}
+                      className="text-red-400"
                       name={`email`}
                     />
 
-                    <label htmlFor="email" className={`${labelCss}`}>
+                    <label htmlFor="email" className={`label`}>
                       Email
                     </label>
                   </div>
                 </div>
 
-                <div className=" w-full md:w-2/5 relative  ">
+                <div className=" w-full md:w-2/5 relative z-0  ">
                   <div className=" flex  ">
                     {/* datalist input for country flag and code */}
                     <div
-                      className={`w-36   text-sm text-gray-900   border-none rounded-l-md`}
+                      className={`w-36 text-sm text-gray-900   border-none rounded-l-md`}
                     >
                       <div className={`flex flex-col `}>
                         <Field
@@ -87,11 +95,11 @@ export default function ContactForm() {
                           type="text"
                           list="CountryFlag"
                           placeholder=" "
-                          className={`${inputCss}`}
+                          className={`input peer`}
                         />
                         <ErrorMessage
                           component="span"
-                          style={{ color: "red" }}
+                          className="text-red-400"
                           name={`countryFlag`}
                         />
 
@@ -100,55 +108,52 @@ export default function ContactForm() {
                             <option
                               key={index}
                               value={country?.emoji + " " + country.dial_code}
-                              className=""
                             />
                           ))}
                         </datalist>
                       </div>
                     </div>
                     {/* number input for contact  */}
-
                     <div className="flex w-full flex-col">
                       <Field
                         type="number"
                         name="contact"
                         placeholder=" "
-                        className={`pl-8 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${inputCss}`}
+                        className={` [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none input peer`}
                         autoComplete="off"
                       />
                       <ErrorMessage
                         component="span"
-                        style={{ color: "red" }}
-                        className="pl-8"
+                        className="text-red-400"
                         name={`contact`}
                       />
 
                       <label
                         htmlFor="contact"
-                        className={` ${labelCss}   peer-focus:left-36 left-36 `}
+                        className={`label label-contact `}
                       >
                         Enter Contact Number
                       </label>
                     </div>
                   </div>
                 </div>
-
-                <div className="w-full md:w-2/5  relative z-99">
+                {/* Textarea  */}
+                <div className="w-full md:w-2/5  relative z-0">
                   <div className="flex flex-col">
                     <Field
                       component="textarea"
                       name="address"
                       rows="2"
-                      className={`resize-none ${inputCss}`}
+                      className={`resize-none input peer`}
                       placeholder=" "
                     />
 
                     <ErrorMessage
                       component="span"
-                      style={{ color: "red" }}
+                      className="text-red-400"
                       name={`address`}
                     />
-                    <label htmlFor="address" className={`${labelCss}`}>
+                    <label htmlFor="address" className={`label`}>
                       Enter Address
                     </label>
                   </div>
@@ -158,16 +163,12 @@ export default function ContactForm() {
             {/* button group */}
             <div className="flex justify-between">
               <Link to={`/templates/info`}>
-                <button
-                  className={`bg-cyan-500 ${formButtonCss.split(
-                    "form-button"
-                  )}`}
-                >
-                  <FaArrowLeft className="text-white" />
+                <button className=" btn btn-back">
+                  <FaArrowLeft />
                 </button>
               </Link>
-              <button type="submit" className={`${formButtonCss}`}>
-                <FaArrowRight className="text-white" />
+              <button type="submit" className={`btn btn-next`}>
+                <FaArrowRight />
               </button>
             </div>
           </Form>

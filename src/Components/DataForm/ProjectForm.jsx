@@ -1,29 +1,34 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { lazy } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ProjectDetails } from "Redux/Action/Project";
 import { FaPlus, FaArrowLeft, FaTrash, FaArrowRight } from "react-icons/fa";
-import {
-  formButtonCss,
-  formHeadingCss,
-  inputCss,
-  labelCss,
-} from "Components/TailwindCss/tailwindCss";
+
 const CustomInput = lazy(() => import("Components/DataForm/CustomInput"));
-export default function ProjectForm() {
+export default function ProjectForm({ setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // state for all input field
+  const location = useLocation();
+  const templateId = localStorage.getItem("template-id");
+  const local = JSON.parse(localStorage.getItem("project-details"));
+  // Initialvalues
+  let initial = [
+    {
+      projectName: "",
+      projectDetail: "",
+    },
+  ];
+  // if edit-section then previous data else initial
   const initialValues = {
-    info: [
-      {
-        projectName: "",
-        projectDetail: "",
-      },
-    ],
+    info:
+      location.pathname.includes("/edit-section") &&
+      localStorage.getItem("project-details")
+        ? local?.projectData
+        : initial,
   };
+  // validation schema
   const handleValidation = Yup.object().shape({
     info: Yup.array().of(
       Yup.object().shape({
@@ -34,7 +39,6 @@ export default function ProjectForm() {
   });
   // Add field function
   const addInputField = (values, setValues) => {
-    // Add dynamic form
     const data = {
       projectName: "",
       projectDetail: "",
@@ -47,6 +51,7 @@ export default function ProjectForm() {
     const infoFilter = values?.info?.filter((item, index) => i !== index);
     setValues({ ...values, info: infoFilter });
   };
+  // onSubmit function
   const handleSubmit = (values, { resetForm }) => {
     let data = {
       projectData: values?.info,
@@ -54,10 +59,14 @@ export default function ProjectForm() {
     // dispatch for education
     dispatch(ProjectDetails(data)).then((res) => {
       if (res) {
-        navigate(`/templates/skillform`);
+        if (location.pathname.includes("/edit-section")) {
+          navigate(`/templates/preview/template-${templateId}`);
+          setOpen(false);
+        } else {
+          navigate(`/templates/skillform`);
+        }
       }
     });
-    console.log("data", data);
     resetForm({ values: "" });
   };
 
@@ -70,14 +79,17 @@ export default function ProjectForm() {
       >
         {({ values, setValues }) => (
           <>
+            {/* Add button and heading of form  */}
             <div className="flex justify-between">
-              <h3 className={` ${formHeadingCss}`}>Other Details</h3>
-              <div
-                type="button"
-                className={`${formButtonCss}`}
-                onClick={() => addInputField(values, setValues)}
-              >
-                <FaPlus className="text-white" />
+              <h3 className={`heading formHeading`}>Other Details</h3>
+              <div>
+                <button
+                  type="button"
+                  className={`btn btn-add`}
+                  onClick={() => addInputField(values, setValues)}
+                >
+                  <FaPlus className="" />
+                </button>
               </div>
             </div>
             <Form>
@@ -86,37 +98,39 @@ export default function ProjectForm() {
                   values.info.map((item, index) => {
                     return (
                       <div key={index}>
+                        {/* remove button  */}
                         <div className="flex justify-between mt-5 mb-5">
-                          <h3 className={`${formHeadingCss}`}>
+                          <h3 className={`heading formHeading`}>
                             {index > 0 && "New Details"}
                           </h3>
-                          <div className=" flex items-end cursor-pointer ">
+                          <div className=" flex items-end  ">
                             {index > 0 && (
                               <button
-                                className={`${formButtonCss}`}
+                                className={`btn btn-delete`}
                                 onClick={() =>
                                   removeInputFields(index, values, setValues)
                                 }
                               >
-                                <FaTrash className="" />
+                                <FaTrash />
                               </button>
                             )}
                           </div>
                         </div>
                         <div className="flex w-full  flex-wrap gap-4 mb-2">
-                          <div className=" w-full md:w-2/5 relative mt-5">
+                          {/* Project Name  */}
+                          <div className=" w-full md:w-2/5 relative z-0 mt-5">
                             <CustomInput
                               name={`info.${index}.projectName`}
                               placeholder="Title"
                             />
                           </div>
-
-                          <div className=" w-full md:w-2/5 relative ">
+                          {/* textarea  */}
+                          <div className=" w-full md:w-2/5 relative z-0 ">
                             <Field
                               component="textarea"
                               rows="2"
                               placeholder=" "
-                              className={`resize-none ${inputCss}`}
+                              className={`resize-none input peer`}
                               name={`info.${index}.projectDetail`}
                             />
                             <ErrorMessage
@@ -126,7 +140,7 @@ export default function ProjectForm() {
                             />
                             <label
                               htmlFor={`info.${index}.projectDetail`}
-                              className={`${labelCss}`}
+                              className={`label`}
                             >
                               Enter Details
                             </label>
@@ -137,29 +151,20 @@ export default function ProjectForm() {
                   })
                 }
               </FieldArray>
-
               {/* Button group  */}
               <div className="flex justify-between mt-4">
                 <Link to={`/templates/experienceform`}>
-                  <button
-                    className={`bg-[#309ba0] ${formButtonCss.split(
-                      "form-button"
-                    )}`}
-                  >
+                  <button className={`btn btn-back`}>
                     <FaArrowLeft className="text-white" />
                   </button>
                 </Link>
                 <div>
-                  <Link to={`/templates/skillform`}>
-                    <button
-                      className={`bg-[#309ba0] px-5 pt-2 pb-1.5 ${formButtonCss
-                        .split("px-5 py-2.5")
-                        .reverse()}`}
-                    >
-                      Skip
-                    </button>
-                  </Link>
-                  <button type="submit" className={`${formButtonCss}`}>
+                  {!location.pathname.includes("/edit-section") && (
+                    <Link to={`/templates/skillform`}>
+                      <button className={`btn btn-skip`}>Skip</button>
+                    </Link>
+                  )}
+                  <button type="submit" className={`btn btn-next`}>
                     <FaArrowRight className="text-white" />
                   </button>
                 </div>

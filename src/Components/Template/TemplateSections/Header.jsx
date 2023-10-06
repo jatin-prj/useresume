@@ -9,7 +9,7 @@ export default function Header({ headBgColor, headTextColor }) {
     >
       <div className="h-20 w-20 overflow-hidden rounded-full  border ml-5 ">
         <img
-          src={profile}
+          src={info?.Profile ? info?.Profile : profile}
           alt="userProfile"
           className="object-cover w-full h-full "
         />

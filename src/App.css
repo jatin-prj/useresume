@@ -4,18 +4,10 @@
   border: 0 !important;
   border-bottom: 2px solid #309ba0 !important;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  /* color: #086368; */
 }
 .rti--container:focus {
   border: none !important;
   outline: none !important;
-}
-
-.form-button {
-  background-color: #0e7490;
-}
-.Back-button {
-  background-color: #309ba0;
 }
 
 .hero-heading {
@@ -24,10 +16,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
-  /* color: #3498db; */
-  /* font-size: 7vw; */
-  /* font-family: "Open Sans", sans-serif; */
-  /* font-weight: 700; */
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -39,4 +27,19 @@
   height: 50%;
   color: #dae5e1;
   overflow: hidden;
+}
+.bounce-image {
+  animation: bounce 4s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-10%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
 }

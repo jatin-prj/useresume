@@ -1,3 +1,4 @@
+// dispatch types
 export const INFOSECTION = "INFOSECTION";
 export const EXPERIENCE = "EXPERIENCE";
 export const EDUCATION = "EDUCATION";

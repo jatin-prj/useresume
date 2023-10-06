@@ -1,21 +1,15 @@
 import { useSelector } from "react-redux";
-import {
-  sectionHeadingCss,
-  sectionSubHeadingCss,
-} from "Components/TailwindCss/tailwindCss";
-
 export default function Education() {
   const Education = useSelector((state) => state?.ResumeDetails?.education);
-  // console.log("Edu", Education);
   return (
-    <div className="w-full h-full p-2">
-      <h2 className={`${sectionHeadingCss}`}>Education Background</h2>
+    <div className="w-full h-full ">
+      <h2 className={`sectionHeading`}>Education Background</h2>
 
       <div className="flex flex-col space-y-1 flex-wrap ml-3">
         {Education?.educationData?.map((education, index) => (
           <div className="flex flex-col p-2" key={index}>
             <p>
-              <span className={`${sectionSubHeadingCss}`}>
+              <span className={`sectionSubHeading`}>
                 {education?.instituteName}
               </span>
               , {education?.course}

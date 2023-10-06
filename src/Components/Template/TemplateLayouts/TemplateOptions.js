@@ -17,4 +17,5 @@ export const Templates = [
     id: 3,
     template: <img src={t3} alt="template3" className="w-fit h-fit" />,
   },
+  
 ];

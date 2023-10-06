@@ -6,31 +6,32 @@ import { useDispatch } from "react-redux";
 import profile from "Assests/Img/profile.avif";
 import { PersonalDetails } from "Redux/Action/Information";
 import { FaArrowRight, FaCloudUploadAlt } from "react-icons/fa";
-import {
-  formButtonCss,
-  formHeadingCss,
-  inputCss,
-  labelCss,
-} from "Components/TailwindCss/tailwindCss";
 import { designationData } from "Redux/Action/Data";
-export default function InfoSection() {
+export default function InfoSection({ setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const templateId = localStorage.getItem("template-id");
+  const local = JSON.parse(localStorage.getItem("personal-details"));
   // state for set user profile image
   const [img, setImg] = useState(profile);
-  const initialValues = {
+  // Initialvalues
+  let initial = {
     Profile: "",
     FullName: "",
     Profession: "",
   };
-
+  // if edit-section then previous data else initial
+  const initialValues =
+    location.pathname.includes("/edit-section") &&
+    localStorage.getItem("personal-details")
+      ? local
+      : initial;
+  // validation schema
   const handleValidation = Yup.object().shape({
     FullName: Yup.string().required("*  Enter Your Full Name"),
     Profession: Yup.string().required("*  Enter Your Profession"),
   });
-
   // onSubmit function
   const handleSubmit = (values, { resetForm }) => {
     let FieldData = {
@@ -43,13 +44,12 @@ export default function InfoSection() {
       if (res) {
         if (location.pathname.includes("/edit-section")) {
           navigate(`/templates/preview/template-${templateId}`);
+          setOpen(false);
         } else {
           navigate(`/templates/contactform`);
         }
       }
     });
-    console.log("values", FieldData);
-
     resetForm({ values: "", FieldData: "" });
     setImg("");
   };
@@ -62,26 +62,26 @@ export default function InfoSection() {
     >
       {({ values, setValues }) => (
         <>
-          <h3 className={` ${formHeadingCss}`}>Personal Information</h3>
-
+          <h3 className={`heading formHeading`}>Personal Information</h3>
           <Form>
             <FieldArray name="info">
               <div className="flex w-full  flex-wrap gap-4 mb-2">
-                <div className=" w-full md:w-2/5 relative mb-8 md:mb-0">
+                {/* FullName  */}
+                <div className=" w-full md:w-2/5 relative z-0 mb-8 md:mb-0">
                   <div className="flex flex-col">
                     <Field
                       name={`FullName`}
                       type="text"
                       placeholder=" "
-                      className={`${inputCss}`}
+                      className={`input peer`}
                       autoComplete="off"
                     />
                     <ErrorMessage
                       component="span"
-                      style={{ color: "red" }}
                       name={`FullName`}
+                      className="text-red-400"
                     />
-                    <label htmlFor="FullName" className={`${labelCss}`}>
+                    <label htmlFor="FullName" className={`label`}>
                       Enter Full Name
                     </label>
                   </div>
@@ -90,7 +90,7 @@ export default function InfoSection() {
                 <div className="w-full md:w-2/5 sm:-mt-10">
                   <label
                     htmlFor="ImgUrl"
-                    className={`block mr-[80%] md:mr-0  text-center ${formHeadingCss}`}
+                    className={`block mr-[80%] md:mr-0  text-center heading formHeading`}
                   >
                     Profile Picture
                   </label>
@@ -121,26 +121,26 @@ export default function InfoSection() {
                   </div>
                 </div>
                 {/* Designation(profession) */}
-                <div className="w-full md:w-2/5 relative">
+                <div className="w-full md:w-2/5 relative z-0">
                   <div className="flex flex-col">
                     <Field
                       name={`Profession`}
                       type="text"
                       placeholder=" "
                       list="Profession"
-                      className={`${inputCss}`}
+                      className={`input peer`}
                     />
                     <ErrorMessage
                       component="span"
-                      style={{ color: "red" }}
                       name={`Profession`}
+                      className="text-red-400"
                     />
-                    <label htmlFor="Profession" className={`${labelCss}`}>
+                    <label htmlFor="Profession" className={`label`}>
                       Profession
                     </label>
                     <datalist id="Profession">
                       {designationData.map((d) => (
-                        <option key={d.value} value={d.label} className="" />
+                        <option key={d.value} value={d.label}  />
                       ))}
                     </datalist>
                   </div>
@@ -150,8 +150,8 @@ export default function InfoSection() {
             {/* button group */}
             <div className="flex justify-end">
               {/* next button  */}
-              <button type="submit" className={`${formButtonCss}`}>
-                <FaArrowRight className="text-white" />
+              <button type="submit" className={`btn btn-next`}>
+                <FaArrowRight  />
               </button>
             </div>
           </Form>
